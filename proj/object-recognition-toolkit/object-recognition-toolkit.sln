@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-class-loader", "test-c
 		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-algorithm-loader", "test-algorithm-loader\test-algorithm-loader.vcxproj", "{A1825625-4B16-4D48-9358-393C927ABFD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +26,10 @@ Global
 		{9E2E7DFF-C2CE-4F10-9130-3AA9A2763EE5}.Debug|x64.Build.0 = Debug|x64
 		{9E2E7DFF-C2CE-4F10-9130-3AA9A2763EE5}.Release|x64.ActiveCfg = Release|x64
 		{9E2E7DFF-C2CE-4F10-9130-3AA9A2763EE5}.Release|x64.Build.0 = Release|x64
+		{A1825625-4B16-4D48-9358-393C927ABFD9}.Debug|x64.ActiveCfg = Debug|x64
+		{A1825625-4B16-4D48-9358-393C927ABFD9}.Debug|x64.Build.0 = Debug|x64
+		{A1825625-4B16-4D48-9358-393C927ABFD9}.Release|x64.ActiveCfg = Release|x64
+		{A1825625-4B16-4D48-9358-393C927ABFD9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
