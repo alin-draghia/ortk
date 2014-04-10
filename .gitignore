@@ -154,3 +154,7 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+3rd-party/dlib/
+3rd-party/eigen/
+3rd-party/poco/
+3rd-party/opencv/
