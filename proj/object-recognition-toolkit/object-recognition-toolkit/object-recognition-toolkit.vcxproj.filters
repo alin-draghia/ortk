@@ -1,17 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="include">
+      <UniqueIdentifier>{3a86ff1a-4d7c-42f6-b1b7-5b49579eb7a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="include\object-recognition-toolkit">
+      <UniqueIdentifier>{f3e29b8b-c5f4-4b68-bb70-45aa3ad571d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="include\object-recognition-toolkit\core">
+      <UniqueIdentifier>{c725ea55-7e38-4cd5-aa55-c63d28a549f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\object-recognition-toolkit\tmp">
+      <UniqueIdentifier>{a8e5ad59-5061-42e6-b95c-d7e9f88031ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{b745f7d1-8cca-4d46-883c-1fd550960da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\object-recognition-toolkit">
+      <UniqueIdentifier>{579bb87f-2bdd-43de-9a31-decf73db090b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\object-recognition-toolkit\core">
+      <UniqueIdentifier>{07f4db85-9048-4690-9945-c6964d6f1a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\object-recognition-toolkit\tmp">
+      <UniqueIdentifier>{ffb9e9e9-afbe-48a5-ad64-69a61161430f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h">
+      <Filter>include\object-recognition-toolkit\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\tmp\tmp.h">
+      <Filter>include\object-recognition-toolkit\tmp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\core.cpp">
+      <Filter>src\object-recognition-toolkit\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\tmp\tmp.cpp">
+      <Filter>src\object-recognition-toolkit\tmp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
