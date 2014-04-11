@@ -60,13 +60,13 @@
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h">
       <Filter>include\object-recognition-toolkit\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h">
-      <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h">
       <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\core\algorithm.cpp">
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h">
+      <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h">
       <Filter>src\object-recognition-toolkit\core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -94,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\algorithm.cpp">
+      <Filter>src\object-recognition-toolkit\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

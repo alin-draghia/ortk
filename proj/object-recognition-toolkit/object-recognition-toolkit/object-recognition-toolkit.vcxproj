@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h" />
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Base.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child1.h" />

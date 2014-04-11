@@ -20,9 +20,9 @@ namespace object_recognition_toolkit
 			virtual const std::string& name() const = 0;
 		};
 
-
+#if(1)
 		using AlgorithmFactory = Poco::DynamicFactory<Algorithm>;
-
+#endif
 
 
 	}
