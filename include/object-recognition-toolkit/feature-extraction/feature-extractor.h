@@ -4,17 +4,16 @@
 
 #include "object-recognition-toolkit\core\algorithm.h"
 
-namespace object_recognition_toolkit
-{
-	namespace feature_extraction
-	{
+namespace object_recognition_toolkit {
+	namespace feature_extraction {
+
 		class FeatureExtractor
-			: public object_recognition_toolkit::core::Algorithm
-		{
+			: public object_recognition_toolkit::core::Algorithm {
 		public:
-			FeatureExtractor();
-			virtual ~FeatureExtractor() = 0;
+			FeatureExtractor( );
+			virtual ~FeatureExtractor( ) = 0;
 		};
+
 	}
 }
 

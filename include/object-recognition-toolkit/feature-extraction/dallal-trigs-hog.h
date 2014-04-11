@@ -4,17 +4,15 @@
 
 #include "feature-extractor.h"
 
-namespace object_recognition_toolkit
-{
-	namespace feature_extraction
-	{
+namespace object_recognition_toolkit {
+
+	namespace feature_extraction {
 		class DallalTriggsHog
-			: public object_recognition_toolkit::feature_extraction::FeatureExtractor
-		{
+			: public object_recognition_toolkit::feature_extraction::FeatureExtractor {
 		public:
-			DallalTriggsHog();
-			virtual ~DallalTriggsHog();
-			virtual const std::string& name() const;
+			DallalTriggsHog( );
+			virtual ~DallalTriggsHog( );
+			virtual const std::string& name( ) const;
 
 		private:
 

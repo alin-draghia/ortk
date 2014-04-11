@@ -2,20 +2,14 @@
 
 #include <iostream>
 
-namespace object_recognition_toolkit
-{
-	namespace design_pattern
-	{
-		Child3::Child3()
-		{
-		}
+namespace object_recognition_toolkit {
+	namespace design_pattern {
 
-		Child3::~Child3()
-		{
-		}
+		Child3::Child3( ) { }
 
-		void Child3::Print() const
-		{
+		Child3::~Child3( ) { }
+
+		void Child3::Print( ) const {
 			std::cout << __FUNCTION__ << std::endl;
 		}
 	}

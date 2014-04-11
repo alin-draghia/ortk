@@ -8,10 +8,8 @@
 #include <Poco\Instantiator.h>
 #include <Poco\DynamicFactory.h>
 
-namespace object_recognition_toolkit
-{
-	namespace core
-	{
+namespace object_recognition_toolkit {
+	namespace core {
 #if(0)
 		class AlgorithmFactory
 		{
@@ -23,7 +21,7 @@ namespace object_recognition_toolkit
 			~AlgorithmFactory();
 
 			Poco::AutoPtr<object_recognition_toolkit::feature_extraction::FeatureExtractor>
-			createFeatureExtractor(const std::string& featureExtractorName);
+				createFeatureExtractor(const std::string& featureExtractorName);
 
 		private:
 			void registerBuiltins();
