@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ORT_ALGORITHM_HEADER_INCLUDED_
-#define _ORT_ALGORITHM_HEADER_INCLUDED_
+#ifndef ALGORITHM_H_
+#define ALGORITHM_H_
 
 #include <string>
 #include <Poco\RefCountedObject.h>
@@ -11,7 +11,8 @@ namespace object_recognition_toolkit {
 
 		// # Big issue here, I'f i dont define the inline c-tor and d-tor lnk 2019
 		class Algorithm
-			: public Poco::RefCountedObject {
+			: public Poco::RefCountedObject
+		{
 		public:
 			Algorithm( );
 			virtual ~Algorithm( ) = 0;
@@ -25,4 +26,4 @@ namespace object_recognition_toolkit {
 
 	}
 }
-#endif //_ORT_ALGORITHM_HEADER_INCLUDED_
+#endif // ALGORITHM_H_

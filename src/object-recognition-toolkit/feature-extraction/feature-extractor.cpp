@@ -4,8 +4,6 @@
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
-		FeatureExtractor::FeatureExtractor( ) { }
-
 		FeatureExtractor::~FeatureExtractor( ) { }
 	}
 }

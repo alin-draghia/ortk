@@ -10,9 +10,6 @@
     <Filter Include="include\object-recognition-toolkit\core">
       <UniqueIdentifier>{c725ea55-7e38-4cd5-aa55-c63d28a549f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\object-recognition-toolkit\tmp">
-      <UniqueIdentifier>{a8e5ad59-5061-42e6-b95c-d7e9f88031ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{b745f7d1-8cca-4d46-883c-1fd550960da2}</UniqueIdentifier>
     </Filter>
@@ -21,15 +18,6 @@
     </Filter>
     <Filter Include="src\object-recognition-toolkit\core">
       <UniqueIdentifier>{07f4db85-9048-4690-9945-c6964d6f1a1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\object-recognition-toolkit\tmp">
-      <UniqueIdentifier>{ffb9e9e9-afbe-48a5-ad64-69a61161430f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\object-recognition-toolkit\design-pattern">
-      <UniqueIdentifier>{2d0b900c-ac4d-4d95-9d02-a7f62b1acb1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\object-recognition-toolkit\design-pattern">
-      <UniqueIdentifier>{07bc06cc-36b0-4ed3-abf4-534db662a05e}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\object-recognition-toolkit\feature-extraction">
       <UniqueIdentifier>{179a6331-2620-4d94-b228-74a6d6e3f5d3}</UniqueIdentifier>
@@ -41,21 +29,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h">
       <Filter>include\object-recognition-toolkit\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\tmp\tmp.h">
-      <Filter>include\object-recognition-toolkit\tmp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Base.h">
-      <Filter>include\object-recognition-toolkit\design-pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child1.h">
-      <Filter>include\object-recognition-toolkit\design-pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child2.h">
-      <Filter>include\object-recognition-toolkit\design-pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child3.h">
-      <Filter>include\object-recognition-toolkit\design-pattern</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h">
       <Filter>include\object-recognition-toolkit\core</Filter>
@@ -69,25 +42,13 @@
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h">
       <Filter>src\object-recognition-toolkit\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor-factory.h">
+      <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\core.cpp">
       <Filter>src\object-recognition-toolkit\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\tmp\tmp.cpp">
-      <Filter>src\object-recognition-toolkit\tmp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Base.cpp">
-      <Filter>src\object-recognition-toolkit\design-pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child1.cpp">
-      <Filter>src\object-recognition-toolkit\design-pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child2.cpp">
-      <Filter>src\object-recognition-toolkit\design-pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child3.cpp">
-      <Filter>src\object-recognition-toolkit\design-pattern</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>

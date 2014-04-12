@@ -29,7 +29,7 @@ namespace {
 			loader.loadLibrary("object-recognition-toolkit.dll", "AlgorithmFactoryManifest");
 			auto& factory = loader.instance("object_recognition_toolkit::core::AlgorithmFactory");
 			//auto class_name = typeid(DallalTriggsHog).name();
-			factory.registerClass<DallalTriggsHog>("DallalTriggsHog");
+			//factory.registerClass<DallalTriggsHog>("DallalTriggsHog");
 		}
 
 		~DallalTriggsHogRegistrar( ) { }

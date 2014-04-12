@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ORT_CORE_HEADER_INCLUDED_
-#define _ORT_CORE_HEADER_INCLUDED_
+#ifndef CORE_H_
+#define CORE_H_
 
 namespace object_recognition_toolkit {
 	namespace core {
@@ -10,4 +10,4 @@ namespace object_recognition_toolkit {
 	}
 }
 
-#endif
+#endif // CORE_H_

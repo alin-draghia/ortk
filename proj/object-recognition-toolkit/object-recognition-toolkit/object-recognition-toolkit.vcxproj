@@ -14,24 +14,15 @@
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Base.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child1.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child2.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\design-pattern\Child3.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h" />
+    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor-factory.h" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\tmp\tmp.h" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\algorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\core.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Base.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child1.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child2.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\design-pattern\Child3.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\tmp\tmp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C8F47735-0511-45DA-917B-4EDC36674DD2}</ProjectGuid>
