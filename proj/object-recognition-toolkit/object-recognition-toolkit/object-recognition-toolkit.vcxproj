@@ -11,16 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor-factory.h" />
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\algorithm.cpp" />
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h" />
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\core.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
   </ItemGroup>

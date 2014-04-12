@@ -27,37 +27,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\core.h">
-      <Filter>include\object-recognition-toolkit\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm.h">
-      <Filter>include\object-recognition-toolkit\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h">
       <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h">
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\core\algorithm_factory.h">
-      <Filter>src\object-recognition-toolkit\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor-factory.h">
-      <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h">
+      <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\core.cpp">
-      <Filter>src\object-recognition-toolkit\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\core\algorithm.cpp">
-      <Filter>src\object-recognition-toolkit\core</Filter>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.cpp">
+      <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

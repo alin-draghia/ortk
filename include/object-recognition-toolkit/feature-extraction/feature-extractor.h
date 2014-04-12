@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "object-recognition-toolkit\core\algorithm.h"
+#include <Poco/ClassLoader.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
@@ -13,7 +13,14 @@ namespace object_recognition_toolkit {
 		{
 		public:
 			virtual ~FeatureExtractor( ) = 0;
+			virtual const std::string& name( ) const = 0;
 		};
+
+		using FeatureExtractorLoader = Poco::ClassLoader<FeatureExtractor>;
+
+		const std::string Manifest = "feature_extraction";
+
+		
 
 	}
 }
