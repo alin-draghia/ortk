@@ -2,7 +2,7 @@
 
 #include "object-recognition-toolkit/feature-extraction/feature-extractor.h"
 #include "pass-through.h"
-#include "dallal-trigs-hog.h"
+#include "dalal-triggs-hog.h"
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
@@ -16,6 +16,6 @@ namespace {
 
 	POCO_BEGIN_NAMED_MANIFEST(feature_extraction, FeatureExtractor)
 		POCO_EXPORT_CLASS(PassThrough)
-		POCO_EXPORT_CLASS(DallalTriggsHog)
+		POCO_EXPORT_CLASS(DalalTriggsHog)
 	POCO_END_MANIFEST
 }

@@ -9,17 +9,17 @@
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
-		class DallalTriggsHog
+		class DalalTriggsHog
 			: public FeatureExtractor {
 		public:
-			DallalTriggsHog( );
-			virtual ~DallalTriggsHog( );
+			DalalTriggsHog();
+			virtual ~DalalTriggsHog();
 
 			virtual const std::string& name( ) const;
 			virtual std::vector<float> compute(const cv::Mat& image) const;
 
 		private:
-			const std::string name_ = "DallalTriggsHog";
+			const std::string name_ = "DalalTriggsHog";
 			cv::HOGDescriptor hog_;
 			cv::Size winSize_;
 			cv::Size blockSize_;

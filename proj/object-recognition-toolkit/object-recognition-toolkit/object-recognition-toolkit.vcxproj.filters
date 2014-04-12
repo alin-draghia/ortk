@@ -30,21 +30,21 @@
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h">
       <Filter>include\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h">
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h">
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp">
-      <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.cpp">
+      <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp">
       <Filter>src\object-recognition-toolkit\feature-extraction</Filter>
     </ClCompile>
   </ItemGroup>

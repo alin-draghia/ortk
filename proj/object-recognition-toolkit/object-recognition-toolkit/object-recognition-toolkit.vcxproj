@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
     <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.h" />
+    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
     <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dallal-trigs-hog.cpp" />
     <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -44,9 +44,11 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="opencv_debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="opencv_release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
