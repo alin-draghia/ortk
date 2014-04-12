@@ -159,3 +159,6 @@ $RECYCLE.BIN/
 3rd-party/poco/
 3rd-party/opencv/
 datasets/INRIAPerson/
+vs_proj/3rd-party/
+vs_proj/object-recognition-toolkit/include/
+vs_proj/object-recognition-toolkit/src/
