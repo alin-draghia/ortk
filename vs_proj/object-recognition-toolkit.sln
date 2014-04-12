@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "object-recognition-toolkit", "object-recognition-toolkit\object-recognition-toolkit.vcxproj", "{C8F47735-0511-45DA-917B-4EDC36674DD2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-feature-extractor-loader", "test-feature-extractor-loader\test-feature-extractor-loader.vcxproj", "{3223A2B3-866A-4C05-AF77-02E0E268AF1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,13 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\dynamic-holders.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\dynamic-opencv-mat-holder.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
     <ClInclude Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
+    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\mock-feature-extractor.h" />
     <ClInclude Include="src\object-recognition-toolkit\feature-extraction\pass-through.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\mock-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -68,7 +74,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

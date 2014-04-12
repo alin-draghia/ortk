@@ -1,29 +1,27 @@
 #pragma once
-#ifndef PASS_THROUGH_H_
-#define PASS_THROUGH_H_
+#ifndef DUMMY_FEATURE_EXTRACTOR_H_
+#define DUMMY_FEATURE_EXTRACTOR_H_
 
 #include <string>
-
 #include <vector>
-#include <opencv2/opencv.hpp>
 
 #include "object-recognition-toolkit/feature-extraction/feature-extractor.h"
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
-		class PassThrough
+		class MockFeatureExtractor
 			: public FeatureExtractor
 		{
 		public:
-			PassThrough( );
-			virtual ~PassThrough( );
+			MockFeatureExtractor();
+			virtual ~MockFeatureExtractor();
 
 			virtual const std::string& name() const;
 			virtual std::vector<float> compute(const cv::Mat& image) const;
 
 		private:
-			const std::string name_ = "PassThrough";
+			const std::string name_ = "MockFeatureExtractor";
 		};
 
 	}
