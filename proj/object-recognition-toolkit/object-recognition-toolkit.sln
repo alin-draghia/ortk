@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "object-recognition-toolkit", "object-recognition-toolkit\object-recognition-toolkit.vcxproj", "{C8F47735-0511-45DA-917B-4EDC36674DD2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-algorithm-loader", "test-algorithm-loader\test-algorithm-loader.vcxproj", "{A1825625-4B16-4D48-9358-393C927ABFD9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-feature-extractor-loader", "test-feature-extractor-loader\test-feature-extractor-loader.vcxproj", "{3223A2B3-866A-4C05-AF77-02E0E268AF1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Debug|x64.Build.0 = Debug|x64
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Release|x64.ActiveCfg = Release|x64
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Release|x64.Build.0 = Release|x64
-		{A1825625-4B16-4D48-9358-393C927ABFD9}.Debug|x64.ActiveCfg = Debug|x64
-		{A1825625-4B16-4D48-9358-393C927ABFD9}.Debug|x64.Build.0 = Debug|x64
-		{A1825625-4B16-4D48-9358-393C927ABFD9}.Release|x64.ActiveCfg = Release|x64
-		{A1825625-4B16-4D48-9358-393C927ABFD9}.Release|x64.Build.0 = Release|x64
+		{3223A2B3-866A-4C05-AF77-02E0E268AF1F}.Debug|x64.ActiveCfg = Debug|x64
+		{3223A2B3-866A-4C05-AF77-02E0E268AF1F}.Debug|x64.Build.0 = Debug|x64
+		{3223A2B3-866A-4C05-AF77-02E0E268AF1F}.Release|x64.ActiveCfg = Release|x64
+		{3223A2B3-866A-4C05-AF77-02E0E268AF1F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
