@@ -17,7 +17,7 @@ namespace FE = object_recognition_toolkit::feature_extraction;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	FE::FeatureExtractorLoader loader;
-	loader.loadLibrary("object-recognition-toolkit.dll", FE::Manifest);
+	loader.loadLibrary("object-recognition-toolkit" + Poco::SharedLibrary::suffix(), FE::Manifest);
 	
 	for ( auto library : loader ) {
 		std::cout << "library: " << library->first << std::endl;

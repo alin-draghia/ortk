@@ -11,14 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp" />
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
-    <ClInclude Include="..\..\..\include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
-    <ClInclude Include="..\..\..\src\object-recognition-toolkit\feature-extraction\pass-through.h" />
+    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
+    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
+    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\pass-through.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C8F47735-0511-45DA-917B-4EDC36674DD2}</ProjectGuid>
@@ -53,11 +53,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\..\..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin\</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\..\..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -67,13 +68,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(SolutionDir)\..\..\3rd-party\dlib;$(SolutionDir)\..\..\3rd-party\eigen;$(SolutionDir)\..\..\3rd-party\opencv\include;$(SolutionDir)\..\..\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\..\3rd-party\opencv\x64\vc12\lib;$(SolutionDir)\..\..\3rd-party\poco\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)\..\..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3rd-party\opencv\x64\vc12\lib;$(SolutionDir)\3rd-party\poco\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)\bin\$(TargetName).lib</ImportLibrary>
       <AdditionalDependencies>PocoFoundationd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -87,15 +88,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\include;$(SolutionDir)\..\..\3rd-party\dlib;$(SolutionDir)\..\..\3rd-party\eigen;$(SolutionDir)\..\..\3rd-party\opencv\include;$(SolutionDir)\..\..\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\..\3rd-party\opencv\x64\vc12\lib;$(SolutionDir)\..\..\3rd-party\poco\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)\..\..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(SolutionDir)\3rd-party\opencv\x64\vc12\lib;$(SolutionDir)\3rd-party\poco\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)\bin\$(TargetName).lib</ImportLibrary>
       <AdditionalDependencies>PocoFoundation.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
