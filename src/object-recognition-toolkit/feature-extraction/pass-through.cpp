@@ -12,5 +12,11 @@ namespace object_recognition_toolkit {
 			return name_;
 		}
 
+		std::vector<float> PassThrough::compute(const cv::Mat& image) const
+		{
+			std::vector<float> feats = image;
+
+			return std::move(feats);
+		}
 	}
 }
