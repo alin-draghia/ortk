@@ -5,12 +5,13 @@
 #include <string>
 #include <vector>
 
-#include "object-recognition-toolkit/feature-extraction/feature-extractor.h"
+#include <object-recognition-toolkit/core/core.h>
+#include <object-recognition-toolkit/feature-extraction/feature-extractor.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
-		class MockFeatureExtractor
+		class ORT_API MockFeatureExtractor
 			: public FeatureExtractor
 		{
 		public:

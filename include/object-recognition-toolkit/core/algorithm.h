@@ -13,10 +13,12 @@
 
 #include "dynamic-holders.h"
 
+#include <object-recognition-toolkit/core/core.h>
+
 namespace object_recognition_toolkit {
 	namespace core {
 
-		class Algorithm
+		class ORT_API Algorithm
 		{
 		public:
 			virtual ~Algorithm( ) = 0;

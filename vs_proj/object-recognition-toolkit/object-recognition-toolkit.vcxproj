@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\dynamic-holders.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\dynamic-opencv-mat-holder.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
@@ -72,7 +73,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_THE_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -92,7 +93,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_THE_DLL;WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

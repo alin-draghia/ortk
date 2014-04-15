@@ -2,14 +2,15 @@
 #ifndef DALAL_TRIGGS_HOG_H_
 #define DALAL_TRIGGS_HOG_H_
 
-#include "object-recognition-toolkit/feature-extraction/feature-extractor.h"
-
 #include <opencv2/opencv.hpp>
+
+#include <object-recognition-toolkit/core/core.h>
+#include <object-recognition-toolkit/feature-extraction/feature-extractor.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
-		class DalalTriggsHog
+		class ORT_API DalalTriggsHog
 			: public FeatureExtractor {
 		public:
 			DalalTriggsHog();
