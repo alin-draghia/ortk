@@ -11,6 +11,7 @@
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
+
 		class ORT_API MockFeatureExtractor
 			: public FeatureExtractor
 		{
@@ -24,6 +25,7 @@ namespace object_recognition_toolkit {
 		private:
 			const std::string name_ = "MockFeatureExtractor";
 		};
+
 
 	}
 }

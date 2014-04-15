@@ -10,6 +10,7 @@
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
+
 		class ORT_API DalalTriggsHog
 			: public FeatureExtractor {
 		public:
@@ -28,6 +29,7 @@ namespace object_recognition_toolkit {
 			cv::Size cellSize_;
 			int nBins_;
 		};
+
 
 	}
 }

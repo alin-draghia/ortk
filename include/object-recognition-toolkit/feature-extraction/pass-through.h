@@ -3,14 +3,15 @@
 #define PASS_THROUGH_H_
 
 #include <string>
-
 #include <vector>
+
 #include <opencv2/opencv.hpp>
 
 #include "object-recognition-toolkit/feature-extraction/feature-extractor.h"
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
+
 
 		class PassThrough
 			: public FeatureExtractor
@@ -25,6 +26,7 @@ namespace object_recognition_toolkit {
 		private:
 			const std::string name_ = "PassThrough";
 		};
+
 
 	}
 }
