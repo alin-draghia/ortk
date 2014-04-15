@@ -1,4 +1,4 @@
-#include "mock-feature-extractor.h"
+#include <object-recognition-toolkit/feature-extraction/mock-feature-extractor.h>
 
 #include <memory>
 #include <opencv2/opencv.hpp>

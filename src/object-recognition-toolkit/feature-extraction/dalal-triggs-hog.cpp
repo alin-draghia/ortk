@@ -1,4 +1,4 @@
-#include "dalal-triggs-hog.h"
+#include <object-recognition-toolkit/feature-extraction/dalal-triggs-hog.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {

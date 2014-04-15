@@ -15,9 +15,9 @@
     <ClInclude Include="include\object-recognition-toolkit\core\dynamic-holders.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\dynamic-opencv-mat-holder.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
-    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\mock-feature-extractor.h" />
-    <ClInclude Include="src\object-recognition-toolkit\feature-extraction\pass-through.h" />
+    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
+    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\mock-feature-extractor.h" />
+    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\pass-through.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />

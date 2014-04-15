@@ -23,10 +23,11 @@ namespace object_recognition_toolkit {
 			virtual std::vector<float> compute(const cv::Mat& image) const = 0;
 		};
 
+
+		#if(0)
 		using FeatureExtractorLoader = Poco::ClassLoader<FeatureExtractor>;
-
 		const std::string Manifest = "feature_extraction";
-
+		#endif
 		
 
 	}

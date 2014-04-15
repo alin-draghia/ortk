@@ -1,4 +1,4 @@
-#include "pass-through.h"
+#include <object-recognition-toolkit/feature-extraction/pass-through.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
