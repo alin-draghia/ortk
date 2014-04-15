@@ -162,3 +162,5 @@ datasets/INRIAPerson/
 vs_proj/3rd-party/
 vs_proj/object-recognition-toolkit/include/
 vs_proj/object-recognition-toolkit/src/
+vs_proj/lib/
+*.exp
