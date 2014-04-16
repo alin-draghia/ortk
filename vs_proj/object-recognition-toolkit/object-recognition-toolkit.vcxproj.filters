@@ -8,6 +8,9 @@
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -15,5 +18,7 @@
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\image-pyramid.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float-pyramid.cpp" />
   </ItemGroup>
 </Project>
