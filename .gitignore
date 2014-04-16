@@ -164,3 +164,9 @@ vs_proj/object-recognition-toolkit/include/
 vs_proj/object-recognition-toolkit/src/
 vs_proj/lib/
 *.exp
+3rd-party/vlfeat/
+testing-3rd-party/3rd-party/dlib/
+testing-3rd-party/3rd-party/eigen/
+testing-3rd-party/3rd-party/opencv/
+testing-3rd-party/3rd-party/vlfeat/
+testing-3rd-party/3rd-party/
