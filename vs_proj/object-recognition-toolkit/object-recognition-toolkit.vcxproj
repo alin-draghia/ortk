@@ -14,16 +14,17 @@
     <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.h" />
-    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\mock-feature-extractor.h" />
-    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\pass-through.h" />
+    <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\dalal-triggs-hog.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\mock-feature-extractor.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\feature-extraction\pass-through.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C8F47735-0511-45DA-917B-4EDC36674DD2}</ProjectGuid>

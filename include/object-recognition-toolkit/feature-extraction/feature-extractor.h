@@ -2,11 +2,9 @@
 #ifndef FEATURE_EXTRACTOR_H_
 #define FEATURE_EXTRACTOR_H_
 
-#include <string>
 #include <vector>
 
 #include <opencv2/opencv.hpp>
-
 
 #include <object-recognition-toolkit/core/core.h>
 #include <object-recognition-toolkit/core/algorithm.h>
@@ -19,7 +17,8 @@ namespace object_recognition_toolkit {
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:
-			virtual ~FeatureExtractor( ) = 0;
+			FeatureExtractor(const std::string& name);
+			virtual ~FeatureExtractor( );
 			
 			virtual std::vector<float> compute(const cv::Mat& image) const = 0;
 		};

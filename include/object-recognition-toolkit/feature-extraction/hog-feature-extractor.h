@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DALAL_TRIGGS_HOG_H_
-#define DALAL_TRIGGS_HOG_H_
+#ifndef HOG_FEATURE_EXTRACTOR_H_
+#define HOG_FEATURE_EXTRACTOR_H_
 
 #include <opencv2/opencv.hpp>
 
@@ -11,17 +11,15 @@ namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
 
-		class ORT_API DalalTriggsHog
+		class ORT_API HogFeatureExtractor
 			: public FeatureExtractor {
 		public:
-			DalalTriggsHog();
-			virtual ~DalalTriggsHog();
+			HogFeatureExtractor();
+			virtual ~HogFeatureExtractor();
 
-			virtual const std::string& name( ) const;
 			virtual std::vector<float> compute(const cv::Mat& image) const;
 
 		private:
-			const std::string name_ = "DalalTriggsHog";
 			cv::HOGDescriptor hog_;
 			cv::Size winSize_;
 			cv::Size blockSize_;
@@ -34,4 +32,4 @@ namespace object_recognition_toolkit {
 	}
 }
 
-#endif DALAL_TRIGGS_HOG_H_
+#endif // HOG_FEATURE_EXTRACTOR_H_
