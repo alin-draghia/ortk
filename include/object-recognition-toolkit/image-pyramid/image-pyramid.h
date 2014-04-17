@@ -9,7 +9,7 @@ namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class ImagePyramid
+		class ORT_API ImagePyramid
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:

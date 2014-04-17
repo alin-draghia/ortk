@@ -8,7 +8,7 @@ namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class FloatImagePyramid
+		class ORT_API FloatImagePyramid
 			: public ImagePyramid
 		{
 		public:

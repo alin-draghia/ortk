@@ -8,7 +8,7 @@ namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class PyramidLevel
+		class ORT_API PyramidLevel
 		{
 		public:
 			PyramidLevel(const cv::Mat& image, double scale)
