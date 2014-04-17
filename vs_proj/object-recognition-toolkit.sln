@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "person-detection-sample", "
 		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "train-person-detector", "train-person-detector\train-person-detector.vcxproj", "{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -24,6 +29,10 @@ Global
 		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Debug|x64.Build.0 = Debug|x64
 		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Release|x64.ActiveCfg = Release|x64
 		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Release|x64.Build.0 = Release|x64
+		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Debug|x64.ActiveCfg = Debug|x64
+		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Debug|x64.Build.0 = Debug|x64
+		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Release|x64.ActiveCfg = Release|x64
+		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
