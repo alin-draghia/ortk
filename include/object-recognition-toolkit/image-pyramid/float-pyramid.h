@@ -19,10 +19,9 @@ namespace object_recognition_toolkit
 			cv::Size GetMinSize() const;
 			cv::Size GetMaxSize() const;
 
-			virtual std::vector<cv::Mat> Build(cv::Mat image) const;
+			virtual std::vector<PyramidLevel> Build(cv::Mat image) const;
 
-			virtual cv::Rect ForwardTransform(const cv::Rect& box, size_t level) const;
-			virtual cv::Rect InverseTransform(const cv::Rect& box, size_t level) const;
+
 
 		private:
 			double scaleFactor_;

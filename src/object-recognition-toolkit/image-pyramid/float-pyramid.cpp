@@ -37,24 +37,33 @@ namespace object_recognition_toolkit
 		}
 
 
-		std::vector<cv::Mat> FloatImagePyramid::Build(cv::Mat image) const
+		std::vector<PyramidLevel> FloatImagePyramid::Build(cv::Mat image) const
 		{
-			std::vector<cv::Mat> pyramid;
+			std::vector<PyramidLevel> pyramid;
+			
 
+			for (int i = 0; true; i++) {
+				double scale = 1.0 / std::pow(scaleFactor_, i);
+				int width = cvRound(image.cols * scale);
+				int height = cvRound(image.rows * scale);
 
+				if (maxSize_.width != 0 && maxSize_.height != 0) {
+					if (width > maxSize_.width || height > maxSize_.height) {
+						continue;
+					}
+				}
+
+				if (width < minSize_.width || height < minSize_.height) {
+					break;
+				}
+
+				cv::Mat image0;
+				cv::resize(image, image0, cv::Size(), scale, scale, cv::INTER_LINEAR);
+
+				pyramid.emplace_back(image0, scale);
+			}
+			
 			return std::move(pyramid);
-		}
-
-
-		cv::Rect FloatImagePyramid::ForwardTransform(const cv::Rect& box, size_t level) const
-		{
-			throw std::exception("not implemented");
-		}
-
-
-		cv::Rect FloatImagePyramid::InverseTransform(const cv::Rect& box, size_t level) const
-		{
-			throw std::exception("not implemented");
 		}
 
 	}

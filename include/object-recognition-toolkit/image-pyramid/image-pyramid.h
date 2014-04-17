@@ -16,10 +16,8 @@ namespace object_recognition_toolkit
 			ImagePyramid(const std::string& name);
 			virtual ~ImagePyramid();
 
-			virtual std::vector<cv::Mat> Build(cv::Mat image) const = 0;
-
-			virtual cv::Rect ForwardTransform(const cv::Rect& box, size_t level) const = 0;
-			virtual cv::Rect InverseTransform(const cv::Rect& box, size_t level) const = 0;
+			virtual std::vector<PyramidLevel> Build(cv::Mat image) const = 0;
+			
 		};
 	}
 }

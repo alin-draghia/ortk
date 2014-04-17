@@ -15,7 +15,18 @@ namespace object_recognition_toolkit
 				: image_{ image }, scale_{ scale } {}
 
 			~PyramidLevel() = default;
+
+			double GetScale() const
+			{
+				return scale_;
+			}
 			
+
+			cv::Mat& GetImage()
+			{
+				return image_;
+			}
+
 			template<typename T>
 			cv::Rect_<T> Transform(const cv::Rect_<T>& box) const
 			{
