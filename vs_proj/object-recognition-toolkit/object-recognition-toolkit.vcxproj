@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
@@ -26,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />

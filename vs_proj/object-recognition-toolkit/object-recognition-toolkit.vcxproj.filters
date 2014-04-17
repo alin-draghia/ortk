@@ -13,6 +13,7 @@
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -24,5 +25,6 @@
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float-pyramid.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
   </ItemGroup>
 </Project>
