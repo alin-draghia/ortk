@@ -171,3 +171,9 @@ testing-3rd-party/3rd-party/opencv/
 testing-3rd-party/3rd-party/vlfeat/
 testing-3rd-party/3rd-party/
 lib/
+vs_proj/train-person-detector/out/
+*.pkl
+*.out
+*.in
+*.npz
+*.rar
