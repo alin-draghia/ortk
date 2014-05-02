@@ -2,6 +2,9 @@
 #ifndef HOG_FEATURE_EXTRACTOR_H_
 #define HOG_FEATURE_EXTRACTOR_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <opencv2/opencv.hpp>
 
 #include <object-recognition-toolkit/core/core.h>
@@ -31,5 +34,7 @@ namespace object_recognition_toolkit {
 
 	}
 }
+
+#pragma warning(pop)
 
 #endif // HOG_FEATURE_EXTRACTOR_H_

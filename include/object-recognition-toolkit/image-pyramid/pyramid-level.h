@@ -2,6 +2,10 @@
 #ifndef PYRAMID_LEVEL_H_
 #define PYRAMID_LEVEL_H_
 
+
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <opencv2/opencv.hpp>
 
 namespace object_recognition_toolkit
@@ -73,5 +77,7 @@ namespace object_recognition_toolkit
 		};
 	}
 }
+
+#pragma warning(pop)
 
 #endif

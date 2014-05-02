@@ -2,6 +2,9 @@
 #ifndef CLASSIFIER_H_
 #define CLASSIFIER_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <string>
 #include <vector>
 
@@ -22,5 +25,7 @@ namespace object_recognition_toolkit
 		};
 	}
 }
+
+#pragma warning(pop)
 
 #endif // CLASSIFIER_H_

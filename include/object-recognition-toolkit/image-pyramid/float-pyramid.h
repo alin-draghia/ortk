@@ -2,6 +2,9 @@
 #ifndef FLOAT_PYRAMID_H_
 #define FLOAT_PYRAMID_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <object-recognition-toolkit/image-pyramid/image-pyramid.h>
 
 namespace object_recognition_toolkit
@@ -30,5 +33,7 @@ namespace object_recognition_toolkit
 		};
 	}
 }
+
+#pragma warning(pop)
 
 #endif // FLOAT_PYRAMID_H_

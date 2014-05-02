@@ -2,6 +2,9 @@
 #ifndef MOCK_PERSON_CLASSIFIER_H_
 #define MOCK_PERSON_CLASSIFIER_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <object-recognition-toolkit/classification/classifier.h>
 
 
@@ -26,5 +29,7 @@ namespace object_recognition_toolkit
 
 	}
 }
+
+#pragma warning(pop)
 
 #endif // MOCK_PERSON_CLASSIFIER_H_

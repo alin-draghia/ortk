@@ -2,6 +2,9 @@
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <string>
 
 #include <opencv2/opencv.hpp>
@@ -25,5 +28,7 @@ namespace object_recognition_toolkit {
 
 	}
 }
+
+#pragma warning(pop)
 
 #endif // ALGORITHM_H_

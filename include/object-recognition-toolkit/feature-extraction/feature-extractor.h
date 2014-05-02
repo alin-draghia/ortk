@@ -2,6 +2,9 @@
 #ifndef FEATURE_EXTRACTOR_H_
 #define FEATURE_EXTRACTOR_H_
 
+#pragma warning(push)
+#pragma warning(disable: 4251)
+
 #include <vector>
 
 #include <opencv2/opencv.hpp>
@@ -26,5 +29,7 @@ namespace object_recognition_toolkit {
 		
 	}
 }
+
+#pragma warning(pop)
 
 #endif // FEATURE_EXTRACTOR_H_
