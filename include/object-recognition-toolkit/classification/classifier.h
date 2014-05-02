@@ -8,9 +8,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/serialization/version.hpp>
-#include <boost/serialization/split_member.hpp>
-
 #include <object-recognition-toolkit/core/algorithm.h>
 
 namespace object_recognition_toolkit
@@ -29,19 +26,11 @@ namespace object_recognition_toolkit
 
 		private:
 			friend class boost::serialization::access;
-			template<class Archive>
-			void save(Archive & ar, const unsigned int version) const;
-			template<class Archive>
-			void load(Archive & ar, const unsigned int version);
-			BOOST_SERIALIZATION_SPLIT_MEMBER()
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 	}
 }
-
-#include <boost/archive/polymorphic_iarchive.hpp>
-#include <boost/archive/polymorphic_oarchive.hpp>
-#include <boost/serialization/export.hpp>
-BOOST_CLASS_EXPORT_KEY(object_recognition_toolkit::classification::Classifier);
 
 #pragma warning(pop)
 

@@ -1,7 +1,11 @@
 #include <memory>
 
 #include <boost/serialization/string.hpp>
-
+#include <boost/serialization/base_object.hpp>
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/factory.hpp>
 #include <opencv2/opencv.hpp>
 
 #include "object-recognition-toolkit/classification/linear-svc-trainer.h"
@@ -60,42 +64,29 @@ namespace object_recognition_toolkit
 			return (double)svm_.predict(m, true);
 		}
 
-		template<class Archive>
-		void LinearSvcTrainer::LinearSvcClassifier::save(Archive & ar, const unsigned int version) const
-		{
-			ar << boost::serialization::base_object<Classifier>(*this);
-			cv::FileStorage fs("", cv::FileStorage::WRITE + cv::FileStorage::FORMAT_YAML + cv::FileStorage::MEMORY);
-			svm_.write(*fs, "my_svm");
-			std::string svm_buffer = fs.releaseAndGetString();
-			ar & svm_buffer;
-		}
 
-
-		template<class Archive>
-		void LinearSvcTrainer::LinearSvcClassifier::load(Archive & ar, const unsigned int version)
+		void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<Classifier>(*this);
 			std::string svm_buffer;
 			ar >> svm_buffer;
 			cv::FileStorage fs(svm_buffer, cv::FileStorage::READ + cv::FileStorage::FORMAT_YAML + cv::FileStorage::MEMORY);
 			svm_.read(*fs, *fs["my_svm"]);
-		}		
+		}
+
+
+		void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<Classifier>(*this);
+			cv::FileStorage fs("", cv::FileStorage::WRITE + cv::FileStorage::FORMAT_YAML + cv::FileStorage::MEMORY);
+			svm_.write(*fs, "my_svm");
+			std::string svm_buffer = fs.releaseAndGetString();
+			ar << svm_buffer;
+		}
+
 
 	}
 }
 
-#include <boost/archive/polymorphic_iarchive.hpp>
-#include <boost/archive/polymorphic_oarchive.hpp>
-#include <boost/serialization/export.hpp>
-BOOST_CLASS_EXPORT_IMPLEMENT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
+BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier)
 
-
-
-namespace object_recognition_toolkit {
-	namespace classification {
-		//template<> ORT_API void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
-		//template<> ORT_API void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
-		template ORT_API void LinearSvcTrainer::LinearSvcClassifier::load(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
-		template ORT_API void LinearSvcTrainer::LinearSvcClassifier::save(boost::archive::polymorphic_oarchive& ar, const unsigned int version) const;
-	}
-}

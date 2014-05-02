@@ -5,8 +5,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <boost/serialization/version.hpp>
-#include <boost/serialization/split_member.hpp>
+
 
 #include "trainer.h"
 
@@ -23,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
 
 		public:
-			class LinearSvcClassifier : public
+			class ORT_API LinearSvcClassifier : public
 				object_recognition_toolkit::classification::Classifier
 			{
 			public:
@@ -32,25 +31,19 @@ namespace object_recognition_toolkit
 
 				virtual double PredictConf(const std::vector<float>& instance) const;
 
+			private:
+				friend class LinearSvcTrainer;
 				cv::SVM svm_;
 
 			private:
 				friend class boost::serialization::access;
-				template<class Archive>
-				void save(Archive & ar, const unsigned int version) const;
-				template<class Archive>
-				void load(Archive & ar, const unsigned int version);
-				BOOST_SERIALIZATION_SPLIT_MEMBER()
+				void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+				void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 			};
 		};
 	}
 }
 
-#include <boost/archive/polymorphic_iarchive.hpp>
-#include <boost/archive/polymorphic_oarchive.hpp>
-#include <boost/serialization/export.hpp>
-BOOST_CLASS_EXPORT_KEY(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
-	
 
 #pragma warning(pop)
 
