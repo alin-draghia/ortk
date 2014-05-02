@@ -27,4 +27,7 @@
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

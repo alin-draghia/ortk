@@ -177,3 +177,5 @@ vs_proj/train-person-detector/out/
 *.in
 *.npz
 *.rar
+3rd-party/python/
+vs_proj/packages/
