@@ -14,6 +14,8 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -26,6 +28,8 @@
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\trainer.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

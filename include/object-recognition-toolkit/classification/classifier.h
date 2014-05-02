@@ -18,10 +18,16 @@ namespace object_recognition_toolkit
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:
+			Classifier();
 			Classifier(const std::string& name);
 			virtual ~Classifier();
 
-			virtual double PredictConf(const std::vector<float>& instance) const = 0;
+			virtual double PredictConf(const std::vector<float>& instance) const;
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 	}
 }

@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
@@ -27,8 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -86,9 +90,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>BUILDING_THE_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_SERIALIZATION_DYN_LINK;BUILDING_THE_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;$(SolutionDir)\3rd-party\python\Lib\site-packages\numpy\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,9 +110,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>BUILDING_THE_DLL;WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_SERIALIZATION_DYN_LINK;BUILDING_THE_DLL;WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;$(SolutionDir)\3rd-party\python\Lib\site-packages\numpy\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -124,6 +128,5 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets" Condition="Exists('..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets')" />
-    <Import Project="..\packages\boost_python.1.55.0.16\build\native\boost_python.targets" Condition="Exists('..\packages\boost_python.1.55.0.16\build\native\boost_python.targets')" />
   </ImportGroup>
 </Project>
