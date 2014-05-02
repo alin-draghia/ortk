@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/serialization/base_object.hpp>
+
 #include <object-recognition-toolkit/core/algorithm.h>
 
 namespace object_recognition_toolkit
@@ -18,13 +20,29 @@ namespace object_recognition_toolkit
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:
+			Classifier();
 			Classifier(const std::string& name);
 			virtual ~Classifier();
 
-			virtual double PredictConf(const std::vector<float>& instance) const = 0;
+			virtual double PredictConf(const std::vector<float>& instance) const;
+
+		private:
+			friend class boost::serialization::access;
+
+			BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+			template<class Archive>
+			void save(Archive& ar, const unsigned int version) const;
+
+			template<class Archive>
+			void load(Archive& ar, const unsigned int version);
+
 		};
 	}
 }
+
+
+BOOST_CLASS_EXPORT_KEY(object_recognition_toolkit::classification::Classifier);
 
 #pragma warning(pop)
 

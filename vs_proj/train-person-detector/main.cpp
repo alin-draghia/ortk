@@ -26,7 +26,9 @@
 #include <object-recognition-toolkit/image-pyramid/float-pyramid.h>
 #include <object-recognition-toolkit/classification/classifier.h>
 #include <object-recognition-toolkit/classification/linear-svc.h>
+#include <object-recognition-toolkit/classification/linear-svc-trainer.h>
 
+using object_recognition_toolkit::classification::Trainer;
 using object_recognition_toolkit::classification::Classifier;
 using object_recognition_toolkit::feature_extraction::FeatureExtractor;
 using object_recognition_toolkit::image_scanning::ImageScanner;
