@@ -128,6 +128,5 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets" Condition="Exists('..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets')" />
-    <Import Project="..\packages\boost_python.1.55.0.16\build\native\boost_python.targets" Condition="Exists('..\packages\boost_python.1.55.0.16\build\native\boost_python.targets')" />
   </ImportGroup>
 </Project>

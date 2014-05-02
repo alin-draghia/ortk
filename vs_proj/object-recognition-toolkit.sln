@@ -16,6 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "train-person-detector", "tr
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "train-person-detector-2", "train-person-detector-2\train-person-detector-2.vcxproj", "{E4BE7B29-C340-4738-A9B3-62A32687B124}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

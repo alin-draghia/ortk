@@ -5,6 +5,9 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
+#include <boost/serialization/version.hpp>
+#include <boost/serialization/split_member.hpp>
+
 #include "trainer.h"
 
 namespace object_recognition_toolkit
@@ -33,21 +36,21 @@ namespace object_recognition_toolkit
 
 			private:
 				friend class boost::serialization::access;
-
-				BOOST_SERIALIZATION_SPLIT_MEMBER();
-
 				template<class Archive>
-				void save(Archive& ar, const unsigned int version) const;
-
+				void save(Archive & ar, const unsigned int version) const;
 				template<class Archive>
-				void load(Archive& ar, const unsigned int version);
+				void load(Archive & ar, const unsigned int version);
+				BOOST_SERIALIZATION_SPLIT_MEMBER()
 			};
 		};
 	}
 }
 
-
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/serialization/export.hpp>
 BOOST_CLASS_EXPORT_KEY(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
+	
 
 #pragma warning(pop)
 

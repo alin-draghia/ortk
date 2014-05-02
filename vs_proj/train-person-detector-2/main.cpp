@@ -22,8 +22,8 @@
 #include <algorithm>
 #include <random>
 
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/polymorphic_text_iarchive.hpp>
+#include <boost/archive/polymorphic_text_oarchive.hpp>
 
 #include <opencv2/opencv.hpp>
 
@@ -356,7 +356,8 @@ void save_classifier(const std::string& filename, const std::unique_ptr<Classifi
 		throw std::invalid_argument("cls is null");
 
 	std::ofstream ofs(filename);
-	boost::archive::text_oarchive oa(ofs);
+	boost::archive::polymorphic_text_oarchive poa(ofs);
+	boost::archive::polymorphic_oarchive& oa = poa;
 
 	Classifier* p = cls.get();
 	oa << p;
@@ -366,8 +367,8 @@ void save_classifier(const std::string& filename, const std::unique_ptr<Classifi
 std::unique_ptr<Classifier> load_classifier(const std::string& filename)
 {
 	std::ifstream ifs(filename);
-	boost::archive::text_iarchive ia(ifs);
-
+	boost::archive::polymorphic_text_iarchive pia(ifs);
+	boost::archive::polymorphic_iarchive& ia = pia;
 	Classifier* cls = nullptr;
 	ia >> cls;
 
