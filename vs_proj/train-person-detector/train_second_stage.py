@@ -4,11 +4,11 @@ import cPickle
 
 print('Loading dataset...');
 
-dataset = np.loadtxt('second.stage.in', delimiter=',');
+#dataset = np.loadtxt('second.stage.in', delimiter=',');
 
-np.savez('second.stage.in.npz', dataset)
+#np.savez('second.stage.in.npz', dataset)
 
-#dataset = np.load('first.stage.in.npz')['arr_0']
+dataset = np.load('second.stage.in.npz')['arr_0']
 
 X = dataset[:, 1:]
 y = dataset[:, 0]
@@ -20,7 +20,7 @@ print('num_samples=', num_samples)
 print()
 print('Begin trainig...')
 
-cls = LinearSVC(C=0.01, verbose=1)
+cls = LinearSVC(C=1, verbose=1)
 
 cls.fit(X, y);
 

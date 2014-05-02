@@ -373,11 +373,11 @@ void run_classifier_over_test_images(std::unique_ptr<Classifier>& classifier, co
 	};
 
 	auto image_scanner = std::unique_ptr<ImageScanner>{
-		new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 4, 4 }, { 0, 0 } }
+		new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } }
 	};
 
 	auto pyramid_builder = std::unique_ptr<ImagePyramid>{
-		new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.05, { 64, 128 }, { 0, 0 } }
+		new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } }
 	};
 
 	for (const auto& image_file : test_image_files) {
@@ -402,7 +402,7 @@ void run_classifier_over_test_images(std::unique_ptr<Classifier>& classifier, co
 
 				double conf = classifier->PredictConf(features);
 
-				if (conf > 0.0) {
+				if (conf > 0.5) {
 					detection_boxes.push_back(pyramid_level.Invert(boxes[i]));
 					detection_confs.push_back(conf);
 				}

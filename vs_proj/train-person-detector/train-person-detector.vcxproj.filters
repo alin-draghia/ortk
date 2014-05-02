@@ -33,4 +33,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="train_first_stage.py" />
+    <None Include="train_second_stage.py" />
+  </ItemGroup>
 </Project>
