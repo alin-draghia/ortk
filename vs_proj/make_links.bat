@@ -1,6 +1,9 @@
 @echo off
+@echo off
 
-echo %cd%
+set my_dir=%~dp0%
+cd /D %my_dir%
+
 
 rmdir object-recognition-toolkit\include
 mklink /D object-recognition-toolkit\include %cd%\..\include
