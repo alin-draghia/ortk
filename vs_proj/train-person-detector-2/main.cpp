@@ -61,7 +61,7 @@ void run_classifier_over_test_images(std::unique_ptr<Classifier>& first_pass_cla
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-	test_dummy_serialization();
+	//test_dummy_serialization();
 	// two pass object detector traing
 
 	// STEP 1. Extract features from all the training positive samples
@@ -92,18 +92,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		test_image_files.push_back(it->path());
 	}
 
+	if (!fs::exists(fs::path{ "person-detector.stage1.svm" })) {
+		auto first_stage_classifier = first_pass(positive_sample_files, negative_sample_files);
+		save_classifier("person-detector.stage1.svm", first_stage_classifier);
+	}
+	auto first_stage_classifier = load_classifier("person-detector.stage1.svm");
 
-	auto first_stage_classifier = first_pass(positive_sample_files, negative_sample_files);
-	save_classifier("person-detector.stage1.svm", first_stage_classifier);
-	auto first_stage_classifier0 = load_classifier("person-detector.stage1.svm");
 
+	if (!fs::exists(fs::path{ "person-detector.stage2.svm" })) {
+		auto final_classifier = second_pass(first_stage_classifier, positive_sample_files, negative_sample_files);
+		save_classifier("person-detector.stage2.svm", final_classifier);
+	}
+	auto second_stage_classifier = load_classifier("person-detector.stage2.svm");
 
-
-	auto final_classifier = second_pass(first_stage_classifier, positive_sample_files, negative_sample_files);
-	save_classifier("person-detector.stage2.svm", final_classifier);
-	auto second_stage_classifier0 = load_classifier("person-detector.stage2.svm");
-
-	run_classifier_over_test_images(final_classifier, test_image_files);
+	run_classifier_over_test_images(second_stage_classifier, test_image_files);
 
 	return 0;
 }
@@ -149,19 +151,36 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 	//X.reserve(num_samples);
 	//y.reserve(num_samples);
 
+	int num_pos = 10000;
+	int num_neg = 10000;
+
+	int descriptor_lenght = feature_extractor->lenght();
+
 	cv::Mat_<float> X;
 	cv::Mat_<float> y;
 
+	X.create(0, descriptor_lenght);
+	X.reserve(num_pos + num_neg);
+	y.create(0, 1);
+	y.reserve(num_pos + num_neg);
 
 	size_t current = 0;
 
+	int pos_count = 0;
 	// positive samples
 	for (const fs::path& im_path : positive_sample_files) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 		cv::Mat roi = im({ 15, 15, 64, 128 }).clone();
-		std::vector<float> features = feature_extractor->compute(roi);
-		X.push_back(features);
+		std::vector<float> features = feature_extractor->compute(roi);	
+		cv::Mat_<float> fv(features);
+		cv::Mat_<float> fv0 = fv.reshape(1, 1);
+		X.push_back(fv0);
 		y.push_back(1.0f);
+
+		pos_count += 1;
+		if (pos_count == num_pos) {
+			break;
+		}
 
 		if ((current % 100) == 0) {
 			std::clog << "progress " << current << "/" << num_samples << std::endl;
@@ -169,8 +188,9 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 		current++;
 	}
 
+	int neg_count = 0;
 	// negative samples
-	for (const fs::path& im_path : positive_sample_files) {
+	for (const fs::path& im_path : negative_sample_files) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 		std::vector<cv::Mat> windows;
 		image_scanner->ScanImage(im, windows, std::vector<cv::Rect>());
@@ -180,8 +200,15 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 
 		for (const cv::Mat& window : windows) {
 			std::vector<float> features = feature_extractor->compute(window);
-			X.push_back(features);
+			cv::Mat_<float> fv(features);
+			cv::Mat_<float> fv0 = fv.reshape(1, 1);
+			X.push_back(fv0);
 			y.push_back(-1.0f);
+
+			neg_count += 1;
+			if (neg_count == num_neg) {
+				break;
+			}
 
 			if ((current % 100) == 0) {
 				std::clog << "progress " << current << "/" << num_samples << std::endl;
@@ -193,6 +220,12 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 
 	std::clog << "progress " << current << "/" << num_samples << std::endl;
 
+	cv::FileStorage fs;
+	if (fs.open("stage.1.dataset.yml", cv::FileStorage::FORMAT_YAML + cv::FileStorage::WRITE)) {
+		fs << "X" << X;
+		fs << "y" << y;
+		fs.release();
+	}
 
 
 
@@ -232,6 +265,15 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	cv::Mat_<float> X;
 	cv::Mat_<float> y;
 
+
+	int descriptor_lenght = feature_extractor->lenght();
+	int cache_size = 200000;
+
+	X.create(0, descriptor_lenght);
+	X.reserve(cache_size);
+	y.create(0, 1);
+	y.reserve(cache_size);
+
 	size_t current = 0;
 
 	// positive samples
@@ -239,7 +281,9 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 		cv::Mat roi = im({ 15, 15, 64, 128 }).clone();
 		std::vector<float> features = feature_extractor->compute(roi);
-		X.push_back(features);
+		cv::Mat_<float> fv(features);
+		cv::Mat_<float> fv0 = fv.reshape(1, 1);
+		X.push_back(fv0);
 		y.push_back(1.0f);
 
 		if ((current % 100) == 0) {
@@ -252,7 +296,7 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	std::clog << "Mining hard negatives" << std::endl;
 
 	// negative samples
-	for (const fs::path& im_path : positive_sample_files) {
+	for (const fs::path& im_path : negative_sample_files) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 
 		std::vector<PyramidLevel> pyramid = pyramid_builder->Build(im);
@@ -265,7 +309,9 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 			for (const cv::Mat& window : windows) {
 				std::vector<float> features = feature_extractor->compute(window);
 				if (first_pass_classifier->PredictConf(features) > 0.0) {
-					X.push_back(features);
+					cv::Mat_<float> fv(features);
+					cv::Mat_<float> fv0 = fv.reshape(1, 1);
+					X.push_back(fv0);
 					y.push_back(-1.0f);
 
 					if ((current % 100) == 0) {
