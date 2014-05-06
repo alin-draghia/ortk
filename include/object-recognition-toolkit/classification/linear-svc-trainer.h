@@ -6,14 +6,14 @@
 #pragma warning(disable: 4251)
 
 
-
-#include "trainer.h"
+#include "../core/public-api.h"
+#include "./trainer.h"
 
 namespace object_recognition_toolkit
 {
 	namespace classification
 	{
-		class ORT_API LinearSvcTrainer
+		class PUBLIC_API LinearSvcTrainer
 		{
 		public:
 			LinearSvcTrainer();
@@ -22,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
 
 		public:
-			class ORT_API LinearSvcClassifier : public
+			class PUBLIC_API LinearSvcClassifier : public
 				object_recognition_toolkit::classification::Classifier
 			{
 			public:

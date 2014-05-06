@@ -9,14 +9,14 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <object-recognition-toolkit/core/core.h>
-#include <object-recognition-toolkit/core/algorithm.h>
+#include "../core/public-api.h"
+#include "../core/algorithm.h"
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
 
-		class ORT_API FeatureExtractor
+		class PUBLIC_API FeatureExtractor
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:

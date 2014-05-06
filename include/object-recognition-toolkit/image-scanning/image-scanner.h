@@ -9,15 +9,15 @@
 #include <vector>
 #include <tuple>
 
-#include <object-recognition-toolkit/core/core.h>
-#include <object-recognition-toolkit/core/algorithm.h>
+#include "../core/public-api.h"
+#include "../core/algorithm.h"
 
 namespace object_recognition_toolkit
 {
 	namespace image_scanning
 	{
 
-		class ORT_API ImageScanner
+		class PUBLIC_API ImageScanner
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:

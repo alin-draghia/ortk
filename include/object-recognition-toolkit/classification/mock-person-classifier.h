@@ -5,7 +5,8 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <object-recognition-toolkit/classification/classifier.h>
+#include "../core/public-api.h"
+#include "./classifier.h"
 
 
 namespace object_recognition_toolkit
@@ -13,7 +14,7 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 
-		class ORT_API MockPersonClassifier
+		class PUBLIC_API MockPersonClassifier
 			: public Classifier
 		{
 		public:

@@ -5,14 +5,15 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <object-recognition-toolkit/image-scanning/image-scanner.h>
+#include "../core/public-api.h"
+#include "./image-scanner.h"
 
 namespace object_recognition_toolkit
 {
 	namespace image_scanning
 	{
 
-		class ORT_API DenseImageScanner
+		class PUBLIC_API DenseImageScanner
 			: public ImageScanner
 		{
 		public:

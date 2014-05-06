@@ -179,3 +179,4 @@ vs_proj/train-person-detector/out/
 *.rar
 3rd-party/python/
 vs_proj/packages/
+vs_proj/datasets/

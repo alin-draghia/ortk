@@ -5,14 +5,15 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <object-recognition-toolkit/core/algorithm.h>
-#include <object-recognition-toolkit/image-pyramid/pyramid-level.h>
+#include "../core/public-api.h"
+#include "../core/algorithm.h"
+#include "./pyramid-level.h"
 
 namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class ORT_API ImagePyramid
+		class PUBLIC_API ImagePyramid
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:

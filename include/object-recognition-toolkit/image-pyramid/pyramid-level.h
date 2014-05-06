@@ -8,11 +8,13 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "../core/public-api.h"
+
 namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class ORT_API PyramidLevel
+		class PUBLIC_API PyramidLevel
 		{
 		public:
 			PyramidLevel(const cv::Mat& image, double scale)

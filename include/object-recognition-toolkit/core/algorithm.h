@@ -13,7 +13,8 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <object-recognition-toolkit/core/core.h>
+#include "./public-api.h"
+
 
 
 
@@ -21,7 +22,7 @@ namespace object_recognition_toolkit {
 	namespace core {
 
 
-		class ORT_API Algorithm
+		class PUBLIC_API Algorithm
 		{
 		public:
 			Algorithm();

@@ -8,13 +8,14 @@
 #include <string>
 #include <vector>
 
-#include <object-recognition-toolkit/core/algorithm.h>
+#include "../core/public-api.h"
+#include "../core/algorithm.h"
 
 namespace object_recognition_toolkit
 {
 	namespace classification
 	{
-		class ORT_API Classifier
+		class PUBLIC_API Classifier
 			: public object_recognition_toolkit::core::Algorithm
 		{
 		public:

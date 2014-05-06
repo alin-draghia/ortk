@@ -18,6 +18,7 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />
