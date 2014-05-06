@@ -28,5 +28,10 @@ namespace object_recognition_toolkit {
 		}
 
 
+		int HogFeatureExtractor::lenght() const
+		{
+			return (int)hog_.getDescriptorSize();
+		}
+
 	}
 }

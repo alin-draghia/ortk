@@ -24,6 +24,7 @@ namespace object_recognition_toolkit {
 			virtual ~FeatureExtractor( );
 			
 			virtual std::vector<float> compute(const cv::Mat& image) const = 0;
+			virtual int lenght() const = 0;
 		};
 
 		

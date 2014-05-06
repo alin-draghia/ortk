@@ -21,6 +21,7 @@ namespace object_recognition_toolkit {
 			virtual ~HogFeatureExtractor();
 
 			virtual std::vector<float> compute(const cv::Mat& image) const;
+			virtual int lenght() const;
 
 		private:
 			cv::HOGDescriptor hog_;
