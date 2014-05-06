@@ -20,4 +20,7 @@ mklink /D bin %cd%\..\bin
 rmdir lib
 mklink /D lib %cd%\..\lib
 
+rmdir datasets
+mklink /D datasets ..\datasets
+
 pause
