@@ -5,15 +5,23 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
+#define USE_DLIB 0
+
+#if(USE_DLIB)
+#include <dlib/svm.h>
+#endif
 
 #include "../core/public-api.h"
 #include "./trainer.h"
+
+
 
 namespace object_recognition_toolkit
 {
 	namespace classification
 	{
 		class PUBLIC_API LinearSvcTrainer
+			: public Trainer
 		{
 		public:
 			LinearSvcTrainer();
@@ -33,8 +41,11 @@ namespace object_recognition_toolkit
 
 			private:
 				friend class LinearSvcTrainer;
-				cv::SVM svm_;
 
+				#if(USE_DLIB)
+				#else
+				cv::SVM svm_;
+				#endif
 			private:
 				friend class boost::serialization::access;
 				void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);

@@ -4,10 +4,9 @@ import cPickle
 
 print('Loading dataset...');
 
-#dataset = np.loadtxt('second.stage.in', delimiter=',');
+dataset = np.loadtxt('second.stage.in', delimiter=',');
 
-#np.savez('second.stage.in.npz', dataset)
-
+np.savez('second.stage.in.npz', dataset)
 dataset = np.load('second.stage.in.npz')['arr_0']
 
 X = dataset[:, 1:]

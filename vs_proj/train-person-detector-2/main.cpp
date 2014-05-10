@@ -48,20 +48,149 @@ using object_recognition_toolkit::pyramid::PyramidLevel;
 
 namespace fs = std::tr2::sys;
 
-void save_classifier(const std::string& filename, const std::unique_ptr<Classifier>& cls);
-std::unique_ptr<Classifier> load_classifier(const std::string& filename);
+void save_classifier(const std::string& filename, const std::shared_ptr<Classifier>& cls);
+std::shared_ptr<Classifier> load_classifier(const std::string& filename);
 
-void test_dummy_serialization();
+void test_dummy_serialization( );
 
 std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sample_files, const std::vector<fs::path>& negative_sample_files);
 std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& positive_sample_files, const std::vector<fs::path>& negative_sample_files);
 
-void run_classifier_over_test_images(std::unique_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& test_image_files);
+void run_classifier_over_test_images(std::shared_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& test_image_files);
 
-int _tmain(int argc, _TCHAR* argv[])
+cv::Mat extract_positive_dataset(const std::vector<fs::path>& sample_files,
+	std::shared_ptr<FeatureExtractor> feature_extractor,
+	int num_samples)
+{
+	cv::Mat X;
+	X.create(0, feature_extractor->lenght( ), CV_32F);
+	X.reserve(num_samples);
+	int count = 0;
+	for ( auto im_path : sample_files ) {
+		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
+		cv::Mat roi = im({ 15, 15, 64, 128 }).clone( );
+		std::vector<float> features = feature_extractor->compute(roi);
+		cv::Mat_<float> fv(features);
+		cv::Mat_<float> fv0 = fv.reshape(1, 1);
+		X.push_back(fv0);
+
+		count += 1;
+		if ( count == num_samples ) {
+			break;
+		}
+	}
+
+	return X;
+}
+
+
+cv::Mat extract_negative_dataset(const std::vector<fs::path>& sample_files,
+	std::shared_ptr<FeatureExtractor> feature_extractor, int num_samples,
+	std::shared_ptr<ImagePyramid> pyramid_builder,
+	std::shared_ptr<ImageScanner> image_scanner,
+	std::shared_ptr<Classifier> classifier)
+{
+	cv::Mat X;
+	X.create(0, feature_extractor->lenght( ), CV_32F);
+	X.reserve(num_samples);
+
+	if ( !classifier ) {
+		// first stage
+		int windows_to_keep_per_image = 10;
+		int count = 0;
+		for ( auto im_path : sample_files ) {
+
+			cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
+			std::vector<cv::Mat> windows;
+			image_scanner->ScanImage(im, windows, std::vector<cv::Rect>( ));
+
+			std::random_shuffle(windows.begin( ), windows.end( ));
+			windows.resize(windows_to_keep_per_image);
+
+			for ( const cv::Mat& window : windows ) {
+
+				std::vector<float> features = feature_extractor->compute(window);
+				cv::Mat_<float> fv(features);
+				cv::Mat_<float> fv0 = fv.reshape(1, 1);
+				X.push_back(fv0);
+
+				count += 1;
+				if ( count == num_samples ) {
+					goto done;
+				}
+
+			}
+
+		}
+
+	} else {
+
+		int count = 0;
+		for ( auto im_path : sample_files ) {
+
+			cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
+
+			std::vector<PyramidLevel> pyramid = pyramid_builder->Build(im);
+
+			for ( PyramidLevel& level : pyramid ) {
+
+				std::vector<cv::Mat> windows;
+				image_scanner->ScanImage(level.GetImage( ), windows, std::vector<cv::Rect>( ));
+
+				for ( const cv::Mat& window : windows ) {
+
+					std::vector<float> features = feature_extractor->compute(window);
+					if ( classifier->PredictConf(features) > 0.0 ) {
+						cv::Mat_<float> fv(features);
+						cv::Mat_<float> fv0 = fv.reshape(1, 1);
+						X.push_back(fv0);
+
+						count += 1;
+						if ( count == num_samples ) {
+							goto done;
+						}
+					}
+
+				}
+			}
+
+		}
+
+	}
+
+done:
+	return X;
+}
+
+
+std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::shared_ptr<Trainer> trainer)
+{
+	cv::Mat X, y, y_pos, y_neg;
+	y_pos.create(X_pos.rows, 1, CV_32F);
+	y_pos = +1.0f;
+	y_neg.create(X_neg.rows, 1, CV_32F);
+	y_neg = -1.0f;
+	X.push_back(X_neg);
+	X.push_back(X_pos);
+	y.push_back(y_neg);
+	y.push_back(y_pos);
+
+	auto ret = std::shared_ptr<Classifier>(trainer->Train(X, y));
+
+	std::vector<float> pos_sample = X_pos.row(0);
+	std::vector<float> neg_sample = X_neg.row(0);
+
+	auto val_pos = ret->PredictConf(pos_sample);
+	std::cout << "val for positive sample=" << val_pos << std::endl;
+	auto val_neg = ret->PredictConf(neg_sample);
+	std::cout << "val for negative sample=" << val_neg << std::endl;
+
+	return ret;
+}
+
+int _tmain(int argc, _TCHAR* argv[ ])
 {
 
-	//test_dummy_serialization();
 	// two pass object detector traing
 
 	// STEP 1. Extract features from all the training positive samples
@@ -71,41 +200,113 @@ int _tmain(int argc, _TCHAR* argv[])
 	// samples, augment the the dataset
 	// STEP 5. Train liniar svm model > 2nd-pass.model
 
-	auto dataset_dir = fs::path{ "./../../datasets/INRIAPerson" };
-	auto train_dir = dataset_dir / fs::path{ "train_64x128_H96" };
-	auto positive_dir = train_dir / fs::path{ "pos" };
-	auto negative_dir = train_dir / fs::path{ "neg" };
+	const int num_pos = 3000;
+	const int num_neg = 3000;
+	const int num_stages = 5;
+
+
+	auto dataset_dir = fs::path { "./../../datasets/INRIAPerson" };
+	auto train_dir = dataset_dir / fs::path { "train_64x128_H96" };
+	auto positive_dir = train_dir / fs::path { "pos" };
+	auto negative_dir = train_dir / fs::path { "neg" };
 
 	std::vector<fs::path> positive_sample_files;
-	for (auto it = fs::directory_iterator(positive_dir); it != fs::directory_iterator(); it++) {
-		positive_sample_files.push_back(it->path());
+	for ( auto it = fs::directory_iterator(positive_dir); it != fs::directory_iterator( ); it++ ) {
+		positive_sample_files.push_back(it->path( ));
 	}
 
 	std::vector<fs::path> negative_sample_files;
-	for (auto it = fs::directory_iterator(negative_dir); it != fs::directory_iterator(); it++) {
-		negative_sample_files.push_back(it->path());
+	for ( auto it = fs::directory_iterator(negative_dir); it != fs::directory_iterator( ); it++ ) {
+		negative_sample_files.push_back(it->path( ));
 	}
 
 	auto test_dir = dataset_dir / fs::path("Test") / fs::path("pos");
 	std::vector<fs::path> test_image_files;
-	for (auto it = fs::directory_iterator(test_dir); it != fs::directory_iterator(); it++) {
-		test_image_files.push_back(it->path());
+	for ( auto it = fs::directory_iterator(test_dir); it != fs::directory_iterator( ); it++ ) {
+		test_image_files.push_back(it->path( ));
 	}
 
-	if (!fs::exists(fs::path{ "person-detector.stage1.svm" })) {
-		auto first_stage_classifier = first_pass(positive_sample_files, negative_sample_files);
-		save_classifier("person-detector.stage1.svm", first_stage_classifier);
+
+	auto feature_extractor = std::shared_ptr<FeatureExtractor>{
+		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor { }
+	};
+
+	auto image_scanner = std::shared_ptr<ImageScanner>{
+		new object_recognition_toolkit::image_scanning::DenseImageScanner { { 64, 128 }, { 8, 8 }, { 0, 0 } }
+	};
+
+	auto pyramid_builder = std::shared_ptr<ImagePyramid>{
+		new object_recognition_toolkit::pyramid::FloatImagePyramid { 1.2, { 64, 128 }, { 0, 0 } }
+	};
+
+	auto trainer = std::shared_ptr<Trainer> {
+		new object_recognition_toolkit::classification::LinearSvcTrainer { }
+	};
+
+	// starting with an empty classifier
+	auto classifier = std::shared_ptr<Classifier> {nullptr};
+
+	for ( int stage = 0; stage < num_stages; stage++ ) {
+
+		std::cout << "Training stage " << std::to_string(stage) << " ..." << std::endl;
+
+		cv::Mat X_pos, X_neg;
+		std::string stage_dataset_filename = "stage-" + std::to_string(stage) + ".ds.yaml";
+		std::string prev_stage_dataset_filename = "stage-" + std::to_string(stage - 1) + ".ds.yaml";
+
+		std::string stage_classifier_filename = "stage-" + std::to_string(stage) + ".cls";
+		std::string prev_stage_classifier_filename = "stage-" + std::to_string(stage - 1) + ".cls";
+
+		if ( !fs::exists(fs::path(stage_dataset_filename)) ) {
+
+			std::cout << "Computing features..." << std::endl;
+
+			X_pos = extract_positive_dataset(positive_sample_files, feature_extractor, num_pos);
+			X_neg = extract_negative_dataset(negative_sample_files, feature_extractor, num_neg, pyramid_builder, image_scanner, classifier);
+			if ( fs::exists(fs::path(prev_stage_dataset_filename)) ) {
+				cv::FileStorage fs;
+				if ( fs.open(prev_stage_dataset_filename, cv::FileStorage::READ) ) {
+					cv::Mat X_neg_prev;
+					fs["X_neg"] >> X_neg_prev;
+					X_neg.push_back(X_neg_prev);
+				}
+			}
+
+			std::cout << "Computed " << std::to_string(X_pos.rows) << " positive samples" << std::endl;
+			std::cout << "Computed " << std::to_string(X_neg.rows) << " negative samples" << std::endl;
+
+			cv::FileStorage fs;
+			if ( fs.open(stage_dataset_filename, cv::FileStorage::WRITE) ) {
+				fs << "X_pos" << X_pos;
+				fs << "X_neg" << X_neg;
+			}
+
+		} else {
+			std::cout << "Loading features..." << std::endl;
+			cv::FileStorage fs;
+			if ( fs.open(stage_dataset_filename, cv::FileStorage::READ) ) {
+				fs["X_pos"] >> X_pos;
+				fs["X_neg"] >> X_neg;
+			}
+			std::cout << "Computed " << std::to_string(X_pos.rows) << " positive samples" << std::endl;
+			std::cout << "Computed " << std::to_string(X_neg.rows) << " negative samples" << std::endl;
+		}
+
+		if ( !fs::exists(fs::path(stage_classifier_filename)) ) {
+			std::cout << "Training classifier..." << std::endl;
+			classifier = train_stage(X_pos, X_neg, trainer);
+			std::cout << "done" << std::endl;
+			save_classifier(stage_classifier_filename, classifier);
+		} else {
+			std::cout << "Loading classifier..." << std::endl;
+			classifier = load_classifier(stage_classifier_filename);
+			std::cout << "done" << std::endl;
+		}
+
+		std::cout << "Running classifier over test images ..." << std::endl;
+		run_classifier_over_test_images(classifier, test_image_files);
+		std::cout << "done" << std::endl;
 	}
-	auto first_stage_classifier = load_classifier("person-detector.stage1.svm");
-
-
-	if (!fs::exists(fs::path{ "person-detector.stage2.svm" })) {
-		auto final_classifier = second_pass(first_stage_classifier, positive_sample_files, negative_sample_files);
-		save_classifier("person-detector.stage2.svm", final_classifier);
-	}
-	auto second_stage_classifier = load_classifier("person-detector.stage2.svm");
-
-	run_classifier_over_test_images(second_stage_classifier, test_image_files);
 
 	return 0;
 }
@@ -119,8 +320,8 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 	std::clog << "Extracting features..." << std::endl;
 
 	const int num_samples_per_negative_image = 10;
-	const int num_positive_samples = (int)positive_sample_files.size();
-	const int num_negative_samples = (int)negative_sample_files.size() * num_samples_per_negative_image;
+	const int num_positive_samples = (int)positive_sample_files.size( );
+	const int num_negative_samples = (int)negative_sample_files.size( ) * num_samples_per_negative_image;
 	const int num_samples = num_positive_samples + num_negative_samples;
 	const int feature_size = (64 / 8 - 1) * (128 / 8 - 1) * (4 * 9);
 
@@ -133,15 +334,15 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 
 	// object recognition toolkit
 	auto feature_extractor = std::unique_ptr<FeatureExtractor>{
-		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{}
+		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor { }
 	};
 
 	auto image_scanner = std::unique_ptr<ImageScanner>{
-		new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } }
+		new object_recognition_toolkit::image_scanning::DenseImageScanner { { 64, 128 }, { 8, 8 }, { 0, 0 } }
 	};
 
 	auto pyramid_builder = std::unique_ptr<ImagePyramid>{
-		new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } }
+		new object_recognition_toolkit::pyramid::FloatImagePyramid { 1.2, { 64, 128 }, { 0, 0 } }
 	};
 
 
@@ -154,7 +355,7 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 	int num_pos = 10000;
 	int num_neg = 10000;
 
-	int descriptor_lenght = feature_extractor->lenght();
+	int descriptor_lenght = feature_extractor->lenght( );
 
 	cv::Mat_<float> X;
 	cv::Mat_<float> y;
@@ -168,21 +369,21 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 
 	int pos_count = 0;
 	// positive samples
-	for (const fs::path& im_path : positive_sample_files) {
+	for ( const fs::path& im_path : positive_sample_files ) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
-		cv::Mat roi = im({ 15, 15, 64, 128 }).clone();
-		std::vector<float> features = feature_extractor->compute(roi);	
+		cv::Mat roi = im({ 15, 15, 64, 128 }).clone( );
+		std::vector<float> features = feature_extractor->compute(roi);
 		cv::Mat_<float> fv(features);
 		cv::Mat_<float> fv0 = fv.reshape(1, 1);
 		X.push_back(fv0);
 		y.push_back(1.0f);
 
 		pos_count += 1;
-		if (pos_count == num_pos) {
+		if ( pos_count == num_pos ) {
 			break;
 		}
 
-		if ((current % 100) == 0) {
+		if ( (current % 100) == 0 ) {
 			std::clog << "progress " << current << "/" << num_samples << std::endl;
 		}
 		current++;
@@ -190,15 +391,15 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 
 	int neg_count = 0;
 	// negative samples
-	for (const fs::path& im_path : negative_sample_files) {
+	for ( const fs::path& im_path : negative_sample_files ) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 		std::vector<cv::Mat> windows;
-		image_scanner->ScanImage(im, windows, std::vector<cv::Rect>());
+		image_scanner->ScanImage(im, windows, std::vector<cv::Rect>( ));
 
-		std::random_shuffle(windows.begin(), windows.end());
+		std::random_shuffle(windows.begin( ), windows.end( ));
 		windows.resize(num_samples_per_negative_image);
 
-		for (const cv::Mat& window : windows) {
+		for ( const cv::Mat& window : windows ) {
 			std::vector<float> features = feature_extractor->compute(window);
 			cv::Mat_<float> fv(features);
 			cv::Mat_<float> fv0 = fv.reshape(1, 1);
@@ -206,11 +407,11 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 			y.push_back(-1.0f);
 
 			neg_count += 1;
-			if (neg_count == num_neg) {
+			if ( neg_count == num_neg ) {
 				break;
 			}
 
-			if ((current % 100) == 0) {
+			if ( (current % 100) == 0 ) {
 				std::clog << "progress " << current << "/" << num_samples << std::endl;
 			}
 			current++;
@@ -221,10 +422,10 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 	std::clog << "progress " << current << "/" << num_samples << std::endl;
 
 	cv::FileStorage fs;
-	if (fs.open("stage.1.dataset.yml", cv::FileStorage::FORMAT_YAML + cv::FileStorage::WRITE)) {
+	if ( fs.open("stage.1.dataset.yml", cv::FileStorage::FORMAT_YAML + cv::FileStorage::WRITE) ) {
 		fs << "X" << X;
 		fs << "y" << y;
-		fs.release();
+		fs.release( );
 	}
 
 
@@ -234,7 +435,7 @@ std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sam
 	std::clog << std::endl;
 	std::clog << "Training..." << std::endl;
 
-	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer();
+	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer( );
 	std::unique_ptr<Classifier> cls(trainer.Train(X, y));
 
 	return cls;
@@ -247,15 +448,15 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 
 	// object recognition toolkit
 	auto feature_extractor = std::unique_ptr<FeatureExtractor>{
-		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{}
+		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor { }
 	};
 
 	auto image_scanner = std::unique_ptr<ImageScanner>{
-		new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } }
+		new object_recognition_toolkit::image_scanning::DenseImageScanner { { 64, 128 }, { 8, 8 }, { 0, 0 } }
 	};
 
 	auto pyramid_builder = std::unique_ptr<ImagePyramid>{
-		new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } }
+		new object_recognition_toolkit::pyramid::FloatImagePyramid { 1.2, { 64, 128 }, { 0, 0 } }
 	};
 
 	std::clog << std::endl;
@@ -266,7 +467,7 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	cv::Mat_<float> y;
 
 
-	int descriptor_lenght = feature_extractor->lenght();
+	int descriptor_lenght = feature_extractor->lenght( );
 	int cache_size = 200000;
 
 	X.create(0, descriptor_lenght);
@@ -277,16 +478,16 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	size_t current = 0;
 
 	// positive samples
-	for (const fs::path& im_path : positive_sample_files) {
+	for ( const fs::path& im_path : positive_sample_files ) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
-		cv::Mat roi = im({ 15, 15, 64, 128 }).clone();
+		cv::Mat roi = im({ 15, 15, 64, 128 }).clone( );
 		std::vector<float> features = feature_extractor->compute(roi);
 		cv::Mat_<float> fv(features);
 		cv::Mat_<float> fv0 = fv.reshape(1, 1);
 		X.push_back(fv0);
 		y.push_back(1.0f);
 
-		if ((current % 100) == 0) {
+		if ( (current % 100) == 0 ) {
 			std::clog << "progress " << current << std::endl;
 		}
 		current++;
@@ -296,25 +497,25 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	std::clog << "Mining hard negatives" << std::endl;
 
 	// negative samples
-	for (const fs::path& im_path : negative_sample_files) {
+	for ( const fs::path& im_path : negative_sample_files ) {
 		cv::Mat im = cv::imread(im_path, cv::IMREAD_GRAYSCALE);
 
 		std::vector<PyramidLevel> pyramid = pyramid_builder->Build(im);
 
-		for (PyramidLevel& level : pyramid) {
+		for ( PyramidLevel& level : pyramid ) {
 
 			std::vector<cv::Mat> windows;
-			image_scanner->ScanImage(level.GetImage(), windows, std::vector<cv::Rect>());
+			image_scanner->ScanImage(level.GetImage( ), windows, std::vector<cv::Rect>( ));
 
-			for (const cv::Mat& window : windows) {
+			for ( const cv::Mat& window : windows ) {
 				std::vector<float> features = feature_extractor->compute(window);
-				if (first_pass_classifier->PredictConf(features) > 0.0) {
+				if ( first_pass_classifier->PredictConf(features) > 0.0 ) {
 					cv::Mat_<float> fv(features);
 					cv::Mat_<float> fv0 = fv.reshape(1, 1);
 					X.push_back(fv0);
 					y.push_back(-1.0f);
 
-					if ((current % 100) == 0) {
+					if ( (current % 100) == 0 ) {
 						std::clog << "progress " << current << std::endl;
 					}
 					current++;
@@ -328,14 +529,14 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 	std::clog << std::endl;
 	std::clog << "Training..." << std::endl;
 
-	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer();
+	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer( );
 	std::unique_ptr<Classifier> cls(trainer.Train(X, y));
 
 	return cls;
 }
 
 
-void run_classifier_over_test_images(std::unique_ptr<Classifier>& classifier, const std::vector<fs::path>& test_image_files)
+void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier, const std::vector<fs::path>& test_image_files)
 {
 
 	fs::path result_dir("./out");
@@ -343,18 +544,18 @@ void run_classifier_over_test_images(std::unique_ptr<Classifier>& classifier, co
 
 	// object recognition toolkit
 	auto feature_extractor = std::unique_ptr<FeatureExtractor>{
-		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{}
+		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor { }
 	};
 
 	auto image_scanner = std::unique_ptr<ImageScanner>{
-		new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } }
+		new object_recognition_toolkit::image_scanning::DenseImageScanner { { 64, 128 }, { 8, 8 }, { 0, 0 } }
 	};
 
 	auto pyramid_builder = std::unique_ptr<ImagePyramid>{
-		new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } }
+		new object_recognition_toolkit::pyramid::FloatImagePyramid { 1.2, { 64, 128 }, { 0, 0 } }
 	};
 
-	for (const auto& image_file : test_image_files) {
+	for ( const auto& image_file : test_image_files ) {
 		cv::Mat im = cv::imread(image_file, cv::IMREAD_GRAYSCALE);
 		cv::Mat disp;
 		cv::cvtColor(im, disp, cv::COLOR_GRAY2BGR);
@@ -364,55 +565,57 @@ void run_classifier_over_test_images(std::unique_ptr<Classifier>& classifier, co
 		std::vector<cv::Rect> detection_boxes;
 		std::vector<double> detection_confs;
 
-		for (PyramidLevel& pyramid_level : pyramid) {
+		for ( PyramidLevel& pyramid_level : pyramid ) {
 
 			std::vector<cv::Mat> windows;
 			std::vector<cv::Rect> boxes;
 
-			image_scanner->ScanImage(pyramid_level.GetImage(), windows, boxes);
+			image_scanner->ScanImage(pyramid_level.GetImage( ), windows, boxes);
 
-			for (size_t i = 0; i < windows.size(); i++) {
+			for ( size_t i = 0; i < windows.size( ); i++ ) {
 				std::vector<float> features = feature_extractor->compute(windows[i]);
 
 				double conf = classifier->PredictConf(features);
 
-				if (conf > 0.5) {
+				if ( conf > 0.5 ) {
 					detection_boxes.push_back(pyramid_level.Invert(boxes[i]));
 					detection_confs.push_back(conf);
 				}
 			}
 		}
 
-		for (auto& box : detection_boxes) {
+		for ( auto& box : detection_boxes ) {
 			cv::rectangle(disp, box, CV_RGB(255, 0, 0));
 		}
 
 
-		fs::path out_file = result_dir / fs::path{ image_file.filename() };
-		cv::imwrite(out_file, disp);
+		fs::path out_file = result_dir / fs::path { image_file.filename( ) };
+		//cv::imwrite(out_file, disp);
 		cv::imshow("results", disp);
-		int k = cv::waitKey(1);
-		if (k == 27) {
-			break;
+		int k = cv::waitKey(15);
+		if ( k == 27 ) {
+			cv::destroyWindow("results");
+			std::cout << "abort" << std::endl;
+			return;
 		}
 	}
 }
 
-void save_classifier(const std::string& filename, const std::unique_ptr<Classifier>& cls)
+void save_classifier(const std::string& filename, const std::shared_ptr<Classifier>& cls)
 {
-	if (!cls)
+	if ( !cls )
 		throw std::invalid_argument("cls is null");
 
 	std::ofstream ofs(filename);
 	boost::archive::polymorphic_text_oarchive poa(ofs);
 	boost::archive::polymorphic_oarchive& oa = poa;
 
-	Classifier* p = cls.get();
+	Classifier* p = cls.get( );
 	oa << p;
 }
 
 
-std::unique_ptr<Classifier> load_classifier(const std::string& filename)
+std::shared_ptr<Classifier> load_classifier(const std::string& filename)
 {
 	std::ifstream ifs(filename);
 	boost::archive::polymorphic_text_iarchive pia(ifs);
@@ -420,16 +623,16 @@ std::unique_ptr<Classifier> load_classifier(const std::string& filename)
 	Classifier* cls = nullptr;
 	ia >> cls;
 
-	return std::unique_ptr<Classifier>(cls);
+	return std::shared_ptr<Classifier>(cls);
 }
 
-void test_dummy_serialization()
+void test_dummy_serialization( )
 {
 	cv::Mat_<float> X, y;
-	X.push_back(cv::Matx12f{ 1, 0 });
-	X.push_back(cv::Matx12f{ 0, 1 });
-	X.push_back(cv::Matx12f{ 1, 1 });
-	X.push_back(cv::Matx12f{ 0, 0 });
+	X.push_back(cv::Matx12f { 1, 0 });
+	X.push_back(cv::Matx12f { 0, 1 });
+	X.push_back(cv::Matx12f { 1, 1 });
+	X.push_back(cv::Matx12f { 0, 0 });
 	X = X.reshape(1);
 
 	y.push_back(1);
@@ -437,25 +640,25 @@ void test_dummy_serialization()
 	y.push_back(1);
 	y.push_back(-1);
 
-	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer();
-	std::unique_ptr<Classifier> cls(trainer.Train(X, y));
+	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer( );
+	std::shared_ptr<Classifier> cls(trainer.Train(X, y));
 
 
-	
+
 	{
-		
+
 		//auto ppp = dynamic_cast<object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier*>(cls.get( ));
 		//auto ppp = dynamic_cast<object_recognition_toolkit::classification::Classifier*>(cls.get());
-		auto ppp = dynamic_cast<object_recognition_toolkit::core::Algorithm*>(cls.get());
+		auto ppp = dynamic_cast<object_recognition_toolkit::core::Algorithm*>(cls.get( ));
 		std::ofstream ofs("dumm_.cls");
 		boost::archive::polymorphic_text_oarchive poa(ofs);
 		boost::archive::polymorphic_oarchive& oa = poa;
-		
-		
+
+
 		//oa.register_type(static_cast<object_recognition_toolkit::core::Algorithm*>(nullptr));
 		//oa.register_type(static_cast<object_recognition_toolkit::classification::Classifier*>(nullptr));
 		//oa.register_type(static_cast<object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier*>(nullptr));
-		
+
 		oa << ppp;
 	}
 	{
@@ -470,7 +673,7 @@ void test_dummy_serialization()
 
 		int jedgs = 0;
 	}
-	
+
 
 	save_classifier("dummy.cls", cls);
 

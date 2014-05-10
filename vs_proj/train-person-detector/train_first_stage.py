@@ -4,9 +4,9 @@ import cPickle
 
 print('Loading dataset...');
 
-#dataset = np.loadtxt('first.stage.in', delimiter=',');
+dataset = np.loadtxt('first.stage.in', delimiter=',');
 
-#np.savez('first.stage.in.npz', dataset)
+np.savez('first.stage.in.npz', dataset)
 dataset = np.load('first.stage.in.npz')['arr_0']
 X = dataset[:, 1:]
 y = dataset[:, 0]

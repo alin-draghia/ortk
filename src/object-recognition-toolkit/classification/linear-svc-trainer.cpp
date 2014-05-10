@@ -12,19 +12,17 @@
 
 
 
-namespace object_recognition_toolkit
-{
-	namespace classification
-	{
+namespace object_recognition_toolkit {
+	namespace classification {
 
 
-		LinearSvcTrainer::LinearSvcTrainer()
+		LinearSvcTrainer::LinearSvcTrainer( )
 		{
 
 		}
 
 
-		LinearSvcTrainer::~LinearSvcTrainer()
+		LinearSvcTrainer::~LinearSvcTrainer( )
 		{
 
 		}
@@ -33,35 +31,36 @@ namespace object_recognition_toolkit
 		Classifier* LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
 		{
 
-			std::unique_ptr<LinearSvcClassifier> cls(new LinearSvcClassifier());
+			std::unique_ptr<LinearSvcClassifier> cls(new LinearSvcClassifier( ));
 
+#if(USE_DLIB)
+#else
 			cv::SVMParams params;
 			params.svm_type = cv::SVM::C_SVC;
 			params.kernel_type = cv::SVM::LINEAR;
-			params.term_crit = cv::TermCriteria(CV_TERMCRIT_ITER, (int)1e7, 1e-6);
+			params.C = 0.1;
+			params.term_crit = cv::TermCriteria(CV_TERMCRIT_ITER, 1000, 1e-6);
 
-			bool train_ok = cls->svm_.train(features, labels, {}, {}, params);
-			if (train_ok) {
-				return cls.release();
+			bool train_ok = cls->svm_.train(features, labels, { }, { }, params);
+			if ( train_ok ) {
+				return cls.release( );
 			}
-
+#endif
 			return nullptr;
 		}
 
 
-		LinearSvcTrainer::LinearSvcClassifier::LinearSvcClassifier()
+		LinearSvcTrainer::LinearSvcClassifier::LinearSvcClassifier( )
 			: Classifier("LinearSvcTrainer::LinearSvcClassifier")
-		{
-		}
+		{ }
 
-		LinearSvcTrainer::LinearSvcClassifier::~LinearSvcClassifier()
-		{
-		}
+		LinearSvcTrainer::LinearSvcClassifier::~LinearSvcClassifier( )
+		{ }
 
 		double LinearSvcTrainer::LinearSvcClassifier::PredictConf(const std::vector<float>& instance) const
 		{
-			cv::Mat m(1, (int)instance.size(), CV_32F, (void*)instance.data());
-			return (double)svm_.predict(m, true);
+			cv::Mat m(1, (int)instance.size( ), CV_32F, (void*)instance.data( ));
+			return (double)svm_.predict(m, true) * -1.0;
 		}
 
 
@@ -80,7 +79,7 @@ namespace object_recognition_toolkit
 			ar << boost::serialization::base_object<Classifier>(*this);
 			cv::FileStorage fs("", cv::FileStorage::WRITE + cv::FileStorage::FORMAT_YAML + cv::FileStorage::MEMORY);
 			svm_.write(*fs, "my_svm");
-			std::string svm_buffer = fs.releaseAndGetString();
+			std::string svm_buffer = fs.releaseAndGetString( );
 			ar << svm_buffer;
 		}
 
