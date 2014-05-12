@@ -182,3 +182,7 @@ vs_proj/packages/
 vs_proj/datasets/
 vs_proj/train-person-detector-2/dumm_.cls
 vs_proj/train-person-detector-2/dummy.cls
+vs_proj/train-person-detector-2/out/
+vs_proj/train-person-detector-2/stage-0-results/
+vs_proj/train-person-detector-2/stage-1-results/
+vs_proj/train-person-detector-2/stage-2-results/

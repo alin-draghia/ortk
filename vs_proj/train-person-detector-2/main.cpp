@@ -56,7 +56,7 @@ void test_dummy_serialization( );
 std::unique_ptr<Classifier> first_pass(const std::vector<fs::path>& positive_sample_files, const std::vector<fs::path>& negative_sample_files);
 std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& positive_sample_files, const std::vector<fs::path>& negative_sample_files);
 
-void run_classifier_over_test_images(std::shared_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& test_image_files);
+void run_classifier_over_test_images(std::shared_ptr<Classifier>& first_pass_classifier, const std::vector<fs::path>& test_image_files, const std::string& output_dir = "");
 
 cv::Mat extract_positive_dataset(const std::vector<fs::path>& sample_files,
 	std::shared_ptr<FeatureExtractor> feature_extractor,
@@ -191,6 +191,7 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 int _tmain(int argc, _TCHAR* argv[ ])
 {
 
+
 	// two pass object detector traing
 
 	// STEP 1. Extract features from all the training positive samples
@@ -224,6 +225,23 @@ int _tmain(int argc, _TCHAR* argv[ ])
 	std::vector<fs::path> test_image_files;
 	for ( auto it = fs::directory_iterator(test_dir); it != fs::directory_iterator( ); it++ ) {
 		test_image_files.push_back(it->path( ));
+	}
+
+
+
+	{ // save results for each stage	
+		#if(1)
+		const int num_stages = 5;
+		for ( int stage = 0; stage < num_stages; stage++ ) {
+			std::string stage_classifier_filename = "stage-" + std::to_string(stage) + ".cls";
+			std::string resutl_dir = "stage-" + std::to_string(stage) + "-results";
+			if(fs::exists(fs::path(stage_classifier_filename))){
+				auto classifier = load_classifier(stage_classifier_filename);
+				run_classifier_over_test_images(classifier, test_image_files, resutl_dir);
+			}
+		}
+		return 0;
+		#endif
 	}
 
 
@@ -536,11 +554,17 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 }
 
 
-void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier, const std::vector<fs::path>& test_image_files)
+void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier, 
+	const std::vector<fs::path>& test_image_files,
+	const std::string& output_dir)
 {
 
-	fs::path result_dir("./out");
-	fs::create_directory(result_dir);
+	double threshold = 0.1;
+
+	fs::path result_dir(output_dir);
+	if ( !output_dir.empty( ) ) {
+		fs::create_directories(result_dir);
+	}
 
 	// object recognition toolkit
 	auto feature_extractor = std::unique_ptr<FeatureExtractor>{
@@ -577,7 +601,7 @@ void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier, co
 
 				double conf = classifier->PredictConf(features);
 
-				if ( conf > 0.5 ) {
+				if ( conf > threshold ) {
 					detection_boxes.push_back(pyramid_level.Invert(boxes[i]));
 					detection_confs.push_back(conf);
 				}
@@ -589,8 +613,11 @@ void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier, co
 		}
 
 
-		fs::path out_file = result_dir / fs::path { image_file.filename( ) };
-		//cv::imwrite(out_file, disp);
+		if ( !output_dir.empty( ) ) {			
+			fs::path out_file = result_dir / fs::path { image_file.filename( ) };
+			cv::imwrite(out_file, disp);
+		}
+		
 		cv::imshow("results", disp);
 		int k = cv::waitKey(15);
 		if ( k == 27 ) {
