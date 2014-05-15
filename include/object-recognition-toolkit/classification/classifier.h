@@ -8,22 +8,23 @@
 #include <string>
 #include <vector>
 
+
+
 #include "../core/public-api.h"
-#include "../core/algorithm.h"
+#include "../core/named.h"
+#include "../core/serialization.h"
 
 namespace object_recognition_toolkit
 {
 	namespace classification
 	{
 		class PUBLIC_API Classifier
-			: public object_recognition_toolkit::core::Algorithm
+			: public core::Named
 		{
 		public:
-			Classifier();
-			Classifier(const std::string& name);
-			virtual ~Classifier();
 
-			virtual double PredictConf(const std::vector<float>& instance) const;
+			virtual ~Classifier() = 0;
+			virtual double PredictConf(const std::vector<float>& instance) const = 0;
 
 		private:
 			friend class boost::serialization::access;

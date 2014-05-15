@@ -5,6 +5,9 @@
 #include <memory>
 
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
 #include <opencv2/opencv.hpp>
 

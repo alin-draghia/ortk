@@ -1,5 +1,4 @@
-
-#include <object-recognition-toolkit/classification/mock-person-classifier.h>
+#include "object-recognition-toolkit/classification/mock-person-classifier.h"
 
 namespace object_recognition_toolkit
 {
@@ -7,7 +6,6 @@ namespace object_recognition_toolkit
 	{
 
 		MockPersonClassifier::MockPersonClassifier()
-			: Classifier("MockPersonClassifier")
 		{
 		}
 
@@ -16,6 +14,11 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		const std::string& MockPersonClassifier::name() const
+		{
+			static const std::string name = "MockPersonClassifier";
+			return name;
+		}
 
 		double MockPersonClassifier::PredictConf(const std::vector<float>& instance) const
 		{

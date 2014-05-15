@@ -1,4 +1,4 @@
-#include <object-recognition-toolkit/classification/linear-svc.h>
+#include "object-recognition-toolkit/classification/linear-svc.h"
 
 namespace object_recognition_toolkit
 {
@@ -6,14 +6,19 @@ namespace object_recognition_toolkit
 	{
 
 		LinearSVC::LinearSVC(const float bias, std::vector<float>& coefs)
-			: Classifier("LinearSVC")
-			, bias_{ bias }
+			: bias_{ bias }
 			, coefs_{ coefs }
 		{
 		}
 
 		LinearSVC::~LinearSVC()
 		{
+		}
+
+		const std::string& LinearSVC::name() const
+		{
+			static const std::string name = "LinearSVC";
+			return name;
 		}
 
 		double LinearSVC::PredictConf(const std::vector<float>& instance) const
