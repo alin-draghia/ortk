@@ -28,7 +28,6 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <object-recognition-toolkit/core/algorithm.h>
 #include <object-recognition-toolkit/feature-extraction/feature-extractor.h>
 #include <object-recognition-toolkit/feature-extraction/hog-feature-extractor.h>
 #include <object-recognition-toolkit/image-scanning/image-scanner.h>
