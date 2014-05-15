@@ -5,7 +5,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#if(1)
+#if(0)
 
 #include <string>
 

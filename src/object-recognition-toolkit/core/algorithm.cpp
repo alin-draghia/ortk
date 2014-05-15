@@ -5,6 +5,8 @@
 
 #include "object-recognition-toolkit/core/algorithm.h"
 
+#if (0)
+
 namespace object_recognition_toolkit {
 	namespace core {
 
@@ -44,4 +46,6 @@ namespace object_recognition_toolkit {
 
 	}
 }
+
+#endif
 
