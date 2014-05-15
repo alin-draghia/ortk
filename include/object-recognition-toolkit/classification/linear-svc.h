@@ -20,7 +20,7 @@ namespace object_recognition_toolkit
 			LinearSVC(const float bias, std::vector<float>& coefs);
 			virtual ~LinearSVC();
 
-			virtual double PredictConf(const std::vector<float>& instance) const;
+			virtual double Predict(const std::vector<float>& instance) const;
 
 		public:
 			virtual const std::string& name() const;

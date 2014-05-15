@@ -22,9 +22,10 @@ namespace object_recognition_toolkit
 			: public core::Named
 		{
 		public:
-
 			virtual ~Classifier() = 0;
-			virtual double PredictConf(const std::vector<float>& instance) const = 0;
+
+		public:
+			virtual double Predict(const std::vector<float>& instance) const = 0;
 
 		private:
 			friend class boost::serialization::access;

@@ -195,7 +195,7 @@ cv::Mat extract_negative_dataset(const std::vector<fs::path>& sample_files,
 				for (const cv::Mat& window : windows) {
 
 					std::vector<float> features = feature_extractor->compute(window);
-					if (classifier->PredictConf(features) > 0.0) {
+					if (classifier->Predict(features) > 0.0) {
 						cv::Mat_<float> fv(features);
 						cv::Mat_<float> fv0 = fv.reshape(1, 1);
 						X.push_back(fv0);
@@ -235,9 +235,9 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 	std::vector<float> pos_sample = X_pos.row(0);
 	std::vector<float> neg_sample = X_neg.row(0);
 
-	auto val_pos = ret->PredictConf(pos_sample);
+	auto val_pos = ret->Predict(pos_sample);
 	std::cout << "val for positive sample=" << val_pos << std::endl;
-	auto val_neg = ret->PredictConf(neg_sample);
+	auto val_neg = ret->Predict(neg_sample);
 	std::cout << "val for negative sample=" << val_neg << std::endl;
 
 	return ret;
@@ -585,7 +585,7 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 
 			for (const cv::Mat& window : windows) {
 				std::vector<float> features = feature_extractor->compute(window);
-				if (first_pass_classifier->PredictConf(features) > 0.0) {
+				if (first_pass_classifier->Predict(features) > 0.0) {
 					cv::Mat_<float> fv(features);
 					cv::Mat_<float> fv0 = fv.reshape(1, 1);
 					X.push_back(fv0);
@@ -657,7 +657,7 @@ void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier,
 			for (size_t i = 0; i < windows.size(); i++) {
 				std::vector<float> features = feature_extractor->compute(windows[i]);
 
-				double conf = classifier->PredictConf(features);
+				double conf = classifier->Predict(features);
 
 				if (conf > threshold) {
 					detection_boxes.push_back(pyramid_level.Invert(boxes[i]));

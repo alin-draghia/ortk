@@ -66,7 +66,7 @@ namespace object_recognition_toolkit {
 		{ 
 		}
 
-		double LinearSvcTrainer::LinearSvcClassifier::PredictConf(const std::vector<float>& instance) const
+		double LinearSvcTrainer::LinearSvcClassifier::Predict(const std::vector<float>& instance) const
 		{
 			cv::Mat m(1, (int)instance.size( ), CV_32F, (void*)instance.data( ));
 			return (double)svm_.predict(m, true) * -1.0;
