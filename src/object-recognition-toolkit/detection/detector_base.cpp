@@ -29,6 +29,12 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		const std::string& DetectorBase::name() const
+		{
+			static const std::string name = "DetectorBase";
+			return name;
+		}
+
 		void DetectorBase::detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;
