@@ -33,5 +33,27 @@ namespace object_recognition_toolkit {
 			return (int)hog_.getDescriptorSize();
 		}
 
+
+		void HogFeatureExtractor::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		{
+			ar >> boost::serialization::base_object<FeatureExtractor>(*this);
+			ar >> winSize_;
+			ar >> blockSize_;
+			ar >> blockStride_;
+			ar >> nBins_;
+		}
+
+		void HogFeatureExtractor::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<FeatureExtractor>(*this);
+			ar << winSize_;
+			ar << blockSize_;
+			ar << blockStride_;
+			ar << nBins_;
+		}
+
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::feature_extraction::HogFeatureExtractor);

@@ -14,7 +14,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "./public-api.h"
-
+#include "./serialization.h"
 
 
 

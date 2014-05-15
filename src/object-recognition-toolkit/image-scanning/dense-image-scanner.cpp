@@ -4,7 +4,10 @@ namespace object_recognition_toolkit
 {
 	namespace image_scanning
 	{
-		
+		DenseImageScanner::DenseImageScanner()
+			: ImageScanner("DenseImageScanner")
+		{
+		}
 		
 		DenseImageScanner::DenseImageScanner(cv::Size windowSize, cv::Size windowStep, cv::Size padding)
 			: ImageScanner("DenseImageScanner")
@@ -62,6 +65,25 @@ namespace object_recognition_toolkit
 			}
 		}
 
+		void DenseImageScanner::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		{
+			ar >> boost::serialization::base_object<ImageScanner>(*this);
+			ar >> windowSize_;
+			ar >> windowStep_;
+			ar >> padding_;
+		}
+
+		void DenseImageScanner::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<ImageScanner>(*this);
+			ar << windowSize_;
+			ar << windowStep_;
+			ar << padding_;
+		}
 
 	}
 }
+
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::image_scanning::DenseImageScanner);

@@ -26,6 +26,11 @@ namespace object_recognition_toolkit
 		private:
 			static float b_;
 			static std::vector<float> w_;
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 
 	}

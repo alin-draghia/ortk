@@ -30,6 +30,11 @@ namespace object_recognition_toolkit {
 			cv::Size blockStride_;
 			cv::Size cellSize_;
 			int nBins_;
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 
 

@@ -5,6 +5,11 @@ namespace object_recognition_toolkit
 	namespace pyramid
 	{
 
+		FloatImagePyramid::FloatImagePyramid()
+			: ImagePyramid( "FloatImagePyramid")
+		{
+		}
+
 		FloatImagePyramid::FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize) :
 			ImagePyramid{ "FloatImagePyramid" },
 			scaleFactor_{ scaleFactor },
@@ -66,5 +71,24 @@ namespace object_recognition_toolkit
 			return std::move(pyramid);
 		}
 
+		void FloatImagePyramid::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		{
+			ar >> boost::serialization::base_object<ImagePyramid>(*this);
+			ar >> scaleFactor_; 
+			ar >> minSize_;
+			ar >> maxSize_;
+		}
+
+		void FloatImagePyramid::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<ImagePyramid>(*this);
+			ar << scaleFactor_;
+			ar << minSize_;
+			ar << maxSize_;
+		}
+
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::pyramid::FloatImagePyramid);

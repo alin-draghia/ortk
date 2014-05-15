@@ -18,6 +18,11 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\config.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\serialization.h" />
+    <ClInclude Include="include\object-recognition-toolkit\detection\detector.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
+    <ClInclude Include="include\object-recognition-toolkit\detection\detector_base.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -32,6 +37,10 @@
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\detection\detector.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\detection\detector_base.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
