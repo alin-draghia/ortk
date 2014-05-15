@@ -6,6 +6,7 @@
 #pragma warning(disable: 4251)
 
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 
@@ -22,7 +23,7 @@ namespace object_recognition_toolkit
 			virtual ~NonMaximaSuppressor() = 0;
 
 		public:
-			virtual void suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const = 0;
+			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const = 0;
 
 		private:
 			friend class boost::serialization::access;

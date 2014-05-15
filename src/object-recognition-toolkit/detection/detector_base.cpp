@@ -35,7 +35,7 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
-		void DetectorBase::detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
+		void DetectorBase::detect(const core::Matrix& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 
@@ -46,10 +46,10 @@ namespace object_recognition_toolkit
 			for (PyramidLevel& pyramid_level : pyramid)
 			{
 
-				std::vector<cv::Mat> windows;
-				std::vector<cv::Rect> boxes;
+				std::vector<core::Matrix> windows;
+				std::vector<core::Box> boxes;
 
-				const cv::Mat& pyramid_level_image = pyramid_level.GetImage();
+				const core::Matrix& pyramid_level_image = pyramid_level.GetImage();
 
 				this->scanImage(pyramid_level_image, windows, boxes);
 
@@ -57,8 +57,8 @@ namespace object_recognition_toolkit
 				{
 					double confidence;
 					std::vector<float> features;
-					const cv::Mat& window_image = windows[i];
-					const cv::Rect& window_box = boxes[i];
+					const core::Matrix& window_image = windows[i];
+					const core::Box& window_box = boxes[i];
 
 					this->extractFeatures(window_image, features);
 					this->classify(features, confidence);
@@ -74,27 +74,27 @@ namespace object_recognition_toolkit
 
 		}
 
-		void DetectorBase::buildPyramid(const cv::Mat& image, std::vector<pyramid::PyramidLevel>& pyramid) const
+		void DetectorBase::buildPyramid(const core::Matrix& image, std::vector<pyramid::PyramidLevel>& pyramid) const
 		{
 			pyramid = this->getPyramidBuilder().Build(image);
 		}
 
-		void DetectorBase::scanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const
+		void DetectorBase::scanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const
 		{
 			this->getImageScanner().ScanImage(image, windows, boxes);
 		}
 
-		void DetectorBase::extractFeatures(const cv::Mat& image, std::vector<float>& features) const
+		void DetectorBase::extractFeatures(const core::Matrix& image, std::vector<float>& features) const
 		{
 			features = this->getFeatureExtractor().compute(image);
 		}
 
-		void DetectorBase::classify(const std::vector<float>& features, double& confidence) const
+		void DetectorBase::classify(const core::FeatureVector& features, double& confidence) const
 		{
 			confidence = this->getClassifier().Predict(features);
 		}
 
-		void DetectorBase::nonMaximumSuppression(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const
+		void DetectorBase::nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const
 		{
 			// pass
 		}

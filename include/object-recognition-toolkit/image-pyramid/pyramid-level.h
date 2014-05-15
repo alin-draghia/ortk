@@ -6,9 +6,8 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <opencv2/opencv.hpp>
-
 #include "../core/public-api.h"
+#include "../core/core.h"
 
 namespace object_recognition_toolkit
 {
@@ -17,7 +16,7 @@ namespace object_recognition_toolkit
 		class PUBLIC_API PyramidLevel
 		{
 		public:
-			PyramidLevel(const cv::Mat& image, double scale)
+			PyramidLevel(const core::Matrix& image, double scale)
 				: image_{ image }, scale_{ scale } {}
 
 			~PyramidLevel() = default;
@@ -28,7 +27,7 @@ namespace object_recognition_toolkit
 			}
 			
 
-			cv::Mat& GetImage()
+			core::Matrix& GetImage()
 			{
 				return image_;
 			}

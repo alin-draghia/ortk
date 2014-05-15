@@ -11,6 +11,7 @@
 
 
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 
@@ -25,7 +26,7 @@ namespace object_recognition_toolkit
 			virtual ~Classifier() = 0;
 
 		public:
-			virtual double Predict(const std::vector<float>& instance) const = 0;
+			virtual double Predict(const core::FeatureVector& instance) const = 0;
 
 		private:
 			friend class boost::serialization::access;

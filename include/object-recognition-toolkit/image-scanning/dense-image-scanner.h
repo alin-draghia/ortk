@@ -18,24 +18,24 @@ namespace object_recognition_toolkit
 			DenseImageScanner();
 
 		public:
-			DenseImageScanner(cv::Size windowSize, cv::Size windowStep, cv::Size padding);
+			DenseImageScanner(core::Size windowSize, core::Size windowStep, core::Size padding);
 			~DenseImageScanner();
 
 		public:
 			virtual const std::string& name() const;
 
 		public:
-			virtual void ScanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const;
+			virtual void ScanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const;
 
 		public:
-			cv::Size GetWindowSize() const;
-			cv::Size GetWindowStep() const;
-			cv::Size GetPadding() const;
+			core::Size GetWindowSize() const;
+			core::Size GetWindowStep() const;
+			core::Size GetPadding() const;
 
 		private:
-			cv::Size windowSize_;
-			cv::Size windowStep_;
-			cv::Size padding_;
+			core::Size windowSize_;
+			core::Size windowStep_;
+			core::Size padding_;
 
 		private:
 			friend class boost::serialization::access;

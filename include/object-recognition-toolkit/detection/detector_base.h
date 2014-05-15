@@ -34,17 +34,17 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBase();
 
 		public:
-			virtual void detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
+			virtual void detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
 		public:
 			virtual const std::string& name() const;
 
 		protected:
-			virtual void buildPyramid(const cv::Mat& image, std::vector<pyramid::PyramidLevel>& pyramid) const;
-			virtual void scanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const;
-			virtual void extractFeatures(const cv::Mat& image, std::vector<float>& features) const;
+			virtual void buildPyramid(const core::Matrix& image, std::vector<pyramid::PyramidLevel>& pyramid) const;
+			virtual void scanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const;
+			virtual void extractFeatures(const core::Matrix& image, std::vector<float>& features) const;
 			virtual void classify(const std::vector<float>& features, double& confidence) const;
-			virtual void nonMaximumSuppression(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const;
+			virtual void nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
 		private:
 			ImagePyramid& getPyramidBuilder() const;

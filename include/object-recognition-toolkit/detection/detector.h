@@ -7,6 +7,7 @@
 
 
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 
@@ -21,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual ~Detector() = 0;
 
 		public:
-			virtual void detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
+			virtual void detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
 
 		private:
 			friend class boost::serialization::access;

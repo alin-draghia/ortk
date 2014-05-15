@@ -7,9 +7,8 @@
 
 #include <vector>
 
-#include <opencv2/opencv.hpp>
-
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 
@@ -25,7 +24,7 @@ namespace object_recognition_toolkit
 			virtual ~ImageScanner() = 0;		
 	
 		public:
-			virtual void ScanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const = 0;
+			virtual void ScanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const = 0;
 
 		private:
 			friend class boost::serialization::access;

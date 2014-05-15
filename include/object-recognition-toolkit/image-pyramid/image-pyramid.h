@@ -6,6 +6,7 @@
 #pragma warning(disable: 4251)
 
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 #include "./pyramid-level.h"
@@ -21,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual ~ImagePyramid() = 0;
 
 		public:
-			virtual std::vector<PyramidLevel> Build(cv::Mat image) const = 0;
+			virtual std::vector<PyramidLevel> Build(const core::Matrix& image) const = 0;
 			
 		private:
 			friend class boost::serialization::access;

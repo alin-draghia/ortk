@@ -45,7 +45,7 @@ namespace object_recognition_toolkit
 		}
 
 
-		std::vector<PyramidLevel> FloatImagePyramid::Build(cv::Mat image) const
+		std::vector<PyramidLevel> FloatImagePyramid::Build(const core::Matrix& image) const
 		{
 			std::vector<PyramidLevel> pyramid;
 			

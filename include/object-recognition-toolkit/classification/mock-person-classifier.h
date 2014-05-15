@@ -21,7 +21,7 @@ namespace object_recognition_toolkit
 			MockPersonClassifier();
 			virtual ~MockPersonClassifier();
 
-			virtual double Predict(const std::vector<float>& instance) const;
+			virtual double Predict(const core::FeatureVector& instance) const;
 
 		public:
 			virtual const std::string& name() const;

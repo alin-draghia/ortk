@@ -5,11 +5,8 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <vector>
-
-#include <opencv2/opencv.hpp>
-
 #include "../core/public-api.h"
+#include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
 
@@ -24,7 +21,7 @@ namespace object_recognition_toolkit {
 			virtual ~FeatureExtractor( ) = 0;
 			
 		public:
-			virtual std::vector<float> compute(const cv::Mat& image) const = 0;
+			virtual core::FeatureVector compute(const core::Matrix& image) const = 0;
 			virtual int lenght() const = 0;
 
 		private:

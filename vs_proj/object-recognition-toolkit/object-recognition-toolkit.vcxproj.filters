@@ -44,6 +44,7 @@
     <ClCompile Include="src\object-recognition-toolkit\core\named.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\serialization.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base_mt.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\core\core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

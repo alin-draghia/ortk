@@ -22,8 +22,9 @@ namespace object_recognition_toolkit {
 
 		public:
 			virtual const std::string& name() const;
+
 		public:
-			virtual std::vector<float> compute(const cv::Mat& image) const;
+			virtual core::FeatureVector compute(const core::Matrix& image) const;
 			virtual int lenght() const;
 
 		private:

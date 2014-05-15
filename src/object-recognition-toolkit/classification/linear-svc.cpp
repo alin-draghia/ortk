@@ -21,7 +21,7 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
-		double LinearSVC::Predict(const std::vector<float>& instance) const
+		double LinearSVC::Predict(const core::FeatureVector& instance) const
 		{
 			if (instance.size() != coefs_.size()) {
 				throw std::runtime_error("Invalid instance vector size");

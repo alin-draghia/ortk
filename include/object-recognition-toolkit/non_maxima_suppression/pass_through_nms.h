@@ -22,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual const std::string& name() const;
 
 		public:
-			virtual void suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const;
+			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
 		private:
 			friend class boost::serialization::access;
