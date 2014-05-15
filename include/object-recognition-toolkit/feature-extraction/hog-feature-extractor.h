@@ -7,7 +7,6 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "../core/public-api.h"
 #include "./feature-extractor.h"
 
 namespace object_recognition_toolkit {
@@ -15,11 +14,15 @@ namespace object_recognition_toolkit {
 
 
 		class PUBLIC_API HogFeatureExtractor
-			: public FeatureExtractor {
+			: public FeatureExtractor 
+		{
 		public:
 			HogFeatureExtractor();
 			virtual ~HogFeatureExtractor();
 
+		public:
+			virtual const std::string& name() const;
+		public:
 			virtual std::vector<float> compute(const cv::Mat& image) const;
 			virtual int lenght() const;
 

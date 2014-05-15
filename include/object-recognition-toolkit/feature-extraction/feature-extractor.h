@@ -10,7 +10,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "../core/public-api.h"
-#include "../core/algorithm.h"
+#include "../core/named.h"
 #include "../core/serialization.h"
 
 namespace object_recognition_toolkit {
@@ -18,14 +18,15 @@ namespace object_recognition_toolkit {
 
 
 		class PUBLIC_API FeatureExtractor
-			: public object_recognition_toolkit::core::Algorithm
+			: public core::Named
 		{
 		public:
-			FeatureExtractor(const std::string& name);
-			virtual ~FeatureExtractor( );
+			virtual ~FeatureExtractor( ) = 0;
 			
+		public:
 			virtual std::vector<float> compute(const cv::Mat& image) const = 0;
 			virtual int lenght() const = 0;
+
 		private:
 			friend class boost::serialization::access;
 			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
