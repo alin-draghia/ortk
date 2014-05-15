@@ -7,18 +7,20 @@
 
 
 #include "../core/public-api.h"
-#include "../core/algorithm.h"
+#include "../core/named.h"
+#include "../core/serialization.h"
 
 namespace object_recognition_toolkit
 {
 	namespace detection
 	{
 		class PUBLIC_API Detector
-			: public object_recognition_toolkit::core::Algorithm
+			: public core::Named
 		{
 		public:
 			virtual ~Detector() = 0;
 
+		public:
 			virtual void detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
 
 		private:

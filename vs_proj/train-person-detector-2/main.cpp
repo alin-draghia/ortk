@@ -28,7 +28,6 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <object-recognition-toolkit/core/algorithm.h>
 #include <object-recognition-toolkit/feature-extraction/feature-extractor.h>
 #include <object-recognition-toolkit/feature-extraction/hog-feature-extractor.h>
 #include <object-recognition-toolkit/image-scanning/image-scanner.h>
@@ -739,9 +738,9 @@ void test_dummy_serialization()
 
 	{
 
-		//auto ppp = dynamic_cast<object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier*>(cls.get( ));
-		//auto ppp = dynamic_cast<object_recognition_toolkit::classification::Classifier*>(cls.get());
-		auto ppp = dynamic_cast<object_recognition_toolkit::core::Algorithm*>(cls.get());
+
+		auto ppp = dynamic_cast<object_recognition_toolkit::classification::Classifier*>(cls.get());
+
 		std::ofstream ofs("dumm_.cls");
 		boost::archive::polymorphic_text_oarchive poa(ofs);
 		boost::archive::polymorphic_oarchive& oa = poa;
@@ -756,8 +755,7 @@ void test_dummy_serialization()
 	{
 		//object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier* ppp = new object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier();
 		//object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier* ppp = nullptr;
-		//object_recognition_toolkit::classification::Classifier* ppp = nullptr;
-		object_recognition_toolkit::core::Algorithm* ppp = nullptr;
+		object_recognition_toolkit::classification::Classifier* ppp = nullptr;
 		std::ifstream ifs("dumm_.cls");
 		boost::archive::polymorphic_text_iarchive pia(ifs);
 		boost::archive::polymorphic_iarchive& ia = pia;

@@ -5,7 +5,9 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include "../core/algorithm.h"
+#include "../core/public-api.h"
+#include "../core/named.h"
+#include "../core/serialization.h"
 
 
 namespace object_recognition_toolkit
@@ -14,10 +16,9 @@ namespace object_recognition_toolkit
 	{
 
 		class PUBLIC_API NonMaximaSuppressor
-			: public object_recognition_toolkit::core::Algorithm
+			: public core::Named
 		{
-		public:
-			NonMaximaSuppressor(const std::string& name);
+		public:			
 			virtual ~NonMaximaSuppressor() = 0;
 
 		public:

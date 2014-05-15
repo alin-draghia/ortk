@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
-    <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
@@ -23,10 +22,10 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\named.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
@@ -41,6 +40,7 @@
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\core\named.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

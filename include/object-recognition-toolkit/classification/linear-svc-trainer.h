@@ -29,15 +29,18 @@ namespace object_recognition_toolkit
 
 			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
 
-		public:
-			class PUBLIC_API LinearSvcClassifier : public
-				object_recognition_toolkit::classification::Classifier
+		private:
+			class PUBLIC_API LinearSvcClassifier 
+				: public Classifier
 			{
 			public:
 				LinearSvcClassifier();
 				virtual ~LinearSvcClassifier();
 
 				virtual double PredictConf(const std::vector<float>& instance) const;
+
+			public:
+				virtual const std::string& name() const;
 
 			private:
 				friend class LinearSvcTrainer;

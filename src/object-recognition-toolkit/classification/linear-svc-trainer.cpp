@@ -65,11 +65,12 @@ namespace object_recognition_toolkit {
 
 
 		LinearSvcTrainer::LinearSvcClassifier::LinearSvcClassifier( )
-			: Classifier("LinearSvcTrainer::LinearSvcClassifier")
-		{ }
+		{ 
+		}
 
 		LinearSvcTrainer::LinearSvcClassifier::~LinearSvcClassifier( )
-		{ }
+		{ 
+		}
 
 		double LinearSvcTrainer::LinearSvcClassifier::PredictConf(const std::vector<float>& instance) const
 		{
@@ -97,9 +98,13 @@ namespace object_recognition_toolkit {
 			ar << svm_buffer;
 		}
 
-
+		const std::string& LinearSvcTrainer::LinearSvcClassifier::name() const
+		{
+			static const std::string name = "LinearSvcTrainer::LinearSvcClassifier";
+			return name;
+		}
 	}
 }
 
-BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
+//BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
 

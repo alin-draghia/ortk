@@ -6,15 +6,13 @@ namespace object_recognition_toolkit
 	{
 
 		FloatImagePyramid::FloatImagePyramid()
-			: ImagePyramid( "FloatImagePyramid")
 		{
 		}
 
-		FloatImagePyramid::FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize) :
-			ImagePyramid{ "FloatImagePyramid" },
-			scaleFactor_{ scaleFactor },
-			minSize_{ minSize },
-			maxSize_{ maxSize }
+		FloatImagePyramid::FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize)
+			: scaleFactor_{ scaleFactor }
+			, minSize_{ minSize }
+			, maxSize_{ maxSize }
 		{
 		}
 
@@ -23,6 +21,11 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		const std::string& FloatImagePyramid::name() const
+		{
+			static const std::string name = "FloatImagePyramid";
+			return name;
+		}
 		
 		double FloatImagePyramid::GetScaleFactor() const
 		{

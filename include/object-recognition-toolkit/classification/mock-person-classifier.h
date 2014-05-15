@@ -23,6 +23,9 @@ namespace object_recognition_toolkit
 
 			virtual double PredictConf(const std::vector<float>& instance) const;
 
+		public:
+			virtual const std::string& name() const;
+
 		private:
 			static float b_;
 			static std::vector<float> w_;

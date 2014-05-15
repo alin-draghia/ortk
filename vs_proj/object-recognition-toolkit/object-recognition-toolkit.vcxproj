@@ -16,9 +16,9 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
-    <ClInclude Include="include\object-recognition-toolkit\core\algorithm.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\config.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\named.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\serialization.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector.h" />
@@ -40,7 +40,7 @@
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\trainer.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\core\algorithm.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\core\named.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
