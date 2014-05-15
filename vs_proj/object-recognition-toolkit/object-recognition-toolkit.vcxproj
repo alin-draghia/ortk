@@ -107,6 +107,7 @@
       <PreprocessorDefinitions>BOOST_SERIALIZATION_DYN_LINK;BUILDING_THE_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib\dlib-18.6;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;$(SolutionDir)\3rd-party\python\Lib\site-packages\numpy\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,6 +128,7 @@
       <PreprocessorDefinitions>BOOST_SERIALIZATION_DYN_LINK;BUILDING_THE_DLL;WIN32;NDEBUG;_WINDOWS;_USRDLL;OBJECTRECOGNITIONTOOLKIT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(SolutionDir)\3rd-party\dlib\dlib-18.6;$(SolutionDir)\3rd-party\eigen;$(SolutionDir)\3rd-party\opencv\include;$(SolutionDir)\3rd-party\python\include;$(SolutionDir)\3rd-party\python\Lib\site-packages\numpy\core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
