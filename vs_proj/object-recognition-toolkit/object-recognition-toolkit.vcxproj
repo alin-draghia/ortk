@@ -29,6 +29,8 @@
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
@@ -43,6 +45,8 @@
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\image-pyramid.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
