@@ -5,15 +5,13 @@ namespace object_recognition_toolkit
 	namespace image_scanning
 	{
 		DenseImageScanner::DenseImageScanner()
-			: ImageScanner("DenseImageScanner")
 		{
 		}
-		
+
 		DenseImageScanner::DenseImageScanner(cv::Size windowSize, cv::Size windowStep, cv::Size padding)
-			: ImageScanner("DenseImageScanner")
-			, windowSize_{ windowSize }
+			: windowSize_{ windowSize }
 			, windowStep_{ windowStep }
-			, padding_{ padding}
+			, padding_{ padding }
 		{
 		}
 
@@ -22,6 +20,11 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		const std::string& DenseImageScanner::name() const
+		{
+			static const std::string name = "DenseImageScanner";
+			return name;
+		}
 
 		cv::Size DenseImageScanner::GetWindowSize() const
 		{

@@ -5,12 +5,13 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <cinttypes>
 #include <vector>
-#include <tuple>
+
+#include <opencv2/opencv.hpp>
 
 #include "../core/public-api.h"
-#include "../core/algorithm.h"
+#include "../core/named.h"
+#include "../core/serialization.h"
 
 namespace object_recognition_toolkit
 {
@@ -18,12 +19,12 @@ namespace object_recognition_toolkit
 	{
 
 		class PUBLIC_API ImageScanner
-			: public object_recognition_toolkit::core::Algorithm
+			: public core::Named
 		{
-		public:
-			ImageScanner(const std::string& name);
-			virtual ~ImageScanner();		
+		public:			
+			virtual ~ImageScanner() = 0;		
 	
+		public:
 			virtual void ScanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const = 0;
 
 		private:
