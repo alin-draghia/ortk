@@ -5,6 +5,11 @@ namespace object_recognition_toolkit
 	namespace pyramid
 	{
 
+		FloatImagePyramid::FloatImagePyramid()
+			: ImagePyramid( "FloatImagePyramid")
+		{
+		}
+
 		FloatImagePyramid::FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize) :
 			ImagePyramid{ "FloatImagePyramid" },
 			scaleFactor_{ scaleFactor },
@@ -84,3 +89,6 @@ namespace object_recognition_toolkit
 
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::pyramid::FloatImagePyramid);

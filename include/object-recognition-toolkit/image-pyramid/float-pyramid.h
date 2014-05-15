@@ -16,6 +16,7 @@ namespace object_recognition_toolkit
 		class PUBLIC_API FloatImagePyramid
 			: public ImagePyramid
 		{
+			FloatImagePyramid();
 		public:
 			FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize);
 			virtual ~FloatImagePyramid();
