@@ -41,6 +41,7 @@
 
 #include <object-recognition-toolkit/detection/detector.h>
 #include <object-recognition-toolkit/detection/detector_base.h>
+#include <object-recognition-toolkit/detection/detector_base_mt.h>
 
 using object_recognition_toolkit::classification::Trainer;
 using object_recognition_toolkit::classification::Classifier;
@@ -56,7 +57,7 @@ void test_detectror_class()
 	{
 		std::unique_ptr<Detector> detector
 		{
-			new object_recognition_toolkit::detection::DetectorBase
+			new object_recognition_toolkit::detection::DetectorBaseMt
 			{
 				new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } },
 				new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } },

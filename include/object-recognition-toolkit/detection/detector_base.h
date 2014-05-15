@@ -26,7 +26,7 @@ namespace object_recognition_toolkit
 			using Classifier = classification::Classifier;
 			using NonMaximaSuppressor = non_maxima_suppression::NonMaximaSuppressor;
 
-		private:
+		protected:
 			DetectorBase();
 
 		public:
@@ -34,7 +34,7 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBase();
 
 		public:
-			void detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
+			virtual void detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
 		public:
 			virtual const std::string& name() const;
