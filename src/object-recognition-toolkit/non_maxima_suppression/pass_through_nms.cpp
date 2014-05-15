@@ -6,13 +6,19 @@ namespace object_recognition_toolkit
 	{
 
 		PassThroughNms::PassThroughNms()
-			: NonMaximaSuppressor("PassThroughNms")
 		{
 		}
 
 		PassThroughNms::~PassThroughNms()
 		{
 		}
+
+		const std::string& PassThroughNms::name() const
+		{
+			static const std::string name = "PassThroughNms";
+			return name;
+		}
+
 
 		void PassThroughNms::suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const
 		{

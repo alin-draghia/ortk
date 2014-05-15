@@ -19,6 +19,9 @@ namespace object_recognition_toolkit
 			virtual ~PassThroughNms();
 
 		public:
+			virtual const std::string& name() const;
+
+		public:
 			virtual void suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const;
 
 		private:
