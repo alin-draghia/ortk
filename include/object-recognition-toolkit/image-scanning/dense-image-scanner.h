@@ -16,6 +16,7 @@ namespace object_recognition_toolkit
 		class PUBLIC_API DenseImageScanner
 			: public ImageScanner
 		{
+			DenseImageScanner();
 		public:
 			DenseImageScanner(cv::Size windowSize, cv::Size windowStep, cv::Size padding);
 			~DenseImageScanner();

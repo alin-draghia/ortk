@@ -4,7 +4,10 @@ namespace object_recognition_toolkit
 {
 	namespace image_scanning
 	{
-		
+		DenseImageScanner::DenseImageScanner()
+			: ImageScanner("DenseImageScanner")
+		{
+		}
 		
 		DenseImageScanner::DenseImageScanner(cv::Size windowSize, cv::Size windowStep, cv::Size padding)
 			: ImageScanner("DenseImageScanner")
@@ -80,3 +83,7 @@ namespace object_recognition_toolkit
 
 	}
 }
+
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::image_scanning::DenseImageScanner);
