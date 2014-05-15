@@ -32,6 +32,17 @@ namespace object_recognition_toolkit
 			return conf;
 		}
 
+		void MockPersonClassifier::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		{
+			ar >> boost::serialization::base_object<Classifier>(*this);
+		}
+
+		void MockPersonClassifier::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<Classifier>(*this);
+		}
+
+
 
 		float MockPersonClassifier::b_{ -6.66579151f };
 
@@ -844,3 +855,6 @@ namespace object_recognition_toolkit
 		};
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::MockPersonClassifier);
