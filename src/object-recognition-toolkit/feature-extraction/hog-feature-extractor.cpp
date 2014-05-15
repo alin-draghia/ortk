@@ -54,3 +54,6 @@ namespace object_recognition_toolkit {
 
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::feature_extraction::HogFeatureExtractor);
