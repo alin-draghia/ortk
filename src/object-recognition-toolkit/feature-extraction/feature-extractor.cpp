@@ -11,13 +11,13 @@ namespace object_recognition_toolkit {
 		{
 		}
 
-		void FeatureExtractor::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void FeatureExtractor::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;
 		}
 
-		void FeatureExtractor::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void FeatureExtractor::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;

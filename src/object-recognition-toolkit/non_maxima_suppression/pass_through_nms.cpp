@@ -26,12 +26,12 @@ namespace object_recognition_toolkit
 			(void)confidences;
 		}
 
-		void PassThroughNms::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void PassThroughNms::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<NonMaximaSuppressor>(*this);
 		}
 
-		void PassThroughNms::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void PassThroughNms::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<NonMaximaSuppressor>(*this);
 		}

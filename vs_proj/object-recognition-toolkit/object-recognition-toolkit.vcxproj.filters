@@ -41,6 +41,7 @@
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\named.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\core\serialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -22,9 +22,7 @@
 #include <algorithm>
 #include <random>
 
-#include <boost/serialization/base_object.hpp>
-#include <boost/archive/polymorphic_text_iarchive.hpp>
-#include <boost/archive/polymorphic_text_oarchive.hpp>
+
 
 #include <opencv2/opencv.hpp>
 
@@ -69,18 +67,14 @@ void test_detectror_class()
 		};
 
 		std::ofstream ofs("detector.dat");
-		boost::archive::polymorphic_text_oarchive poa(ofs);
-		boost::archive::polymorphic_oarchive& oa = poa;
-
+		object_recognition_toolkit::core::oarchive oa(ofs);
 		oa << detector;
 	}
 
 	{
 	std::unique_ptr<Detector> detector;
 	std::ifstream ifs("detector.dat");
-	boost::archive::polymorphic_text_iarchive pia(ifs);
-
-	boost::archive::polymorphic_iarchive& ia = pia;
+	object_recognition_toolkit::core::iarchive ia(ifs);
 	ia >> detector;
 
 	(void)detector;
@@ -698,9 +692,7 @@ void save_classifier(const std::string& filename, const std::shared_ptr<Classifi
 		throw std::invalid_argument("cls is null");
 
 	std::ofstream ofs(filename);
-	boost::archive::polymorphic_text_oarchive poa(ofs);
-	boost::archive::polymorphic_oarchive& oa = poa;
-
+	object_recognition_toolkit::core::oarchive oa(ofs);
 	Classifier* p = cls.get();
 	oa << p;
 }
@@ -709,8 +701,8 @@ void save_classifier(const std::string& filename, const std::shared_ptr<Classifi
 std::shared_ptr<Classifier> load_classifier(const std::string& filename)
 {
 	std::ifstream ifs(filename);
-	boost::archive::polymorphic_text_iarchive pia(ifs);
-	boost::archive::polymorphic_iarchive& ia = pia;
+	object_recognition_toolkit::core::iarchive ia(ifs);
+
 	Classifier* cls = nullptr;
 	ia >> cls;
 
@@ -733,36 +725,6 @@ void test_dummy_serialization()
 
 	auto trainer = object_recognition_toolkit::classification::LinearSvcTrainer();
 	std::shared_ptr<Classifier> cls(trainer.Train(X, y));
-
-
-
-	{
-
-
-		auto ppp = dynamic_cast<object_recognition_toolkit::classification::Classifier*>(cls.get());
-
-		std::ofstream ofs("dumm_.cls");
-		boost::archive::polymorphic_text_oarchive poa(ofs);
-		boost::archive::polymorphic_oarchive& oa = poa;
-
-
-		//oa.register_type(static_cast<object_recognition_toolkit::core::Algorithm*>(nullptr));
-		//oa.register_type(static_cast<object_recognition_toolkit::classification::Classifier*>(nullptr));
-		//oa.register_type(static_cast<object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier*>(nullptr));
-
-		oa << ppp;
-	}
-	{
-		//object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier* ppp = new object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier();
-		//object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier* ppp = nullptr;
-		object_recognition_toolkit::classification::Classifier* ppp = nullptr;
-		std::ifstream ifs("dumm_.cls");
-		boost::archive::polymorphic_text_iarchive pia(ifs);
-		boost::archive::polymorphic_iarchive& ia = pia;
-		ia >> ppp;
-
-		int jedgs = 0;
-	}
 
 
 	save_classifier("dummy.cls", cls);

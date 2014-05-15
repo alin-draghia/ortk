@@ -124,7 +124,7 @@ namespace object_recognition_toolkit
 			return *this->nonMaximaSuppressor_;
 		}
 
-		void DetectorBase::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void DetectorBase::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<Detector>(*this);
 			ar >> pyramidBuilder_;
@@ -134,7 +134,7 @@ namespace object_recognition_toolkit
 			ar >> nonMaximaSuppressor_;
 		}
 
-		void DetectorBase::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void DetectorBase::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<Detector>(*this);
 			ar << pyramidBuilder_;

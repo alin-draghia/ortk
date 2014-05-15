@@ -9,14 +9,14 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		void ImagePyramid::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void ImagePyramid::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;
 		}
 
 
-		void ImagePyramid::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void ImagePyramid::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;

@@ -10,13 +10,13 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		void ImageScanner::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void ImageScanner::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;
 		}
 		
-		void ImageScanner::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void ImageScanner::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			(void)ar;
 			(void)version;

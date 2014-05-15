@@ -1,11 +1,5 @@
 #include <memory>
 
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/base_object.hpp>
-#include <boost/archive/polymorphic_iarchive.hpp>
-#include <boost/archive/polymorphic_oarchive.hpp>
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/factory.hpp>
 #include <opencv2/opencv.hpp>
 
 #include "object-recognition-toolkit/classification/linear-svc-trainer.h"
@@ -79,7 +73,7 @@ namespace object_recognition_toolkit {
 		}
 
 
-		void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void LinearSvcTrainer::LinearSvcClassifier::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<Classifier>(*this);
 			std::string svm_buffer;
@@ -89,7 +83,7 @@ namespace object_recognition_toolkit {
 		}
 
 
-		void LinearSvcTrainer::LinearSvcClassifier::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void LinearSvcTrainer::LinearSvcClassifier::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<Classifier>(*this);
 			cv::FileStorage fs("", cv::FileStorage::WRITE + cv::FileStorage::FORMAT_YAML + cv::FileStorage::MEMORY);

@@ -68,7 +68,7 @@ namespace object_recognition_toolkit
 			}
 		}
 
-		void DenseImageScanner::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void DenseImageScanner::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<ImageScanner>(*this);
 			ar >> windowSize_;
@@ -76,7 +76,7 @@ namespace object_recognition_toolkit
 			ar >> padding_;
 		}
 
-		void DenseImageScanner::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void DenseImageScanner::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<ImageScanner>(*this);
 			ar << windowSize_;

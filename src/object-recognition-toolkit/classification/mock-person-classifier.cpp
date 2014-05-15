@@ -35,12 +35,12 @@ namespace object_recognition_toolkit
 			return conf;
 		}
 
-		void MockPersonClassifier::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void MockPersonClassifier::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<Classifier>(*this);
 		}
 
-		void MockPersonClassifier::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void MockPersonClassifier::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<Classifier>(*this);
 		}

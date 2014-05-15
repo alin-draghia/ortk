@@ -38,7 +38,7 @@ namespace object_recognition_toolkit {
 		}
 
 
-		void HogFeatureExtractor::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		void HogFeatureExtractor::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<FeatureExtractor>(*this);
 			ar >> winSize_;
@@ -47,7 +47,7 @@ namespace object_recognition_toolkit {
 			ar >> nBins_;
 		}
 
-		void HogFeatureExtractor::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		void HogFeatureExtractor::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<FeatureExtractor>(*this);
 			ar << winSize_;
