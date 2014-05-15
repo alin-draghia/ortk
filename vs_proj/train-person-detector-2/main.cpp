@@ -38,6 +38,10 @@
 #include <object-recognition-toolkit/classification/classifier.h>
 #include <object-recognition-toolkit/classification/linear-svc.h>
 #include <object-recognition-toolkit/classification/linear-svc-trainer.h>
+#include <object-recognition-toolkit/detection/detector.h>
+#include <object-recognition-toolkit/classification/mock-person-classifier.h>
+#include <object-recognition-toolkit/non_maxima_suppression/non_maxima_suppressor.h>
+#include <object-recognition-toolkit/non_maxima_suppression/pass_through_nms.h>
 
 using object_recognition_toolkit::classification::Trainer;
 using object_recognition_toolkit::classification::Classifier;
@@ -45,8 +49,61 @@ using object_recognition_toolkit::feature_extraction::FeatureExtractor;
 using object_recognition_toolkit::image_scanning::ImageScanner;
 using object_recognition_toolkit::pyramid::ImagePyramid;
 using object_recognition_toolkit::pyramid::PyramidLevel;
+using object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor;
+using object_recognition_toolkit::detection::Detector;
+
+void test_detectror_class()
+{
+	{
+		std::unique_ptr<Detector> detector{
+			new Detector{
+				new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } },
+				new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } },
+				new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
+				new object_recognition_toolkit::classification::MockPersonClassifier(),
+				new object_recognition_toolkit::non_maxima_suppression::PassThroughNms()
+			}
+		};
+
+		std::ofstream ofs("detector.dat");
+		boost::archive::polymorphic_text_oarchive poa(ofs);
+		boost::archive::polymorphic_oarchive& oa = poa;
+
+		oa << detector;
+	}
+
+	{
+		std::unique_ptr<Detector> detector;
+		std::ifstream ifs("detector.dat");
+		boost::archive::polymorphic_text_iarchive pia(ifs);
+
+		boost::archive::polymorphic_iarchive& ia = pia;
+		ia >> detector;
+
+		(void)detector;
+		
+
+		cv::Mat disp, im = cv::imread(R"(..\datasets\INRIAPerson\Test\pos\crop001501.png)", cv::IMREAD_GRAYSCALE);
+		cv::cvtColor(im, disp, cv::COLOR_GRAY2BGR);
+		std::vector<cv::Rect> dets;
+		std::vector<double> conf;
+		detector->detect(im, dets, conf, 0.0);
+
+		for (cv::Rect& det : dets) {
+			cv::rectangle(disp, det, CV_RGB(255, 0, 0), 1);
+		}
+
+		cv::imshow("out", disp);
+		cv::waitKey();
+
+	}
+	
+	
+}
 
 namespace fs = std::tr2::sys;
+
+
 
 void save_classifier(const std::string& filename, const std::shared_ptr<Classifier>& cls);
 std::shared_ptr<Classifier> load_classifier(const std::string& filename);
@@ -190,7 +247,8 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 
 int _tmain(int argc, _TCHAR* argv[ ])
 {
-
+	test_detectror_class();
+	return 0;
 
 	// two pass object detector traing
 
