@@ -5,9 +5,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include "../core/public-api.h"
 #include "./image-pyramid.h"
-#include "../core/serialization.h"
 
 namespace object_recognition_toolkit
 {
@@ -21,11 +19,16 @@ namespace object_recognition_toolkit
 			FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize);
 			virtual ~FloatImagePyramid();
 
+		public:
+			virtual const std::string& name() const;
+
+		public:
+			virtual std::vector<PyramidLevel> Build(cv::Mat image) const;
+
+		public:
 			double GetScaleFactor() const;
 			cv::Size GetMinSize() const;
 			cv::Size GetMaxSize() const;
-
-			virtual std::vector<PyramidLevel> Build(cv::Mat image) const;
 
 		private:
 			double scaleFactor_;
