@@ -15,6 +15,15 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		void ImagePyramid::serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version)
+		{
+			ar >> boost::serialization::base_object<Algorithm>(*this);
+		}
 
+
+		void ImagePyramid::serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version)
+		{
+			ar << boost::serialization::base_object<Algorithm>(*this);
+		}
 	}
 }

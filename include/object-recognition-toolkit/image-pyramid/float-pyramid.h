@@ -7,6 +7,7 @@
 
 #include "../core/public-api.h"
 #include "./image-pyramid.h"
+#include "../core/serialization.h"
 
 namespace object_recognition_toolkit
 {
@@ -25,12 +26,15 @@ namespace object_recognition_toolkit
 
 			virtual std::vector<PyramidLevel> Build(cv::Mat image) const;
 
-
-
 		private:
 			double scaleFactor_;
 			cv::Size minSize_;
 			cv::Size maxSize_;
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 	}
 }

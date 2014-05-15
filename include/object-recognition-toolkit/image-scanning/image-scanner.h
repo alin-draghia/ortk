@@ -25,6 +25,11 @@ namespace object_recognition_toolkit
 			virtual ~ImageScanner();		
 	
 			virtual void ScanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const = 0;
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(boost::archive::polymorphic_iarchive& ar, const unsigned int version);
+			void serialize(boost::archive::polymorphic_oarchive& ar, const unsigned int version);
 		};
 
 	}
