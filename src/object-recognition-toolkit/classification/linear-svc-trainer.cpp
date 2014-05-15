@@ -101,5 +101,5 @@ namespace object_recognition_toolkit {
 	}
 }
 
-BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier)
+BOOST_CLASS_EXPORT(object_recognition_toolkit::classification::LinearSvcTrainer::LinearSvcClassifier);
 
