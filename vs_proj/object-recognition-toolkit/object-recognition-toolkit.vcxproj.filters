@@ -18,6 +18,7 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\config.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
