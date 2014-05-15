@@ -23,6 +23,7 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\named.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\core\named.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

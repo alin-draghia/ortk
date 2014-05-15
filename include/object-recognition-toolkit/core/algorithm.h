@@ -5,6 +5,8 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
+#if(1)
+
 #include <string>
 
 #include <boost/serialization/access.hpp>
@@ -41,6 +43,8 @@ namespace object_recognition_toolkit {
 
 	}
 }
+
+#endif
 
 #pragma warning(pop)
 
