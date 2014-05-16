@@ -30,3 +30,6 @@ namespace object_recognition_toolkit
 		}
 	}
 }
+
+#define NO_MAKEFILE
+#include <dlib/data_io.h>

@@ -42,6 +42,7 @@
 #include <object-recognition-toolkit/detection/detector.h>
 #include <object-recognition-toolkit/detection/detector_base.h>
 #include <object-recognition-toolkit/detection/detector_base_mt.h>
+#include <object-recognition-toolkit/detection/dallal_triggs_detector_trainer.h>
 
 using object_recognition_toolkit::classification::Trainer;
 using object_recognition_toolkit::classification::Classifier;
@@ -57,6 +58,70 @@ namespace fs = std::tr2::sys;
 
 #include <object-recognition-toolkit/dataset/dataset.h>
 #include <object-recognition-toolkit/core/core.h>
+
+void test_trainer_interface()
+{
+	auto dataset_dir = fs::path{ "./../../datasets/INRIAPerson" };
+	auto train_dir = dataset_dir / fs::path{ "train_64x128_H96" };
+	auto positive_dir = train_dir / fs::path{ "pos" };
+	auto negative_dir = train_dir / fs::path{ "neg" };
+
+	object_recognition_toolkit::dataset::Dataset positives, negatives;
+
+	std::vector<std::string> positive_filenames;
+	for (auto it = fs::directory_iterator(positive_dir); it != fs::directory_iterator(); it++) {
+		positive_filenames.push_back(it->path());
+	}
+
+	std::vector<std::string> negative_filenames;
+	for (auto it = fs::directory_iterator(negative_dir); it != fs::directory_iterator(); it++) {
+		negative_filenames.push_back(it->path());
+	}
+
+	object_recognition_toolkit::dataset::LoadDatasetFiles(positive_filenames, positives);
+	object_recognition_toolkit::dataset::LoadDatasetFiles(negative_filenames, negatives);
+
+	object_recognition_toolkit::dataset::Box positive_box;
+	positive_box.rect.set_left(15);
+	positive_box.rect.set_top(15);
+	positive_box.rect.set_right(15 + 64 - 1);
+	positive_box.rect.set_bottom(15 + 128 - 1);
+
+	auto w = positive_box.rect.width();
+	auto h = positive_box.rect.height();
+
+	for (auto& positive_image : positives.images)
+	{
+		positive_image.boxes.push_back(positive_box);
+	}
+
+	auto trainerParams = object_recognition_toolkit::detection::DallalTriggsDetectorTrainer::Params();
+	trainerParams.numStages = 5;
+	trainerParams.numPositives = 3000;
+	trainerParams.numNegatives = 3000;
+	trainerParams.trainingSize = { 64, 128 };
+	trainerParams.pyramidBuilder.reset(
+		new object_recognition_toolkit::pyramid::FloatImagePyramid(1.2, {}, {})
+		);
+	trainerParams.imageScanner.reset(
+		new object_recognition_toolkit::image_scanning::DenseImageScanner({ 64, 128 }, { 8, 8 }, { 0, 0 })
+		);
+	trainerParams.featureExtractor.reset(
+		new object_recognition_toolkit::feature_extraction::HogFeatureExtractor()
+		);
+	trainerParams.trainer.reset(
+		new object_recognition_toolkit::classification::LinearSvcTrainer()
+		);
+	trainerParams.nonMaxSupperssor.reset(
+		new object_recognition_toolkit::non_maxima_suppression::PassThroughNms()
+		);
+
+	std::unique_ptr<object_recognition_toolkit::detection::DetectorTrainer> trainer(
+		new object_recognition_toolkit::detection::DallalTriggsDetectorTrainer(trainerParams)
+		);
+
+	trainer->Train(positives, negatives);
+}
 
 void test_dataset_loader()
 {
@@ -286,6 +351,9 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	test_trainer_interface();
+	return 0;
+
 	test_dataset_loader();
 	return 0;
 
