@@ -52,6 +52,46 @@ using object_recognition_toolkit::pyramid::PyramidLevel;
 using object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor;
 using object_recognition_toolkit::detection::Detector;
 
+namespace fs = std::tr2::sys;
+
+
+#include <object-recognition-toolkit/dataset/dataset.h>
+#include <object-recognition-toolkit/core/core.h>
+
+void test_dataset_loader()
+{
+	auto base_path = R"(..\..\datasets\INRIAPerson)";
+	auto train_metadata_dir = R"(..\..\datasets\INRIAPerson\Train\annotations)";
+
+	std::vector<std::string> annotations_filenames;
+	for (auto it = fs::directory_iterator(train_metadata_dir); it != fs::directory_iterator(); it++) {
+		annotations_filenames.push_back(it->path());
+	}
+
+	object_recognition_toolkit::dataset::Dataset dataset;
+
+	object_recognition_toolkit::dataset::LoadDatasetPascalV1(annotations_filenames, dataset, base_path);
+
+	for (auto& im : dataset.images) {
+		auto image = object_recognition_toolkit::core::imread(im.filename);
+
+		for (auto& box : im.boxes) {
+			cv::Rect rect(box.rect.left(), box.rect.top(), box.rect.width(), box.rect.height());
+			cv::rectangle(image, rect, CV_RGB(255, 0, 0));
+		}
+
+		object_recognition_toolkit::core::imshow(image);
+		int key = object_recognition_toolkit::core::show();
+		if (key == 27) {
+			break;
+		}
+	}
+
+	object_recognition_toolkit::dataset::SaveDatasetDlib("mydataset.xml", dataset);
+
+	int odigshod = 0;
+}
+
 void test_detectror_class()
 {
 	{
@@ -99,7 +139,7 @@ void test_detectror_class()
 
 }
 
-namespace fs = std::tr2::sys;
+
 
 
 
@@ -246,6 +286,9 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	test_dataset_loader();
+	return 0;
+
 	test_detectror_class();
 	return 0;
 
