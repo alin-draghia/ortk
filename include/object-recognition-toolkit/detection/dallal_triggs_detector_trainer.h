@@ -14,7 +14,7 @@ namespace object_recognition_toolkit
 {
 	namespace detection
 	{
-		class DallalTriggsDetectorTrainer
+		class PUBLIC_API DallalTriggsDetectorTrainer
 			: public DetectorTrainer
 		{
 		public:
@@ -44,7 +44,7 @@ namespace object_recognition_toolkit
 		private:
 			core::Matrix extractPositives(const dataset::Dataset& positive) const;
 			core::Matrix extractNegatives(const dataset::Dataset& negative, classification::Classifier* classifier) const;
-
+			Detector* buildDetector(classification::Classifier* classifier);
 		private:
 			friend class boost::serialization::access;
 			void serialize(core::iarchive& ar, const unsigned int version);

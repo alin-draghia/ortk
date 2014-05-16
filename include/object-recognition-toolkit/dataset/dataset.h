@@ -2,8 +2,6 @@
 #ifndef DATASET_H_INCLUDED_
 #define DATASET_H_INCLUDED_
 
-
-#define NO_MAKEFILE
 #include <dlib/data_io.h>
 
 
@@ -25,7 +23,7 @@ namespace object_recognition_toolkit
 		void PUBLIC_API LoadDatasetPascalV1(const std::vector<std::string>& filenames, Dataset& dataset, const std::string& basepath = std::string());
 		void PUBLIC_API LoadDatasetPascalXml(const std::vector<std::string>& filenames, Dataset& dataset);
 
-		void PUBLIC_API LoadDatasetFiles(const std::vector<std::string>& filenames, Dataset& dataset, const std::string& label="None");
+		void PUBLIC_API LoadDatasetFiles(const std::vector<std::string>& filenames, Dataset& dataset);
 
 	}
 }

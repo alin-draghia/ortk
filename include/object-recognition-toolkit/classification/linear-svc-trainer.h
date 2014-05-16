@@ -29,7 +29,7 @@ namespace object_recognition_toolkit
 
 			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
 
-		private:
+		public:
 			class PUBLIC_API LinearSvcClassifier 
 				: public Classifier
 			{

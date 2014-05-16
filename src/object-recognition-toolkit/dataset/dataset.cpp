@@ -42,13 +42,11 @@ namespace object_recognition_toolkit
 		}
 
 
-		void LoadDatasetFiles(const std::vector<std::string>& filenames, Dataset& dataset, const std::string& label)
+		void LoadDatasetFiles(const std::vector<std::string>& filenames, Dataset& dataset)
 		{
 			for (const std::string& filename : filenames)
 			{				
 				dataset.images.emplace_back(filename);
-				dataset.images.back().boxes.emplace_back();
-				dataset.images.back().boxes.back().label = label;
 			}
 		}
 	}

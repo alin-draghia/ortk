@@ -26,9 +26,7 @@ namespace object_recognition_toolkit
 
 		Detector* DallalTriggsDetectorTrainer::Train(const dataset::Dataset& positive, const dataset::Dataset& negative)
 		{
-
-
-
+			std::unique_ptr<detection::Detector> detector;
 			std::unique_ptr<classification::Classifier> classifier;
 			auto trainer = params_.trainer;
 
@@ -48,7 +46,7 @@ namespace object_recognition_toolkit
 				int pos_count = X_pos.rows;
 				int neg_count = X_neg_total.rows;
 
-				core::Matrix X, y;
+				core::Matrix X, y, y_pos, y_neg;
 				X.create(0, X_pos.cols, CV_32F);
 				X.reserve(pos_count + neg_count);
 				y.create(0, 1, CV_32F);
@@ -56,60 +54,30 @@ namespace object_recognition_toolkit
 
 				X.push_back(X_pos);
 				X.push_back(X_neg_total);
-				y.push_back(core::Matrix::ones(pos_count, 1, CV_32F) * 1.0f);
-				y.push_back(core::Matrix::ones(neg_count, 1, CV_32F) * -1.0f);
 
+				y_pos.create(pos_count, 1, CV_32F);
+				y_pos = 1.0f;
+
+				y_neg.create(neg_count, 1, CV_32F);
+				y_neg = -1.0f;
+
+				y.push_back(y_pos);
+				y.push_back(y_neg);
+
+				
 
 				classifier.reset(
 					trainer->Train(X, y)
 					);
 
+				detector.reset(
+					buildDetector(classifier.get())
+				);
+
 				std::cerr << "done" << std::endl;
 			}
 
-			std::stringstream ss;
-			{
-				auto pyramidBuilder = params_.pyramidBuilder.get();
-				auto imageScanner = params_.imageScanner.get();
-				auto featureExtractor = params_.featureExtractor.get();
-				auto nonMaximaSuppressor = params_.nonMaxSupperssor.get();
-				auto classifier0 = classifier.get();
-
-				core::oarchive oa(ss);
-				oa << pyramidBuilder;
-				oa << imageScanner;
-				oa << featureExtractor;
-				oa << nonMaximaSuppressor;
-				oa << classifier0;
-			}
-
-			{
-				pyramid::ImagePyramid* pyramidBuilder;
-				image_scanning::ImageScanner* imageScanner;
-				feature_extraction::FeatureExtractor* featureExtractor;
-				non_maxima_suppression::NonMaximaSuppressor* nonMaximaSuppressor;
-				classification::Classifier* classifier0;
-
-				core::iarchive ia(ss);
-				ia >> pyramidBuilder;
-				ia >> imageScanner;
-				ia >> featureExtractor;
-				ia >> nonMaximaSuppressor;
-				ia >> classifier0;
-
-				std::unique_ptr<detection::Detector> detector{
-					new DetectorBaseMt(pyramidBuilder,
-						imageScanner,
-						featureExtractor,
-						classifier0,
-						nonMaximaSuppressor
-					)
-				};
-
-				return detector.release();
-
-			}
-
+			return detector.release();			
 		}
 
 		struct done_collecting_samples{};
@@ -245,6 +213,63 @@ namespace object_recognition_toolkit
 			return X;
 		}
 
+		Detector* DallalTriggsDetectorTrainer::buildDetector(classification::Classifier* classifier)
+		{
+			std::stringstream ss;
+
+			{
+				auto pyramidBuilder = params_.pyramidBuilder.get();
+				auto imageScanner = params_.imageScanner.get();
+				auto featureExtractor = params_.featureExtractor.get();
+				auto nonMaximaSuppressor = params_.nonMaxSupperssor.get();
+
+
+				core::oarchive oa(ss);
+				oa << pyramidBuilder;
+				oa << imageScanner;
+				oa << featureExtractor;
+				oa << nonMaximaSuppressor;
+				oa << classifier;
+			}
+
+			{
+				pyramid::ImagePyramid* pyramidBuilder;
+				image_scanning::ImageScanner* imageScanner;
+				feature_extraction::FeatureExtractor* featureExtractor;
+				non_maxima_suppression::NonMaximaSuppressor* nonMaximaSuppressor;
+				classification::Classifier* classifier0;
+
+				core::iarchive ia(ss);
+				ia >> pyramidBuilder;
+				ia >> imageScanner;
+				ia >> featureExtractor;
+				ia >> nonMaximaSuppressor;
+				ia >> classifier0;
+
+				std::unique_ptr<detection::Detector> detector{
+					new DetectorBaseMt(pyramidBuilder,
+					imageScanner,
+					featureExtractor,
+					classifier0,
+					nonMaximaSuppressor
+					)
+				};
+
+				return detector.release();
+			}
+		}
+
+		void DallalTriggsDetectorTrainer::serialize(core::iarchive& ar, const unsigned int version)
+		{
+			(void)ar;
+			(void)version;
+		}
+
+		void DallalTriggsDetectorTrainer::serialize(core::oarchive& ar, const unsigned int version)
+		{
+			(void)ar;
+			(void)version;
+		}
 
 	}
 }
