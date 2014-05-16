@@ -24,6 +24,8 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\named.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base_mt.h" />
+    <ClInclude Include="include\object-recognition-toolkit\dataset\dataset.h" />
+    <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -45,6 +47,8 @@
     <ClCompile Include="src\object-recognition-toolkit\core\serialization.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_base_mt.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\core.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\dataset\dataset.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
