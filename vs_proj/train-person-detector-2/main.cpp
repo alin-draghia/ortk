@@ -96,6 +96,7 @@ void test_trainer_interface()
 	}
 
 	auto trainerParams = object_recognition_toolkit::detection::DallalTriggsDetectorTrainer::Params();
+	trainerParams.data_directory = "./train_data_v1/";
 	trainerParams.numStages = 5;
 	trainerParams.numPositives = 3000;
 	trainerParams.numNegatives = 3000;

@@ -23,6 +23,7 @@ namespace object_recognition_toolkit
 				size_t numPositives;
 				size_t numNegatives;
 				core::Size trainingSize;
+				std::string data_directory;
 				std::shared_ptr<pyramid::ImagePyramid> pyramidBuilder;
 				std::shared_ptr<image_scanning::ImageScanner> imageScanner;
 				std::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor;
