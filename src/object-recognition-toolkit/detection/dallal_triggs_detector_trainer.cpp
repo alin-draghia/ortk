@@ -29,6 +29,24 @@ namespace object_recognition_toolkit
 
 		Detector* DallalTriggsDetectorTrainer::Train(const dataset::Dataset& positive, const dataset::Dataset& negative)
 		{
+			core::Matrix X_pos;
+			core::Matrix X_neg, X_neg_total;
+			auto numStages = params_.numStages;
+			auto numPositives = params_.numPositives;
+			auto numNegatives = params_.numNegatives;
+			auto trainer = params_.trainer;
+			auto featureExtractor = params_.featureExtractor;
+			auto featureLenght = featureExtractor->lenght();
+
+
+			X_pos.create(0, featureLenght, CV_32F);
+			X_pos.reserve(numPositives);
+
+			X_neg.create(0, featureLenght, CV_32F);
+			X_neg.reserve(numNegatives);
+
+			X_neg_total.create(0, featureLenght, CV_32F);
+			X_neg_total.reserve(numNegatives * numStages);
 
 			std::string& data_directory = params_.data_directory;
 			if (!fs::exists(fs::path(data_directory))) {
@@ -37,28 +55,24 @@ namespace object_recognition_toolkit
 
 			std::unique_ptr<detection::Detector> detector;
 			std::unique_ptr<classification::Classifier> classifier;
-			auto trainer = params_.trainer;
+		
 
 			fs::path positive_features_filename
 				= fs::path(data_directory) / fs::path("positive_features.yaml");
 
-			core::Matrix X_pos;
 
 			if (fs::exists(positive_features_filename)) {
 				cv::FileStorage fileStorage;
 				fileStorage.open(positive_features_filename, cv::FileStorage::READ);
 				fileStorage["features"] >> X_pos;
-			} else {
+			}
+			else {
 				X_pos = extractPositives(positive);
 				cv::FileStorage fileStorage;
 				fileStorage.open(positive_features_filename, cv::FileStorage::WRITE);
 				fileStorage << "features" << X_pos;
 			}
 
-
-			core::Matrix X_neg, X_neg_total;
-
-			auto numStages = params_.numStages;
 
 			for (size_t stage = 0; stage < numStages; stage++)
 			{
@@ -74,8 +88,13 @@ namespace object_recognition_toolkit
 
 				std::cerr << "Training stage " << std::to_string(stage) << " ... ";
 
-				X_neg = extractNegatives(negative, classifier.get());
-				{
+				if (fs::exists(stage_negative_features_filename)) {
+					cv::FileStorage storage;
+					storage.open(stage_negative_features_filename, cv::FileStorage::READ);
+					storage["features"] >> X_neg;
+				}
+				else {
+					X_neg = extractNegatives(negative, classifier.get());
 					cv::FileStorage storage;
 					storage.open(stage_negative_features_filename, cv::FileStorage::WRITE);
 					storage << "features" << X_neg;
@@ -102,32 +121,42 @@ namespace object_recognition_toolkit
 				y_neg = -1.0f;
 
 				y.push_back(y_pos);
-				y.push_back(y_neg);				
+				y.push_back(y_neg);
 
-				classifier.reset(
-					trainer->Train(X, y)
-					);
+				if (fs::exists(stage_classifier_filename)) {
+					std::ifstream ifs(stage_classifier_filename);
+					core::iarchive ia(ifs);
+					ia >> classifier;
+				} else {
 
-				{
+					classifier.reset(
+						trainer->Train(X, y)
+						);
+
 					std::ofstream ofs(stage_classifier_filename);
 					core::oarchive oa(ofs);
 					oa << classifier;
 				}
 
-				detector.reset(
-					buildDetector(classifier.get())
-					);
+				if (fs::exists(stage_detector_filename)) {
+					std::ifstream ifs(stage_detector_filename);
+					core::iarchive ia(ifs);
+					ia >> detector;
+				} else {
 
-				{
-					std::ofstream ofs(stage_detector_filename);				
-					core::oarchive oa(ofs);				
+					detector.reset(
+						buildDetector(classifier.get())
+						);
+				
+					std::ofstream ofs(stage_detector_filename);
+					core::oarchive oa(ofs);
 					oa << detector;
 				}
 
 				std::cerr << "done" << std::endl;
 			}
 
-			return detector.release();			
+			return detector.release();
 		}
 
 		struct done_collecting_samples{};
@@ -164,14 +193,14 @@ namespace object_recognition_toolkit
 						cv::Mat_<float> fv(features);
 						cv::Mat_<float> fv0 = fv.reshape(1, 1);
 
-					
+
 						X.push_back(fv0);
 
 						count += 1;
 						if (count == numSamples) {
 							throw done_collecting_samples();
 						}
-						
+
 					}
 				}
 

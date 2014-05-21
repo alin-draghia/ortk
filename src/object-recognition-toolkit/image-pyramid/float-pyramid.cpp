@@ -65,6 +65,10 @@ namespace object_recognition_toolkit
 					break;
 				}
 
+				if (width == 0 || height == 0) {
+					break;
+				}
+
 				cv::Mat image0;
 				cv::resize(image, image0, cv::Size(), scale, scale, cv::INTER_LINEAR);
 
