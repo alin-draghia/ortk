@@ -207,9 +207,6 @@ void test_detectror_class()
 }
 
 
-
-
-
 void save_classifier(const std::string& filename, const std::shared_ptr<Classifier>& cls);
 std::shared_ptr<Classifier> load_classifier(const std::string& filename);
 
@@ -351,8 +348,64 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 	return ret;
 }
 
+void test_detector()
+{
+	const std::string test_samples_directory = "./../../datasets/INRIAPerson/Test/pos";
+	std::vector<std::string> test_samples_filenames;
+
+	for (auto it = fs::directory_iterator(fs::path(test_samples_directory)); it != fs::directory_iterator(); it++) {
+		test_samples_filenames.push_back(it->path());
+	}
+
+
+	object_recognition_toolkit::
+		dataset::Dataset test_dataset;
+
+	object_recognition_toolkit::dataset::LoadDatasetFiles(test_samples_filenames, test_dataset);
+
+	const std::string detector_filename = "train_data_v1/detector-stage-4.dat";
+	std::unique_ptr<Detector> detector;
+	{
+		std::ifstream ifs(detector_filename);
+		bool is_open = ifs.is_open();
+		object_recognition_toolkit::core::iarchive ia(ifs);
+		ia >> detector;
+
+		std::ofstream ofs("train_data_v1/detector-stage-4.dat.0");
+		object_recognition_toolkit::core::oarchive oa(ofs);
+		auto ptr = detector.get();
+		oa << ptr;
+
+	}
+
+
+	for (auto& test_image : test_dataset.images)
+	{
+		auto im = object_recognition_toolkit::core::imread(test_image.filename, false);
+		std::vector<cv::Rect> dets;
+		std::vector<double> confs;
+		detector->detect(im, dets, confs, 0.0);
+
+		auto disp = object_recognition_toolkit::core::imread(test_image.filename, true);
+		for (auto& det : dets) {
+			cv::rectangle(disp, det, CV_RGB(255, 0, 0));
+		}
+
+		object_recognition_toolkit::core::imshow(disp);
+		object_recognition_toolkit::core::show();
+
+
+	}
+
+}
+
+
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+	test_detector();
+	return 0;
+
 	test_trainer_interface();
 	return 0;
 
