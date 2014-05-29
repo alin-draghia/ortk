@@ -1,26 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "object-recognition-toolkit", "object-recognition-toolkit\object-recognition-toolkit.vcxproj", "{C8F47735-0511-45DA-917B-4EDC36674DD2}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "person-detection-sample", "person-detection-sample\person-detection-sample.vcxproj", "{418B5806-15D2-4FDC-BB4A-380D86A5832D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "train-person-detector", "train-person-detector\train-person-detector.vcxproj", "{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "train-person-detector-2", "train-person-detector-2\train-person-detector-2.vcxproj", "{E4BE7B29-C340-4738-A9B3-62A32687B124}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C8F47735-0511-45DA-917B-4EDC36674DD2} = {C8F47735-0511-45DA-917B-4EDC36674DD2}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dummy-project", "dummy-project\dummy-project.vcxproj", "{C3A6257C-9052-413F-882E-4D886AB7DB8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,22 +20,10 @@ Global
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Debug|x64.Build.0 = Debug|x64
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Release|x64.ActiveCfg = Release|x64
 		{C8F47735-0511-45DA-917B-4EDC36674DD2}.Release|x64.Build.0 = Release|x64
-		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Debug|x64.ActiveCfg = Debug|x64
-		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Debug|x64.Build.0 = Debug|x64
-		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Release|x64.ActiveCfg = Release|x64
-		{418B5806-15D2-4FDC-BB4A-380D86A5832D}.Release|x64.Build.0 = Release|x64
-		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Debug|x64.ActiveCfg = Debug|x64
-		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Debug|x64.Build.0 = Debug|x64
-		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Release|x64.ActiveCfg = Release|x64
-		{6DFAA3C4-CE6E-48D3-81D9-ECF646343C3B}.Release|x64.Build.0 = Release|x64
 		{E4BE7B29-C340-4738-A9B3-62A32687B124}.Debug|x64.ActiveCfg = Debug|x64
 		{E4BE7B29-C340-4738-A9B3-62A32687B124}.Debug|x64.Build.0 = Debug|x64
 		{E4BE7B29-C340-4738-A9B3-62A32687B124}.Release|x64.ActiveCfg = Release|x64
 		{E4BE7B29-C340-4738-A9B3-62A32687B124}.Release|x64.Build.0 = Release|x64
-		{C3A6257C-9052-413F-882E-4D886AB7DB8D}.Debug|x64.ActiveCfg = Debug|x64
-		{C3A6257C-9052-413F-882E-4D886AB7DB8D}.Debug|x64.Build.0 = Debug|x64
-		{C3A6257C-9052-413F-882E-4D886AB7DB8D}.Release|x64.ActiveCfg = Release|x64
-		{C3A6257C-9052-413F-882E-4D886AB7DB8D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
