@@ -68,8 +68,9 @@ namespace object_recognition_toolkit {
 
 		double LinearSvcTrainer::LinearSvcClassifier::Predict(const core::FeatureVector& instance) const
 		{
-			
-			return (double)svm_.predict(instance, true) * -1.0;
+			double score = (double)svm_.predict(instance, true);
+			//score = -score;
+			return score;
 		}
 
 
