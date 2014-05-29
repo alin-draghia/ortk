@@ -5,7 +5,6 @@
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />

@@ -42,8 +42,8 @@ namespace object_recognition_toolkit
 		protected:
 			virtual void buildPyramid(const core::Matrix& image, std::vector<pyramid::PyramidLevel>& pyramid) const;
 			virtual void scanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const;
-			virtual void extractFeatures(const core::Matrix& image, std::vector<float>& features) const;
-			virtual void classify(const std::vector<float>& features, double& confidence) const;
+			virtual void extractFeatures(const core::Matrix& image, core::FeatureVector& features) const;
+			virtual void classify(const core::FeatureVector& features, double& confidence) const;
 			virtual void nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
 		private:

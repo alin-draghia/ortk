@@ -79,7 +79,7 @@ namespace object_recognition_toolkit
 				const PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
 
 				double confidence;
-				std::vector<float> features;
+				core::FeatureVector features;
 
 				this->extractFeatures(window, features);
 				this->classify(features, confidence);

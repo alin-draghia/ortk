@@ -23,14 +23,14 @@ namespace object_recognition_toolkit
 
 		double LinearSVC::Predict(const core::FeatureVector& instance) const
 		{
-			if (instance.size() != coefs_.size()) {
+			if (instance.cols != coefs_.size()) {
 				throw std::runtime_error("Invalid instance vector size");
 			}
 
 			double conf = bias_;
 
 			for (size_t i = 0; i < coefs_.size(); i++) {
-				conf += coefs_[i] * instance[i];
+				conf += coefs_[i] * instance.at<float>(i);
 			}
 
 			return conf;

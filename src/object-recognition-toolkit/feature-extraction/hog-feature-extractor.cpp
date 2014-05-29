@@ -24,11 +24,11 @@ namespace object_recognition_toolkit {
 			return name;
 		}
 
-		std::vector<float> HogFeatureExtractor::compute(const cv::Mat& image) const
+		core::FeatureVector HogFeatureExtractor::compute(const cv::Mat& image) const
 		{
 			std::vector<float> feats;
 			hog_.compute(image, feats);
-			return std::move(feats);
+			return core::FeatureVector(feats);
 		}
 
 

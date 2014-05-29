@@ -52,6 +52,7 @@ using object_recognition_toolkit::pyramid::ImagePyramid;
 using object_recognition_toolkit::pyramid::PyramidLevel;
 using object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor;
 using object_recognition_toolkit::detection::Detector;
+using object_recognition_toolkit::core::FeatureVector;
 
 namespace fs = std::tr2::sys;
 
@@ -301,7 +302,7 @@ cv::Mat extract_negative_dataset(const std::vector<fs::path>& sample_files,
 
 				for (const cv::Mat& window : windows) {
 
-					std::vector<float> features = feature_extractor->compute(window);
+					FeatureVector features = feature_extractor->compute(window);
 					if (classifier->Predict(features) > 0.0) {
 						cv::Mat_<float> fv(features);
 						cv::Mat_<float> fv0 = fv.reshape(1, 1);
@@ -339,8 +340,8 @@ std::shared_ptr<Classifier> train_stage(cv::Mat X_pos, cv::Mat X_neg, std::share
 
 	auto ret = std::shared_ptr<Classifier>(trainer->Train(X, y));
 
-	std::vector<float> pos_sample = X_pos.row(0);
-	std::vector<float> neg_sample = X_neg.row(0);
+	FeatureVector pos_sample = X_pos.row(0);
+	FeatureVector neg_sample = X_neg.row(0);
 
 	auto val_pos = ret->Predict(pos_sample);
 	std::cout << "val for positive sample=" << val_pos << std::endl;
@@ -697,7 +698,7 @@ std::unique_ptr<Classifier> second_pass(std::unique_ptr<Classifier>& first_pass_
 			image_scanner->ScanImage(level.GetImage(), windows, std::vector<cv::Rect>());
 
 			for (const cv::Mat& window : windows) {
-				std::vector<float> features = feature_extractor->compute(window);
+				FeatureVector features = feature_extractor->compute(window);
 				if (first_pass_classifier->Predict(features) > 0.0) {
 					cv::Mat_<float> fv(features);
 					cv::Mat_<float> fv0 = fv.reshape(1, 1);
@@ -768,7 +769,7 @@ void run_classifier_over_test_images(std::shared_ptr<Classifier>& classifier,
 			image_scanner->ScanImage(pyramid_level.GetImage(), windows, boxes);
 
 			for (size_t i = 0; i < windows.size(); i++) {
-				std::vector<float> features = feature_extractor->compute(windows[i]);
+				FeatureVector features = feature_extractor->compute(windows[i]);
 
 				double conf = classifier->Predict(features);
 

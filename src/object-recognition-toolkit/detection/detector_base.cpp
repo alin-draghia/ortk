@@ -56,7 +56,7 @@ namespace object_recognition_toolkit
 				for (size_t i = 0; i < windows.size(); i++)
 				{
 					double confidence;
-					std::vector<float> features;
+					core::FeatureVector features;
 					const core::Matrix& window_image = windows[i];
 					const core::Box& window_box = boxes[i];
 
@@ -84,7 +84,7 @@ namespace object_recognition_toolkit
 			this->getImageScanner().ScanImage(image, windows, boxes);
 		}
 
-		void DetectorBase::extractFeatures(const core::Matrix& image, std::vector<float>& features) const
+		void DetectorBase::extractFeatures(const core::Matrix& image, core::FeatureVector& features) const
 		{
 			features = this->getFeatureExtractor().compute(image);
 		}

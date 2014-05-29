@@ -13,7 +13,7 @@ namespace object_recognition_toolkit
 		using Matrix = cv::Mat;
 		using Box = cv::Rect;
 		using Size = cv::Size;
-		using FeatureVector = std::vector<float>;
+		using FeatureVector = cv::Mat;
 
 		Matrix PUBLIC_API imread(const std::string& filename, bool color = true);
 		void PUBLIC_API imwrite(const std::string& filename, const Matrix& image);

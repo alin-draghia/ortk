@@ -33,7 +33,6 @@
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
