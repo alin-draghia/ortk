@@ -5,11 +5,11 @@ namespace object_recognition_toolkit
 	namespace pyramid
 	{
 
-		FloatImagePyramid::FloatImagePyramid()
+		FloatPyramidBuilder::FloatPyramidBuilder()
 		{
 		}
 
-		FloatImagePyramid::FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize)
+		FloatPyramidBuilder::FloatPyramidBuilder(double scaleFactor, cv::Size minSize, cv::Size maxSize)
 			: scaleFactor_{ scaleFactor }
 			, minSize_{ minSize }
 			, maxSize_{ maxSize }
@@ -17,35 +17,35 @@ namespace object_recognition_toolkit
 		}
 
 
-		FloatImagePyramid::~FloatImagePyramid()
+		FloatPyramidBuilder::~FloatPyramidBuilder()
 		{
 		}
 
-		const std::string& FloatImagePyramid::name() const
+		const std::string& FloatPyramidBuilder::name() const
 		{
 			static const std::string name = "FloatImagePyramid";
 			return name;
 		}
 		
-		double FloatImagePyramid::GetScaleFactor() const
+		double FloatPyramidBuilder::GetScaleFactor() const
 		{
 			return scaleFactor_;
 		}
 
 
-		cv::Size FloatImagePyramid::GetMinSize() const
+		cv::Size FloatPyramidBuilder::GetMinSize() const
 		{
 			return minSize_;
 		}
 
 
-		cv::Size FloatImagePyramid::GetMaxSize() const
+		cv::Size FloatPyramidBuilder::GetMaxSize() const
 		{
 			return maxSize_;
 		}
 
 
-		std::vector<PyramidLevel> FloatImagePyramid::Build(const core::Matrix& image) const
+		std::vector<PyramidLevel> FloatPyramidBuilder::Build(const core::Matrix& image) const
 		{
 			std::vector<PyramidLevel> pyramid;
 			
@@ -78,7 +78,7 @@ namespace object_recognition_toolkit
 			return std::move(pyramid);
 		}
 
-		void FloatImagePyramid::serialize(core::iarchive& ar, const unsigned int version)
+		void FloatPyramidBuilder::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<PyramidBuilder>(*this);
 			ar >> scaleFactor_; 
@@ -86,7 +86,7 @@ namespace object_recognition_toolkit
 			ar >> maxSize_;
 		}
 
-		void FloatImagePyramid::serialize(core::oarchive& ar, const unsigned int version)
+		void FloatPyramidBuilder::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<PyramidBuilder>(*this);
 			ar << scaleFactor_;
@@ -98,4 +98,4 @@ namespace object_recognition_toolkit
 }
 
 #include <boost/serialization/export.hpp>
-BOOST_CLASS_EXPORT(object_recognition_toolkit::pyramid::FloatImagePyramid);
+BOOST_CLASS_EXPORT(object_recognition_toolkit::pyramid::FloatPyramidBuilder);

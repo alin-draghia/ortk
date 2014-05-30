@@ -77,7 +77,7 @@ void test_trainer_interface()
 	trainerParams.numNegatives = 3000;
 	trainerParams.trainingSize = { 64, 128 };
 	trainerParams.pyramidBuilder.reset(
-		new object_recognition_toolkit::pyramid::FloatImagePyramid(1.2, {}, {})
+		new object_recognition_toolkit::pyramid::FloatPyramidBuilder(1.2, {}, {})
 		);
 	trainerParams.imageScanner.reset(
 		new object_recognition_toolkit::image_scanning::DenseImageScanner({ 64, 128 }, { 8, 8 }, { 0, 0 })
@@ -140,7 +140,7 @@ void test_detectror_class()
 		{
 			new object_recognition_toolkit::detection::DetectorBaseMt
 			{
-				new object_recognition_toolkit::pyramid::FloatImagePyramid{ 1.2, { 64, 128 }, { 0, 0 } },
+				new object_recognition_toolkit::pyramid::FloatPyramidBuilder{ 1.2, { 64, 128 }, { 0, 0 } },
 				new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } },
 				new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
 				new object_recognition_toolkit::classification::MockPersonClassifier(),
@@ -249,7 +249,7 @@ void test_detector2()
 
 	std::unique_ptr<Detector> detector{
 		new object_recognition_toolkit::detection::DetectorBaseMt{
-			new object_recognition_toolkit::pyramid::FloatImagePyramid(1.05, {}, {}),
+			new object_recognition_toolkit::pyramid::FloatPyramidBuilder(1.05, {}, {}),
 			new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, {} },
 			new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
 			new object_recognition_toolkit::classification::MockPersonClassifier{},

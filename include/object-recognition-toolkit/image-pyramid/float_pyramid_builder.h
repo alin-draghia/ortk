@@ -11,13 +11,13 @@ namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class PUBLIC_API FloatImagePyramid
+		class PUBLIC_API FloatPyramidBuilder
 			: public PyramidBuilder
 		{
-			FloatImagePyramid();
+			FloatPyramidBuilder();
 		public:
-			FloatImagePyramid(double scaleFactor, cv::Size minSize, cv::Size maxSize);
-			virtual ~FloatImagePyramid();
+			FloatPyramidBuilder(double scaleFactor, cv::Size minSize, cv::Size maxSize);
+			virtual ~FloatPyramidBuilder();
 
 		public:
 			virtual const std::string& name() const;
