@@ -33,15 +33,15 @@ namespace object_recognition_toolkit
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 
 			std::vector<image_scanning::Window> windows;
-			std::vector<size_t> pyramid_level_indices;
-			std::vector<PyramidLevel> pyramid;
+			std::vector<int> pyramid_level_indices;
+			pyramid::Pyramid pyramid;
 
 			this->buildPyramid(image, pyramid);
 
-			for (size_t pyramid_level_index = 0; pyramid_level_index < pyramid.size(); pyramid_level_index++)
+			for (int pyramid_level_index = 0; pyramid_level_index < pyramid.GetNumLevels(); pyramid_level_index++)
 			{
 
-				PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
+				const PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
 				std::vector<image_scanning::Window> level_windows;
 
@@ -73,8 +73,8 @@ namespace object_recognition_toolkit
 				int thread_id = omp_get_thread_num();
 
 				const image_scanning::Window& window = windows[i];
-				const size_t pyramid_level_index = pyramid_level_indices[i];
-				const PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
+				const int pyramid_level_index = pyramid_level_indices[i];
+				const PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
 				double confidence = 0.0;
 				core::FeatureVector features;

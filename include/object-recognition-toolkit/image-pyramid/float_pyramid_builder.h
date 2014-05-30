@@ -23,7 +23,7 @@ namespace object_recognition_toolkit
 			virtual const std::string& name() const;
 
 		public:
-			virtual std::vector<PyramidLevel> Build(const core::Matrix& image) const;
+			virtual Pyramid Build(const core::Matrix& image) const;
 
 		public:
 			double GetScaleFactor() const;

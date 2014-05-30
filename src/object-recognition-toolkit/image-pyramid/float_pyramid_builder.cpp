@@ -45,9 +45,9 @@ namespace object_recognition_toolkit
 		}
 
 
-		std::vector<PyramidLevel> FloatPyramidBuilder::Build(const core::Matrix& image) const
+		Pyramid FloatPyramidBuilder::Build(const core::Matrix& image) const
 		{
-			std::vector<PyramidLevel> pyramid;
+			Pyramid pyramid;
 			
 
 			for (int i = 0; true; i++) {
@@ -71,8 +71,9 @@ namespace object_recognition_toolkit
 
 				cv::Mat image0;
 				cv::resize(image, image0, cv::Size(), scale, scale, cv::INTER_LINEAR);
+				
 
-				pyramid.emplace_back(image0, scale);
+				pyramid.AddLevel({ image0, scale });
 			}
 			
 			return std::move(pyramid);

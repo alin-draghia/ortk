@@ -21,7 +21,8 @@ namespace object_recognition_toolkit
 
 			double GetScale() const;
 
-			core::Matrix& GetImage();
+			const core::Matrix& GetImage() const;
+
 			template<typename T>
 			cv::Rect_<T> Transform(const cv::Rect_<T>& box) const;
 
@@ -54,7 +55,7 @@ namespace object_recognition_toolkit
 		}
 
 		inline
-		core::Matrix& PyramidLevel::GetImage()
+		const core::Matrix& PyramidLevel::GetImage() const
 		{
 			return image_;
 		}

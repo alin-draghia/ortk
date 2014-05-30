@@ -40,7 +40,7 @@ namespace object_recognition_toolkit
 			virtual const std::string& name() const;
 
 		protected:
-			virtual void buildPyramid(const core::Matrix& image, std::vector<pyramid::PyramidLevel>& pyramid) const;
+			virtual void buildPyramid(const core::Matrix& image, pyramid::Pyramid& pyramid) const;
 			virtual void scanImage(const core::Matrix& image, std::vector<image_scanning::Window>& windows) const;
 			virtual void extractFeatures(const core::Matrix& image, core::FeatureVector& features) const;
 			virtual void classify(const core::FeatureVector& features, double& confidence) const;

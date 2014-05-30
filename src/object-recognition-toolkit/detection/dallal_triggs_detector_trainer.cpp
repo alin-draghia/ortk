@@ -263,12 +263,16 @@ namespace object_recognition_toolkit
 						auto& filename = dataset_im.filename;
 						core::Matrix image = core::imread(filename, false);
 
-						auto pyramid = pyramidBuilder->Build(image);
+						pyramid::Pyramid pyramid = pyramidBuilder->Build(image);
+						int pyramid_num_levels = pyramid.GetNumLevels();
 
-						for (auto& pyramidLevel : pyramid)
+
+						for (int pyramid_level_index = 0; pyramid_level_index < pyramid_num_levels; pyramid_level_index++)
 						{
+							const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
+
 							auto windows =
-								imageScanner->compute(pyramidLevel.GetImage());
+								imageScanner->compute(pyramid_level.GetImage());
 
 							for (auto& window : windows)
 							{

@@ -1,5 +1,6 @@
 #include "object-recognition-toolkit/detection/detector_base.h"
 
+#include "object-recognition-toolkit/image-pyramid/float_pyramid_builder.h"
 
 using PyramidBuilder = object_recognition_toolkit::pyramid::PyramidBuilder;
 using PyramidLevel = object_recognition_toolkit::pyramid::PyramidLevel;
@@ -39,12 +40,16 @@ namespace object_recognition_toolkit
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 
-			std::vector<PyramidLevel> pyramid;
+			pyramid::Pyramid pyramid;
 
 			this->buildPyramid(image, pyramid);
 
-			for (PyramidLevel& pyramid_level : pyramid)
+			int pyramid_levels_count = pyramid.GetNumLevels();
+
+			for (int pyramid_level_index = 0; pyramid_level_index < pyramid_levels_count; pyramid_level_index++)
 			{
+				const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
+
 				std::vector<image_scanning::Window> windows;
 				const core::Matrix& pyramid_level_image = pyramid_level.GetImage();
 
@@ -69,7 +74,7 @@ namespace object_recognition_toolkit
 
 		}
 
-		void DetectorBase::buildPyramid(const core::Matrix& image, std::vector<pyramid::PyramidLevel>& pyramid) const
+		void DetectorBase::buildPyramid(const core::Matrix& image, pyramid::Pyramid& pyramid) const
 		{
 			pyramid = this->getPyramidBuilder().Build(image);
 		}

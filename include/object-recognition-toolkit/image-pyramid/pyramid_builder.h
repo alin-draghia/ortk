@@ -10,6 +10,7 @@
 #include "../core/named.h"
 #include "../core/serialization.h"
 #include "./pyramid-level.h"
+#include "./pyramid.h"
 
 namespace object_recognition_toolkit
 {
@@ -22,7 +23,7 @@ namespace object_recognition_toolkit
 			virtual ~PyramidBuilder() = 0;
 
 		public:
-			virtual std::vector<PyramidLevel> Build(const core::Matrix& image) const = 0;
+			virtual Pyramid Build(const core::Matrix& image) const = 0;
 			
 		private:
 			friend class boost::serialization::access;

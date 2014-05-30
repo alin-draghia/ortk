@@ -257,6 +257,12 @@ void test_detector2()
 		}
 	};
 
+	{
+		std::ofstream ofs("mock_person_detector");
+		object_recognition_toolkit::core::oarchive oa(ofs);
+		oa << detector;
+	}
+
 
 	for (auto& test_image : test_dataset.images)
 	{
