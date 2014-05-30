@@ -31,6 +31,7 @@
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
