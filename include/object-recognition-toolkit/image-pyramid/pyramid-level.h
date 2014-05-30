@@ -29,7 +29,7 @@ namespace object_recognition_toolkit
 			cv::Rect_<T> Invert(const cv::Rect_<T>& box) const;
 
 			template<typename T>
-			cv::Point_<T> Transofrm(const cv::Point_<T>& pt) const;
+			cv::Point_<T> Transform(const cv::Point_<T>& pt) const;
 
 			template<typename T>
 			cv::Point_<T> Invert(const cv::Point_<T>& pt) const;
@@ -82,7 +82,7 @@ namespace object_recognition_toolkit
 		}
 
 		template<typename T> inline
-		cv::Point_<T> PyramidLevel::Transofrm(const cv::Point_<T>& pt) const
+		cv::Point_<T> PyramidLevel::Transform(const cv::Point_<T>& pt) const
 		{
 			double f = scale_;
 			T x = static_cast<T>(pt.x * f);
