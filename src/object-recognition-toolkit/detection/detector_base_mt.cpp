@@ -28,7 +28,7 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
-		void DetectorBaseMt::detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
+		void DetectorBaseMt::Detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 

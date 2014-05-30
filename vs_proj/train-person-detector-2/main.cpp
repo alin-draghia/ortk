@@ -166,7 +166,7 @@ void test_detectror_class()
 	cv::cvtColor(im, disp, cv::COLOR_GRAY2BGR);
 	std::vector<cv::Rect> dets;
 	std::vector<double> conf;
-	detector->detect(im, dets, conf, 0.0);
+	detector->Detect(im, dets, conf, 0.0);
 
 	for (cv::Rect& det : dets) {
 		cv::rectangle(disp, det, CV_RGB(255, 0, 0), 1);
@@ -213,7 +213,7 @@ void test_detector()
 		auto im = object_recognition_toolkit::core::imread(test_image.filename, false);
 		std::vector<cv::Rect> dets;
 		std::vector<double> confs;
-		detector->detect(im, dets, confs, 2.0);
+		detector->Detect(im, dets, confs, 2.0);
 
 		auto disp = object_recognition_toolkit::core::imread(test_image.filename, true);
 		for (auto& det : dets) {
@@ -269,7 +269,7 @@ void test_detector2()
 		auto im = object_recognition_toolkit::core::imread(test_image.filename, false);
 		std::vector<cv::Rect> dets;
 		std::vector<double> confs;
-		detector->detect(im, dets, confs, 0.0);
+		detector->Detect(im, dets, confs, 0.0);
 
 		auto disp = object_recognition_toolkit::core::imread(test_image.filename, true);
 		for (auto& det : dets) {

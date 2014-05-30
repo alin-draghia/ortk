@@ -34,7 +34,7 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBase();
 
 		public:
-			virtual void detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
+			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
 		public:
 			virtual const std::string& name() const;
