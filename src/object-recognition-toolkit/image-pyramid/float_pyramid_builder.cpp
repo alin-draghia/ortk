@@ -1,4 +1,4 @@
-#include <object-recognition-toolkit/image-pyramid/float-pyramid.h>
+#include "object-recognition-toolkit/image-pyramid/float_pyramid_builder.h"
 
 namespace object_recognition_toolkit
 {
@@ -80,7 +80,7 @@ namespace object_recognition_toolkit
 
 		void FloatImagePyramid::serialize(core::iarchive& ar, const unsigned int version)
 		{
-			ar >> boost::serialization::base_object<ImagePyramid>(*this);
+			ar >> boost::serialization::base_object<PyramidBuilder>(*this);
 			ar >> scaleFactor_; 
 			ar >> minSize_;
 			ar >> maxSize_;
@@ -88,7 +88,7 @@ namespace object_recognition_toolkit
 
 		void FloatImagePyramid::serialize(core::oarchive& ar, const unsigned int version)
 		{
-			ar << boost::serialization::base_object<ImagePyramid>(*this);
+			ar << boost::serialization::base_object<PyramidBuilder>(*this);
 			ar << scaleFactor_;
 			ar << minSize_;
 			ar << maxSize_;

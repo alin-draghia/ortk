@@ -15,11 +15,11 @@ namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
-		class PUBLIC_API ImagePyramid
+		class PUBLIC_API PyramidBuilder
 			: public core::Named
 		{
 		public:
-			virtual ~ImagePyramid() = 0;
+			virtual ~PyramidBuilder() = 0;
 
 		public:
 			virtual std::vector<PyramidLevel> Build(const core::Matrix& image) const = 0;

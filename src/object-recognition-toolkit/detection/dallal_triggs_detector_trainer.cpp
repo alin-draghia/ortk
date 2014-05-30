@@ -316,7 +316,7 @@ namespace object_recognition_toolkit
 			}
 
 			{
-				pyramid::ImagePyramid* pyramidBuilder;
+				pyramid::PyramidBuilder* pyramidBuilder;
 				image_scanning::ImageScanner* imageScanner;
 				feature_extraction::FeatureExtractor* featureExtractor;
 				non_maxima_suppression::NonMaximaSuppressor* nonMaximaSuppressor;

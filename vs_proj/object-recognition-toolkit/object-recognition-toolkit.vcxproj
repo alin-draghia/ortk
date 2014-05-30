@@ -29,12 +29,12 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float_pyramid_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
@@ -59,8 +59,8 @@
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float-pyramid.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\image-pyramid.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float_pyramid_builder.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\pyramid_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />

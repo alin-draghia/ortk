@@ -15,7 +15,7 @@ namespace object_recognition_toolkit
 		class PUBLIC_API DetectorBaseMt
 			: public DetectorBase
 		{
-			using ImagePyramid = pyramid::ImagePyramid;
+			using PyramidBuilder = pyramid::PyramidBuilder;
 			using PyramidLevel = pyramid::PyramidLevel;
 			using ImageScanner = image_scanning::ImageScanner;
 			using FeatureExtractor = feature_extraction::FeatureExtractor;
@@ -26,7 +26,7 @@ namespace object_recognition_toolkit
 			DetectorBaseMt();
 
 		public:
-			DetectorBaseMt(ImagePyramid* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
+			DetectorBaseMt(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
 			virtual ~DetectorBaseMt();
 
 		public:

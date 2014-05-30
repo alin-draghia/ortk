@@ -24,7 +24,7 @@ using object_recognition_toolkit::classification::Trainer;
 using object_recognition_toolkit::classification::Classifier;
 using object_recognition_toolkit::feature_extraction::FeatureExtractor;
 using object_recognition_toolkit::image_scanning::ImageScanner;
-using object_recognition_toolkit::pyramid::ImagePyramid;
+using object_recognition_toolkit::pyramid::PyramidBuilder;
 using object_recognition_toolkit::pyramid::PyramidLevel;
 using object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor;
 using object_recognition_toolkit::detection::Detector;

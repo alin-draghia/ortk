@@ -14,8 +14,8 @@
 
 #include "image-pyramid/pyramid.h"
 #include "image-pyramid/pyramid-level.h"
-#include "image-pyramid/image-pyramid.h"
-#include "image-pyramid/float-pyramid.h"
+#include "image-pyramid/pyramid_builder.h"
+#include "image-pyramid/float_pyramid_builder.h"
 
 #include "image-scanning/window.h"
 #include "image-scanning/image-scanner.h"

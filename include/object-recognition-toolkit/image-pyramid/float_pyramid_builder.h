@@ -5,14 +5,14 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include "./image-pyramid.h"
+#include "./pyramid_builder.h"
 
 namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
 		class PUBLIC_API FloatImagePyramid
-			: public ImagePyramid
+			: public PyramidBuilder
 		{
 			FloatImagePyramid();
 		public:

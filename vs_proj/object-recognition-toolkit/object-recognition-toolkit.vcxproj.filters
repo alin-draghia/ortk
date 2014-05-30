@@ -6,8 +6,6 @@
     <ClInclude Include="include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\dense-image-scanner.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\image-pyramid.h" />
-    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float-pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
@@ -30,14 +28,14 @@
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid.h" />
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid_builder.h" />
+    <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float_pyramid_builder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\hog-feature-extractor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\image-pyramid.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float-pyramid.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
@@ -55,6 +53,8 @@
     <ClCompile Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\dallal_triggs_detector_trainer.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\pyramid_builder.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float_pyramid_builder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

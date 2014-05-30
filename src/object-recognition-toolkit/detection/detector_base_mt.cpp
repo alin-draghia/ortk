@@ -13,7 +13,7 @@ namespace object_recognition_toolkit
 		}
 
 
-		DetectorBaseMt::DetectorBaseMt(ImagePyramid* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor)
+		DetectorBaseMt::DetectorBaseMt(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor)
 			: DetectorBase(pyramidBuilder, imageScanner, featureExtractor, classifier, nonMaximaSuppressor)
 		{
 		}

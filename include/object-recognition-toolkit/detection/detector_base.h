@@ -5,7 +5,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include "../image-pyramid/image-pyramid.h"
+#include "../image-pyramid/pyramid_builder.h"
 #include "../image-scanning/image-scanner.h"
 #include "../feature-extraction/feature-extractor.h"
 #include "../classification/classifier.h"
@@ -19,7 +19,7 @@ namespace object_recognition_toolkit
 		class PUBLIC_API DetectorBase
 			: public Detector
 		{
-			using ImagePyramid = pyramid::ImagePyramid;
+			using PyramidBuilder = pyramid::PyramidBuilder;
 			using PyramidLevel = pyramid::PyramidLevel;
 			using ImageScanner = image_scanning::ImageScanner;
 			using FeatureExtractor = feature_extraction::FeatureExtractor;
@@ -30,7 +30,7 @@ namespace object_recognition_toolkit
 			DetectorBase();
 
 		public:
-			DetectorBase(ImagePyramid* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
+			DetectorBase(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
 			virtual ~DetectorBase();
 
 		public:
@@ -47,14 +47,14 @@ namespace object_recognition_toolkit
 			virtual void nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
 		private:
-			ImagePyramid& getPyramidBuilder() const;
+			PyramidBuilder& getPyramidBuilder() const;
 			ImageScanner& getImageScanner() const;
 			FeatureExtractor& getFeatureExtractor() const;
 			Classifier& getClassifier() const;
 			NonMaximaSuppressor& getNonMaximaSuppressor() const;
 
 		private:
-			std::unique_ptr<ImagePyramid> pyramidBuilder_;
+			std::unique_ptr<PyramidBuilder> pyramidBuilder_;
 			std::unique_ptr<ImageScanner> imageScanner_;
 			std::unique_ptr<FeatureExtractor> featureExtractor_;
 			std::unique_ptr<Classifier> classifier_;

@@ -1,7 +1,7 @@
 #include "object-recognition-toolkit/detection/detector_base.h"
 
 
-using ImagePyramid = object_recognition_toolkit::pyramid::ImagePyramid;
+using PyramidBuilder = object_recognition_toolkit::pyramid::PyramidBuilder;
 using PyramidLevel = object_recognition_toolkit::pyramid::PyramidLevel;
 using ImageScanner = object_recognition_toolkit::image_scanning::ImageScanner;
 using FeatureExtractor = object_recognition_toolkit::feature_extraction::FeatureExtractor;
@@ -16,7 +16,7 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		DetectorBase::DetectorBase(ImagePyramid* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor)
+		DetectorBase::DetectorBase(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor)
 			: pyramidBuilder_(pyramidBuilder)
 			, imageScanner_(imageScanner)
 			, featureExtractor_(featureExtractor)
@@ -94,7 +94,7 @@ namespace object_recognition_toolkit
 			// pass
 		}
 
-		ImagePyramid& DetectorBase::getPyramidBuilder() const
+		PyramidBuilder& DetectorBase::getPyramidBuilder() const
 		{
 			return *this->pyramidBuilder_;
 		}

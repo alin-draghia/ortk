@@ -2,7 +2,7 @@
 #ifndef DALLAL_TRIGGS_DETECTOR_TRAINER_H_INCLUDED
 #define DALLAL_TRIGGS_DETECTOR_TRAINER_H_INCLUDED
 
-#include "../image-pyramid/image-pyramid.h"
+#include "../image-pyramid/pyramid_builder.h"
 #include "../image-scanning/image-scanner.h"
 #include "../feature-extraction/feature-extractor.h"
 #include "../classification/classifier.h"
@@ -24,7 +24,7 @@ namespace object_recognition_toolkit
 				size_t numNegatives;
 				core::Size trainingSize;
 				std::string data_directory;
-				std::shared_ptr<pyramid::ImagePyramid> pyramidBuilder;
+				std::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder;
 				std::shared_ptr<image_scanning::ImageScanner> imageScanner;
 				std::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor;
 				std::shared_ptr<classification::Trainer> trainer;
