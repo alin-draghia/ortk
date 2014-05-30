@@ -370,13 +370,58 @@ void test_detector()
 		bool is_open = ifs.is_open();
 		object_recognition_toolkit::core::iarchive ia(ifs);
 		ia >> detector;
+	}
 
-		std::ofstream ofs("train_data_v1/detector-stage-4.dat.0");
-		object_recognition_toolkit::core::oarchive oa(ofs);
-		auto ptr = detector.get();
-		oa << ptr;
+	(void)detector;
+
+	for (auto& test_image : test_dataset.images)
+	{
+		auto im = object_recognition_toolkit::core::imread(test_image.filename, false);
+		std::vector<cv::Rect> dets;
+		std::vector<double> confs;
+		detector->detect(im, dets, confs, 2.0);
+
+		auto disp = object_recognition_toolkit::core::imread(test_image.filename, true);
+		for (auto& det : dets) {
+			cv::rectangle(disp, det, CV_RGB(255, 0, 0));
+		}
+
+		object_recognition_toolkit::core::imshow(disp);
+		object_recognition_toolkit::core::show();
+
 
 	}
+
+}
+
+
+void test_detector2()
+{
+	const std::string test_samples_directory = "./../../datasets/INRIAPerson/Test/pos";
+	std::vector<std::string> test_samples_filenames;
+
+	for (auto it = fs::directory_iterator(fs::path(test_samples_directory)); it != fs::directory_iterator(); it++) {
+		test_samples_filenames.push_back(it->path());
+	}
+
+
+	object_recognition_toolkit::
+		dataset::Dataset test_dataset;
+
+	object_recognition_toolkit::dataset::LoadDatasetFiles(test_samples_filenames, test_dataset);
+
+
+
+
+	std::unique_ptr<Detector> detector{
+		new object_recognition_toolkit::detection::DetectorBaseMt{
+			new object_recognition_toolkit::pyramid::FloatImagePyramid(1.05, {}, {}),
+			new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, {} },
+			new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
+			new object_recognition_toolkit::classification::MockPersonClassifier{},
+			new object_recognition_toolkit::non_maxima_suppression::PassThroughNms{}
+		}
+	};
 
 
 	for (auto& test_image : test_dataset.images)
@@ -394,14 +439,13 @@ void test_detector()
 		object_recognition_toolkit::core::imshow(disp);
 		object_recognition_toolkit::core::show();
 
-
 	}
 
 }
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
+
 
 	test_detector();
 	return 0;

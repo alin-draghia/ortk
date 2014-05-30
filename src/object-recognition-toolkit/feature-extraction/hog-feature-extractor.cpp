@@ -28,7 +28,7 @@ namespace object_recognition_toolkit {
 		{
 			std::vector<float> feats;
 			hog_.compute(image, feats);
-			return core::FeatureVector(feats);
+			return core::FeatureVector(feats, true);
 		}
 
 

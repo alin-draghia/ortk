@@ -91,7 +91,7 @@ namespace object_recognition_toolkit
 
 		void DetectorBase::classify(const core::FeatureVector& features, double& confidence) const
 		{
-			confidence = this->getClassifier().Predict(features);
+			confidence = this->getClassifier().Predict(features);			
 		}
 
 		void DetectorBase::nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const

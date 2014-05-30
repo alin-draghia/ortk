@@ -67,6 +67,7 @@ namespace object_recognition_toolkit
 			thread_local_confidences.resize(num_threads);
 
 			long num_windows = (long)windows.size();
+			
 			#pragma omp parallel for
 			for (int i = 0; i < num_windows; i++)
 			{
@@ -78,7 +79,7 @@ namespace object_recognition_toolkit
 				const size_t pyramid_level_index = pyramid_level_indices[i];
 				const PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
 
-				double confidence;
+				double confidence = 0.0;
 				core::FeatureVector features;
 
 				this->extractFeatures(window, features);

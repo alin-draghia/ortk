@@ -22,14 +22,11 @@ namespace object_recognition_toolkit
 
 		double MockPersonClassifier::Predict(const core::FeatureVector& instance) const
 		{
-			if (instance.cols != w_.size()) {
-				throw std::runtime_error("Invalid instance vector size");
-			}
-
 			double conf = b_;
 
+			const float* ptr = instance.ptr<float>();
 			for (size_t i = 0; i < w_.size(); i++) {
-				conf += w_[i] * instance.at<float>((int)i);
+				conf += w_[i] * ptr[i];
 			}
 
 			return conf;
