@@ -29,7 +29,7 @@ namespace object_recognition_toolkit
 
 			double conf = bias_;
 
-			for (size_t i = 0; i < coefs_.size(); i++) {
+			for (int i = 0; i < static_cast<int>(coefs_.size()); i++) {
 				conf += coefs_[i] * instance.at<float>(i);
 			}
 
