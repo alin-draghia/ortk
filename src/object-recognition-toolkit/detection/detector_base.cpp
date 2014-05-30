@@ -76,22 +76,22 @@ namespace object_recognition_toolkit
 
 		void DetectorBase::buildPyramid(const core::Matrix& image, pyramid::Pyramid& pyramid) const
 		{
-			pyramid = this->getPyramidBuilder().Build(image);
+			pyramid = this->GetPyramidBuilder().Build(image);
 		}
 
 		void DetectorBase::scanImage(const core::Matrix& image, std::vector<image_scanning::Window>& windows) const
 		{
-			windows = this->getImageScanner().compute(image);
+			windows = this->GetImageScanner().compute(image);
 		}
 
 		void DetectorBase::extractFeatures(const core::Matrix& image, core::FeatureVector& features) const
 		{
-			features = this->getFeatureExtractor().compute(image);
+			features = this->GetFeatureExtracotr().compute(image);
 		}
 
 		void DetectorBase::classify(const core::FeatureVector& features, double& confidence) const
 		{
-			confidence = this->getClassifier().Predict(features);			
+			confidence = this->GetClassifier().Predict(features);			
 		}
 
 		void DetectorBase::nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const
@@ -99,27 +99,27 @@ namespace object_recognition_toolkit
 			// pass
 		}
 
-		PyramidBuilder& DetectorBase::getPyramidBuilder() const
+		PyramidBuilder& DetectorBase::GetPyramidBuilder() const
 		{
 			return *this->pyramidBuilder_;
 		}
 
-		ImageScanner& DetectorBase::getImageScanner() const
+		ImageScanner& DetectorBase::GetImageScanner() const
 		{
 			return *this->imageScanner_;
 		}
 
-		FeatureExtractor& DetectorBase::getFeatureExtractor() const
+		FeatureExtractor& DetectorBase::GetFeatureExtracotr() const
 		{
 			return *this->featureExtractor_;
 		}
 
-		Classifier& DetectorBase::getClassifier() const
+		Classifier& DetectorBase::GetClassifier() const
 		{
 			return *this->classifier_;
 		}
 
-		NonMaximaSuppressor& DetectorBase::getNonMaximaSuppressor() const
+		NonMaximaSuppressor& DetectorBase::GetNonMaximaSuppressor() const
 		{
 			return *this->nonMaximaSuppressor_;
 		}

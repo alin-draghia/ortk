@@ -46,12 +46,12 @@ namespace object_recognition_toolkit
 			virtual void classify(const core::FeatureVector& features, double& confidence) const;
 			virtual void nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
-		private:
-			PyramidBuilder& getPyramidBuilder() const;
-			ImageScanner& getImageScanner() const;
-			FeatureExtractor& getFeatureExtractor() const;
-			Classifier& getClassifier() const;
-			NonMaximaSuppressor& getNonMaximaSuppressor() const;
+		public:
+			virtual pyramid::PyramidBuilder& GetPyramidBuilder() const;
+			virtual image_scanning::ImageScanner& GetImageScanner() const;
+			virtual feature_extraction::FeatureExtractor& GetFeatureExtracotr() const;
+			virtual classification::Classifier& GetClassifier() const;
+			virtual non_maxima_suppression::NonMaximaSuppressor& GetNonMaximaSuppressor() const;
 
 		private:
 			std::unique_ptr<PyramidBuilder> pyramidBuilder_;
