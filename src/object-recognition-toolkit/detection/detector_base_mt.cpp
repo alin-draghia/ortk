@@ -32,8 +32,7 @@ namespace object_recognition_toolkit
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 
-			std::vector<cv::Mat> windows;
-			std::vector<cv::Rect> boxes;
+			std::vector<image_scanning::Window> windows;
 			std::vector<size_t> pyramid_level_indices;
 			std::vector<PyramidLevel> pyramid;
 
@@ -44,17 +43,16 @@ namespace object_recognition_toolkit
 
 				PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
 
-				std::vector<cv::Mat> level_windows;
-				std::vector<cv::Rect> level_boxes;
+				std::vector<image_scanning::Window> level_windows;
+
 
 				const cv::Mat& pyramid_level_image = pyramid_level.GetImage();
 
-				this->scanImage(pyramid_level_image, level_windows, level_boxes);
+				this->scanImage(pyramid_level_image, level_windows);
 
 
 				windows.insert(std::end(windows), std::begin(level_windows), std::end(level_windows));
-				boxes.insert(std::end(boxes), std::begin(level_boxes), std::end(level_boxes));
-				pyramid_level_indices.insert(std::end(pyramid_level_indices), level_boxes.size(), pyramid_level_index);
+				pyramid_level_indices.insert(std::end(pyramid_level_indices), level_windows.size(), pyramid_level_index);
 
 			}
 
@@ -74,19 +72,18 @@ namespace object_recognition_toolkit
 
 				int thread_id = omp_get_thread_num();
 
-				const cv::Mat& window = windows[i];
-				const cv::Rect& box = boxes[i];
+				const image_scanning::Window& window = windows[i];
 				const size_t pyramid_level_index = pyramid_level_indices[i];
 				const PyramidLevel& pyramid_level = pyramid[pyramid_level_index];
 
 				double confidence = 0.0;
 				core::FeatureVector features;
 
-				this->extractFeatures(window, features);
+				this->extractFeatures(window.image, features);
 				this->classify(features, confidence);
 
 				if (confidence > treshold) {
-					thread_local_detections[thread_id].push_back(pyramid_level.Invert(box));
+					thread_local_detections[thread_id].push_back(pyramid_level.Invert(window.box));
 					thread_local_confidences[thread_id].push_back(confidence);
 				}
 			}

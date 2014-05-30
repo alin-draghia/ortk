@@ -11,6 +11,7 @@
 #include "../core/core.h"
 #include "../core/named.h"
 #include "../core/serialization.h"
+#include "window.h"
 
 namespace object_recognition_toolkit
 {
@@ -23,8 +24,8 @@ namespace object_recognition_toolkit
 		public:			
 			virtual ~ImageScanner() = 0;		
 	
-		public:
-			virtual void ScanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const = 0;
+		public:			
+			virtual std::vector<Window> compute(const core::Matrix& image) const = 0;
 
 		private:
 			friend class boost::serialization::access;

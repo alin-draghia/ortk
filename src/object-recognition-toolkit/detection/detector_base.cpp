@@ -45,26 +45,21 @@ namespace object_recognition_toolkit
 
 			for (PyramidLevel& pyramid_level : pyramid)
 			{
-
-				std::vector<core::Matrix> windows;
-				std::vector<core::Box> boxes;
-
+				std::vector<image_scanning::Window> windows;
 				const core::Matrix& pyramid_level_image = pyramid_level.GetImage();
 
-				this->scanImage(pyramid_level_image, windows, boxes);
+				this->scanImage(pyramid_level_image, windows);
 
 				for (size_t i = 0; i < windows.size(); i++)
 				{
 					double confidence;
 					core::FeatureVector features;
-					const core::Matrix& window_image = windows[i];
-					const core::Box& window_box = boxes[i];
 
-					this->extractFeatures(window_image, features);
+					this->extractFeatures(windows[i].image, features);
 					this->classify(features, confidence);
 
 					if (confidence > treshold) {
-						detections.push_back(pyramid_level.Invert(window_box));
+						detections.push_back(pyramid_level.Invert(windows[i].box));
 						confidences.push_back(confidence);
 					}
 				}
@@ -79,9 +74,9 @@ namespace object_recognition_toolkit
 			pyramid = this->getPyramidBuilder().Build(image);
 		}
 
-		void DetectorBase::scanImage(const core::Matrix& image, std::vector<core::Matrix>& windows, std::vector<core::Box>& boxes) const
+		void DetectorBase::scanImage(const core::Matrix& image, std::vector<image_scanning::Window>& windows) const
 		{
-			this->getImageScanner().ScanImage(image, windows, boxes);
+			windows = this->getImageScanner().compute(image);
 		}
 
 		void DetectorBase::extractFeatures(const core::Matrix& image, core::FeatureVector& features) const

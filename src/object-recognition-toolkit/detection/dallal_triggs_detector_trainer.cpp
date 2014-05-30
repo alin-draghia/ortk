@@ -235,14 +235,14 @@ namespace object_recognition_toolkit
 						auto& filename = dataset_im.filename;
 						core::Matrix image = core::imread(filename, false);
 
-						std::vector<cv::Mat> windows;
-						imageScanner->ScanImage(image, windows, std::vector<cv::Rect>());
+						auto windows = 
+						imageScanner->compute(image);
 
 						std::random_shuffle(std::begin(windows), std::end(windows));
 						windows.resize(windows_to_keep_per_image);
 
 						for (auto& window : windows) {
-							core::FeatureVector features = featureExtractor->compute(window);
+							core::FeatureVector features = featureExtractor->compute(window.image);
 							cv::Mat_<float> fv(features);
 							cv::Mat_<float> fv0 = fv.reshape(1, 1);
 							X.push_back(fv0);
@@ -267,12 +267,12 @@ namespace object_recognition_toolkit
 
 						for (auto& pyramidLevel : pyramid)
 						{
-							std::vector<cv::Mat> windows;
-							imageScanner->ScanImage(pyramidLevel.GetImage(), windows, std::vector<cv::Rect>());
+							auto windows =
+								imageScanner->compute(pyramidLevel.GetImage());
 
 							for (auto& window : windows)
 							{
-								core::FeatureVector features = featureExtractor->compute(window);
+								core::FeatureVector features = featureExtractor->compute(window.image);
 
 								if (classifier->Predict(features))
 								{

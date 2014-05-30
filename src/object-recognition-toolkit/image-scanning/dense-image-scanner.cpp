@@ -43,29 +43,31 @@ namespace object_recognition_toolkit
 			return padding_;
 		}
 
-
-		void DenseImageScanner::ScanImage(const cv::Mat& image, std::vector<cv::Mat>& windows, std::vector<cv::Rect>& boxes) const
+	
+		std::vector<Window> DenseImageScanner::compute(const core::Matrix& image) const
 		{
-			windows.clear();
-			boxes.clear();
+			std::vector<Window> windows;
 
 			int left = padding_.width < 0 ? (image.cols % windowSize_.width) / 2 : padding_.width;
 			int right = image.cols - windowSize_.width;
 			int top = padding_.height < 0 ? (image.rows % windowSize_.height) / 2 : padding_.height;
 			int bottom = image.rows - windowSize_.height;
 
-			if (left < 0 || top < 0) {
-				return;
-			}
+			if (!(left < 0 || top < 0)) {
+				for (int y = top; y < bottom; y += windowStep_.height) {
+					for (int x = left; x < right; x += windowStep_.width) {
 
-			for (int y = top; y < bottom; y += windowStep_.height) {
-				for (int x = left; x < right; x += windowStep_.width) {
-					cv::Rect box{ x, y, windowSize_.width, windowSize_.height };
-					cv::Mat window = image(box).clone();
-					boxes.push_back(box);
-					windows.push_back(window);
+						Window w;
+
+						w.box = { x, y, windowSize_.width, windowSize_.height };
+						w.image = image(w.box);
+
+						windows.push_back(w);
+					}
 				}
 			}
+
+			return std::move(windows);
 		}
 
 		void DenseImageScanner::serialize(core::iarchive& ar, const unsigned int version)
