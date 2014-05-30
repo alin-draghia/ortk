@@ -190,3 +190,9 @@ vs_proj/train-person-detector-2/stage-2-results/
 paper/
 *.cls
 *.yaml
+vs_proj/train-person-detector-2/train_data_v1/
+vs_proj/train-person-detector-2/detector.dat
+vs_proj/train-person-detector-2/image_metadata_stylesheet.xsl
+vs_proj/train-person-detector-2/imglab.exe
+vs_proj/train-person-detector-2/mock_person_detector
+vs_proj/train-person-detector-2/mydataset.xml
