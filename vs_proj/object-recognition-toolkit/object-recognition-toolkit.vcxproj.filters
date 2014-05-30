@@ -29,6 +29,7 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\dallal_triggs_detector_trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid.h" />
+    <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
