@@ -13,3 +13,22 @@
 
 
 // TODO: reference additional headers your program requires here
+#include <cstdio>
+#include <cstdlib>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <list>
+#include <filesystem>
+#include <memory>
+#include <algorithm>
+#include <random>
+
+
+
+#include <opencv2/opencv.hpp>
+
+
+//#include <object-recognition-toolkit/object_recognition_toolkit.h>
