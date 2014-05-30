@@ -22,6 +22,25 @@ namespace object_recognition_toolkit
 {
 	namespace core
 	{
+
+
+		class PUBLIC_API Serializable
+		{
+		public:
+			virtual ~Serializable() = 0;
+
+			virtual void Save(const std::string& filename) const = 0;
+			virtual void Load(const std::string& filename) = 0;
+		};
+
+	}
+}
+
+
+namespace object_recognition_toolkit
+{
+	namespace core
+	{
 		using iarchive = boost::archive::text_iarchive;
 		using oarchive = boost::archive::text_oarchive;
 	}
@@ -31,6 +50,9 @@ namespace boost
 {
 	namespace serialization
 	{
+
+
+
 		template<class Archive, class Tp>
 		void serialize(Archive& ar, cv::Size_<Tp>& size, const unsigned int version)
 		{

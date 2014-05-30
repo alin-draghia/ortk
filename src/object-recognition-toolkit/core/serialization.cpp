@@ -4,6 +4,7 @@ namespace object_recognition_toolkit
 {
 	namespace core
 	{
-
+		Serializable::~Serializable() {}
 	}
 }
+
