@@ -26,6 +26,11 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
+		core::Clonable* DenseImageScanner::Clone()
+		{
+			return new DenseImageScanner(*this);
+		}
+
 		cv::Size DenseImageScanner::GetWindowSize() const
 		{
 			return windowSize_;

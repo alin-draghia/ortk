@@ -26,6 +26,11 @@ namespace object_recognition_toolkit
 			static const std::string name = "FloatImagePyramid";
 			return name;
 		}
+
+		core::Clonable* FloatPyramidBuilder::Clone()
+		{
+			return new FloatPyramidBuilder(*this);
+		}
 		
 		double FloatPyramidBuilder::GetScaleFactor() const
 		{

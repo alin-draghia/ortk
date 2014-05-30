@@ -19,6 +19,10 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
+		core::Clonable* PassThroughNms::Clone()
+		{
+			return new PassThroughNms(*this);
+		}
 
 		void PassThroughNms::suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const
 		{

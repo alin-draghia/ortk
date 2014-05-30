@@ -36,5 +36,10 @@ namespace object_recognition_toolkit
 			return conf;
 		}
 
+		core::Clonable* LinearSVC::Clone()
+		{
+			return new LinearSVC(*this);
+		}
+
 	}
 }

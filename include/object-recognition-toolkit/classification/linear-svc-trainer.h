@@ -42,6 +42,9 @@ namespace object_recognition_toolkit
 			public:
 				virtual const std::string& name() const;
 
+			public:
+				virtual core::Clonable* Clone();
+
 			private:
 				friend class LinearSvcTrainer;
 

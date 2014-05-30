@@ -36,6 +36,20 @@ namespace object_recognition_toolkit
 			return name;
 		}
 
+		core::Clonable* DetectorBase::Clone()
+		{
+			std::stringstream ss;
+			core::oarchive oa(ss);			
+			oa << this;
+
+			core::iarchive ia(ss);
+			DetectorBase* ptr;
+			ia >> ptr;
+
+			return ptr;
+
+		}
+
 		void DetectorBase::Detect(const core::Matrix& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{
 			using object_recognition_toolkit::pyramid::PyramidLevel;

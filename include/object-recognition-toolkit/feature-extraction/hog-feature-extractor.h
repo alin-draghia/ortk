@@ -24,6 +24,9 @@ namespace object_recognition_toolkit {
 			virtual const std::string& name() const;
 
 		public:
+			virtual core::Clonable* Clone();
+
+		public:
 			virtual core::FeatureVector compute(const core::Matrix& image) const;
 			virtual int lenght() const;
 

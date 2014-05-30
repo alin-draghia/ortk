@@ -25,6 +25,9 @@ namespace object_recognition_toolkit
 		public:
 			virtual const std::string& name() const;
 
+		public:
+			virtual core::Clonable* Clone();
+
 		private:
 			float bias_;
 			std::vector<float> coefs_;

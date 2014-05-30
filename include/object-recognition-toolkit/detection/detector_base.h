@@ -39,6 +39,9 @@ namespace object_recognition_toolkit
 		public:
 			virtual const std::string& name() const;
 
+		public:
+			virtual core::Clonable* Clone();
+
 		protected:
 			virtual void buildPyramid(const core::Matrix& image, pyramid::Pyramid& pyramid) const;
 			virtual void scanImage(const core::Matrix& image, std::vector<image_scanning::Window>& windows) const;

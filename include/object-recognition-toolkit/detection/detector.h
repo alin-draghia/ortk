@@ -9,6 +9,7 @@
 #include "../core/public-api.h"
 #include "../core/core.h"
 #include "../core/named.h"
+#include "../core/clonable.h"
 #include "../core/serialization.h"
 
 namespace object_recognition_toolkit
@@ -17,6 +18,7 @@ namespace object_recognition_toolkit
 	{
 		class PUBLIC_API Detector
 			: public core::Named
+			, public core::Clonable
 		{
 		public:
 			virtual ~Detector() = 0;

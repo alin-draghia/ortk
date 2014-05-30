@@ -98,6 +98,19 @@ namespace object_recognition_toolkit {
 			static const std::string name = "LinearSvcTrainer::LinearSvcClassifier";
 			return name;
 		}
+
+		core::Clonable* LinearSvcTrainer::LinearSvcClassifier::Clone()
+		{
+			std::stringstream ss;
+			core::oarchive oa(ss);	
+			oa << this;
+
+			core::iarchive ia(ss);
+			LinearSvcTrainer::LinearSvcClassifier* ptr;
+			ia >> ptr;
+
+			return ptr;
+		}
 	}
 }
 

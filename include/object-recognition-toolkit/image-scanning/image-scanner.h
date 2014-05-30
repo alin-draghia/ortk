@@ -10,6 +10,7 @@
 #include "../core/public-api.h"
 #include "../core/core.h"
 #include "../core/named.h"
+#include "../core/clonable.h"
 #include "../core/serialization.h"
 #include "window.h"
 
@@ -20,6 +21,7 @@ namespace object_recognition_toolkit
 
 		class PUBLIC_API ImageScanner
 			: public core::Named
+			, public core::Clonable
 		{
 		public:			
 			virtual ~ImageScanner() = 0;		

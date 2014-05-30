@@ -24,6 +24,18 @@ namespace object_recognition_toolkit {
 			return name;
 		}
 
+		core::Clonable* HogFeatureExtractor::Clone()
+		{
+			std::stringstream ss;
+			core::oarchive oa(ss);			
+			oa << this;
+
+			core::iarchive ia(ss);
+			HogFeatureExtractor* ptr;
+			ia >> ptr;
+			return ptr;
+		}
+
 		core::FeatureVector HogFeatureExtractor::compute(const cv::Mat& image) const
 		{
 			std::vector<float> feats;
