@@ -1,5 +1,6 @@
 #include "object-recognition-toolkit/detection/dallal_triggs_detector_trainer.h"
 #include "object-recognition-toolkit/detection/detector_base_mt.h"
+#include "object-recognition-toolkit/detection/detector_builder.h"
 
 #include <filesystem>
 namespace fs = std::tr2::sys;
@@ -333,14 +334,15 @@ namespace object_recognition_toolkit
 				ia >> nonMaximaSuppressor;
 				ia >> classifier0;
 
-				std::unique_ptr<detection::Detector> detector{
-					new DetectorBaseMt(pyramidBuilder,
-					imageScanner,
-					featureExtractor,
-					classifier0,
-					nonMaximaSuppressor
-					)
-				};
+				DetectorBaseMT_Builder detectorBuilder;
+				detectorBuilder.PutPyramidBuilder(std::shared_ptr<pyramid::PyramidBuilder>(pyramidBuilder));
+				detectorBuilder.PutImageScanner(std::shared_ptr<image_scanning::ImageScanner>(imageScanner));
+				detectorBuilder.PutFeatureExtractor(std::shared_ptr<feature_extraction::FeatureExtractor>(featureExtractor));
+				detectorBuilder.PutNonMaximaSuppressor(std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor>(nonMaximaSuppressor));
+				detectorBuilder.PutClassifier(std::shared_ptr<classification::Classifier>(classifier0));
+
+
+				std::unique_ptr<detection::Detector> detector{ detectorBuilder.Build() };
 
 				return detector.release();
 			}

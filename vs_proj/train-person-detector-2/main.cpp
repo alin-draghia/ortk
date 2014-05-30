@@ -133,53 +133,6 @@ void test_dataset_loader()
 	int odigshod = 0;
 }
 
-void test_detectror_class()
-{
-	{
-		std::unique_ptr<Detector> detector
-		{
-			new object_recognition_toolkit::detection::DetectorBaseMt
-			{
-				new object_recognition_toolkit::pyramid::FloatPyramidBuilder{ 1.2, { 64, 128 }, { 0, 0 } },
-				new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, { 0, 0 } },
-				new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
-				new object_recognition_toolkit::classification::MockPersonClassifier(),
-				new object_recognition_toolkit::non_maxima_suppression::PassThroughNms()
-			}
-		};
-
-		std::ofstream ofs("detector.dat");
-		object_recognition_toolkit::core::oarchive oa(ofs);
-		oa << detector;
-	}
-
-	{
-	std::unique_ptr<Detector> detector;
-	std::ifstream ifs("detector.dat");
-	object_recognition_toolkit::core::iarchive ia(ifs);
-	ia >> detector;
-
-	(void)detector;
-
-
-	cv::Mat disp, im = cv::imread(R"(..\datasets\INRIAPerson\Test\pos\crop001501.png)", cv::IMREAD_GRAYSCALE);
-	cv::cvtColor(im, disp, cv::COLOR_GRAY2BGR);
-	std::vector<cv::Rect> dets;
-	std::vector<double> conf;
-	detector->Detect(im, dets, conf, 0.0);
-
-	for (cv::Rect& det : dets) {
-		cv::rectangle(disp, det, CV_RGB(255, 0, 0), 1);
-	}
-
-	cv::imshow("out", disp);
-	cv::waitKey();
-
-}
-
-
-}
-
 
 
 void test_detector()
@@ -231,6 +184,10 @@ void test_detector()
 
 void test_detector2()
 {
+	using object_recognition_toolkit::detection::DetectorBuilder;
+	using object_recognition_toolkit::detection::DetectorBase_Builder;
+	using object_recognition_toolkit::detection::DetectorBaseMT_Builder;
+
 	const std::string test_samples_directory = "./../../datasets/INRIAPerson/Test/pos";
 	std::vector<std::string> test_samples_filenames;
 
@@ -246,15 +203,21 @@ void test_detector2()
 
 
 
+	std::unique_ptr<DetectorBuilder> detectorBuilder(new DetectorBaseMT_Builder());
+
+	detectorBuilder->PutPyramidBuilder(std::shared_ptr<PyramidBuilder>(new object_recognition_toolkit::pyramid::FloatPyramidBuilder(1.05, {}, {})));
+
+	detectorBuilder->PutImageScanner(std::shared_ptr<ImageScanner>(new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, {} }));
+
+	detectorBuilder->PutFeatureExtractor(std::shared_ptr<FeatureExtractor>(new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{}));
+
+	detectorBuilder->PutNonMaximaSuppressor(std::shared_ptr<NonMaximaSuppressor>(new object_recognition_toolkit::non_maxima_suppression::PassThroughNms{}));
+
+	detectorBuilder->PutClassifier(std::shared_ptr<Classifier>(new object_recognition_toolkit::classification::MockPersonClassifier{}));
+
 
 	std::unique_ptr<Detector> detector{
-		new object_recognition_toolkit::detection::DetectorBaseMt{
-			new object_recognition_toolkit::pyramid::FloatPyramidBuilder(1.05, {}, {}),
-			new object_recognition_toolkit::image_scanning::DenseImageScanner{ { 64, 128 }, { 8, 8 }, {} },
-			new object_recognition_toolkit::feature_extraction::HogFeatureExtractor{},
-			new object_recognition_toolkit::classification::MockPersonClassifier{},
-			new object_recognition_toolkit::non_maxima_suppression::PassThroughNms{}
-		}
+		detectorBuilder->Build()
 	};
 
 	{
@@ -287,16 +250,13 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 
 
-	test_detector();
+	test_detector2();
 	return 0;
 
 	test_trainer_interface();
 	return 0;
 
 	test_dataset_loader();
-	return 0;
-
-	test_detectror_class();
 	return 0;
 
 }

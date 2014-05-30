@@ -30,6 +30,7 @@
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\float_pyramid_builder.h" />
+    <ClInclude Include="include\object-recognition-toolkit\detection\detector_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,7 @@
     <ClCompile Include="src\object-recognition-toolkit\detection\dallal_triggs_detector_trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\pyramid_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float_pyramid_builder.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\detection\detector_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\clonable.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -35,6 +35,7 @@
 #include "detection/detector_base_mt.h"
 #include "detection/detector_trainer.h"
 #include "detection/dallal_triggs_detector_trainer.h"
+#include "detection/detector_builder.h"
 
 
 namespace object_recognition_toolkit

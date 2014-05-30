@@ -42,6 +42,10 @@ namespace object_recognition_toolkit
 			ar << boost::serialization::base_object<Classifier>(*this);
 		}
 
+		core::Clonable* MockPersonClassifier::Clone()
+		{
+			return new MockPersonClassifier(*this);
+		}
 
 
 		float MockPersonClassifier::b_{ -6.66579151f };

@@ -11,6 +11,7 @@
 #include "../classification/classifier.h"
 #include "../non_maxima_suppression/non_maxima_suppressor.h"
 #include "./detector.h"
+#include "./detector_builder.h"
 
 namespace object_recognition_toolkit
 {
@@ -19,18 +20,8 @@ namespace object_recognition_toolkit
 		class PUBLIC_API DetectorBase
 			: public Detector
 		{
-			using PyramidBuilder = pyramid::PyramidBuilder;
-			using PyramidLevel = pyramid::PyramidLevel;
-			using ImageScanner = image_scanning::ImageScanner;
-			using FeatureExtractor = feature_extraction::FeatureExtractor;
-			using Classifier = classification::Classifier;
-			using NonMaximaSuppressor = non_maxima_suppression::NonMaximaSuppressor;
-
-		protected:
-			DetectorBase();
-
 		public:
-			DetectorBase(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
+			DetectorBase();
 			virtual ~DetectorBase();
 
 		public:
@@ -57,16 +48,20 @@ namespace object_recognition_toolkit
 			virtual non_maxima_suppression::NonMaximaSuppressor& GetNonMaximaSuppressor() const;
 
 		private:
-			std::unique_ptr<PyramidBuilder> pyramidBuilder_;
-			std::unique_ptr<ImageScanner> imageScanner_;
-			std::unique_ptr<FeatureExtractor> featureExtractor_;
-			std::unique_ptr<Classifier> classifier_;
-			std::unique_ptr<NonMaximaSuppressor> nonMaximaSuppressor_;
+			std::unique_ptr<pyramid::PyramidBuilder> pyramidBuilder_;
+			std::unique_ptr<image_scanning::ImageScanner> imageScanner_;
+			std::unique_ptr<feature_extraction::FeatureExtractor> featureExtractor_;
+			std::unique_ptr<classification::Classifier> classifier_;
+			std::unique_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor_;
 
 		private:
 			friend class boost::serialization::access;
 			void serialize(core::iarchive& ar, const unsigned int version);
 			void serialize(core::oarchive& ar, const unsigned int version);
+
+		private:
+			friend class DetectorBase_Builder;
+			friend class DetectorBaseMT_Builder;
 		};
 	}
 }

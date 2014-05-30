@@ -11,6 +11,11 @@
 #include "../core/named.h"
 #include "../core/clonable.h"
 #include "../core/serialization.h"
+#include "../image-pyramid/pyramid_builder.h"
+#include "../image-scanning/image-scanner.h"
+#include "../feature-extraction/feature-extractor.h"
+#include "../classification/classifier.h"
+#include "../non_maxima_suppression/non_maxima_suppressor.h"
 
 namespace object_recognition_toolkit
 {

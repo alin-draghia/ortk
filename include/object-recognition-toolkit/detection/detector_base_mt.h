@@ -22,11 +22,8 @@ namespace object_recognition_toolkit
 			using Classifier = classification::Classifier;
 			using NonMaximaSuppressor = non_maxima_suppression::NonMaximaSuppressor;
 
-		protected:
-			DetectorBaseMt();
-
 		public:
-			DetectorBaseMt(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor);
+			DetectorBaseMt();
 			virtual ~DetectorBaseMt();
 
 		public:
@@ -39,6 +36,9 @@ namespace object_recognition_toolkit
 			friend class boost::serialization::access;
 			void serialize(core::iarchive& ar, const unsigned int version);
 			void serialize(core::oarchive& ar, const unsigned int version);
+
+		private:
+			friend class DetectorBaseMT_Builder;
 		};
 
 	}

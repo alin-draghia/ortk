@@ -17,15 +17,6 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		DetectorBase::DetectorBase(PyramidBuilder* pyramidBuilder, ImageScanner* imageScanner, FeatureExtractor* featureExtractor, Classifier* classifier, NonMaximaSuppressor* nonMaximaSuppressor)
-			: pyramidBuilder_(pyramidBuilder)
-			, imageScanner_(imageScanner)
-			, featureExtractor_(featureExtractor)
-			, classifier_(classifier)
-			, nonMaximaSuppressor_(nonMaximaSuppressor)
-		{
-		}
-
 		DetectorBase::~DetectorBase()
 		{
 		}
