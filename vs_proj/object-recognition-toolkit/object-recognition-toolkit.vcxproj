@@ -18,6 +18,7 @@
     <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\config.h" />
+    <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\core.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\named.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />

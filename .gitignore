@@ -196,3 +196,5 @@ vs_proj/train-person-detector-2/image_metadata_stylesheet.xsl
 vs_proj/train-person-detector-2/imglab.exe
 vs_proj/train-person-detector-2/mock_person_detector
 vs_proj/train-person-detector-2/mydataset.xml
+3rd-party/pyopencv-2.1.0.wr1.2.0.tar.gz
+3rd-party/pyopencv-2.1.0.wr1.2.0/
