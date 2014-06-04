@@ -42,6 +42,7 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
+    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
     <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +71,8 @@
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\converters.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\python_ext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -104,7 +107,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="opencv_release.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>b164586b</NuGetPackageImportStamp>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\</OutDir>

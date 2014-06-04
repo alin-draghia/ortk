@@ -33,6 +33,7 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
+    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -60,6 +61,8 @@
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float_pyramid_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\clonable.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\converters.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\python_ext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
