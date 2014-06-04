@@ -168,9 +168,9 @@ namespace {
 					cv_depth = 4;
 			}
 			else if (PyArray_ISFLOAT(obj_ptr)) {
-				if (itemsize == 3)
+				if (itemsize == 4)
 					cv_depth = 5;
-				else if (itemsize == 4)
+				else if (itemsize == 8)
 					cv_depth = 6;
 			}
 

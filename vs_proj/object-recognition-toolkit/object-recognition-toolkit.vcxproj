@@ -46,6 +46,10 @@
     <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\object-recognition-toolkit\python\classification_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\core_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\feature_extraction_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />

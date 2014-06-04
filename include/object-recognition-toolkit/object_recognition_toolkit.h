@@ -5,6 +5,7 @@
 #include "core/core.h"
 #include "core/public-api.h"
 #include "core/named.h"
+#include "core/clonable.h"
 #include "core/serialization.h"
 
 #include "dataset/dataset.h"
