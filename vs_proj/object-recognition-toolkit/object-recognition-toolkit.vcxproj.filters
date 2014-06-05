@@ -33,6 +33,7 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
+    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -60,6 +61,43 @@
     <ClCompile Include="src\object-recognition-toolkit\image-pyramid\float_pyramid_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector_builder.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\core\clonable.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\converters.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\python_ext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\converter\boost_python.converter.arg_to_python_base.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\converter\boost_python.converter.builtin_converters.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\converter\boost_python.converter.from_python.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\converter\boost_python.converter.registry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\converter\boost_python.converter.type_id.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.class.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.enum.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.function.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.function_doc_signature.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.inheritance.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.iterator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.life_support.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.pickle_support.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\object\boost_python.object.stl_iterator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.dict.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.errors.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.exec.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.import.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.list.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.long.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.module.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.numeric.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.object_operators.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.object_protocol.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.slice.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.str.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.tuple.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_python.wrapper.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\core_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\feature_extraction_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\classification_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\pyramid_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\image_scanning_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

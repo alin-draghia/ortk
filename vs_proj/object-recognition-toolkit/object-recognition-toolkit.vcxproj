@@ -42,9 +42,14 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
+    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
     <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\object-recognition-toolkit\python\classification_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\core_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\feature_extraction_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
@@ -70,6 +75,11 @@
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\converters.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\image_scanning_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\pyramid_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\python_ext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -104,7 +114,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="opencv_release.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>b164586b</NuGetPackageImportStamp>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\bin\</OutDir>
@@ -160,5 +172,12 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets" Condition="Exists('..\packages\boost_serialization-vc120.1.55.0.16\build\native\boost_serialization-vc120.targets')" />
+    <Import Project="..\packages\boost_python.1.55.0.16\build\native\boost_python.targets" Condition="Exists('..\packages\boost_python.1.55.0.16\build\native\boost_python.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost_python.1.55.0.16\build\native\boost_python.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_python.1.55.0.16\build\native\boost_python.targets'))" />
+  </Target>
 </Project>

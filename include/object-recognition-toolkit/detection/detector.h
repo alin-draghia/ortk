@@ -31,13 +31,6 @@ namespace object_recognition_toolkit
 		public:
 			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
 
-		public:
-			virtual pyramid::PyramidBuilder& GetPyramidBuilder() const = 0;
-			virtual image_scanning::ImageScanner& GetImageScanner() const = 0;
-			virtual feature_extraction::FeatureExtractor& GetFeatureExtracotr() const = 0;
-			virtual classification::Classifier& GetClassifier() const = 0;
-			virtual non_maxima_suppression::NonMaximaSuppressor& GetNonMaximaSuppressor() const = 0;
-
 		private:
 			friend class boost::serialization::access;
 			void serialize(core::iarchive& ar, const unsigned int version);

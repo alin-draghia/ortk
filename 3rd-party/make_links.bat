@@ -19,4 +19,4 @@ rmdir vlfeat
 mklink /D vlfeat D:\SDK\vlfeat-master
 
 rmdir python
-mklink /D python C:\Users\alin.draghia\AppData\Local\Enthought\Canopy\App\appdata\canopy-1.3.0.1715.win-x86_64
+mklink /D python d:\Anaconda\
