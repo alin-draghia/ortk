@@ -17,7 +17,7 @@ namespace {
 		}
 		static PyTypeObject const* get_pytype()
 		{
-			return &PyType_Type;
+			return &PyTuple_Type;
 		}
 	};
 
@@ -39,11 +39,9 @@ namespace {
 
 		static void* convertible(PyObject* obj_ptr)
 		{
-			boost::python::extract<const boost::python::tuple&> ex(obj_ptr);
-			if (!ex.check())
-				return nullptr;
+			namespace bp = boost::python;
+			bp::tuple tup(bp::handle<>(bp::borrowed(obj_ptr)));
 
-			auto tup = ex();
 
 			if (boost::python::len(tup) != 4)
 				return nullptr;
@@ -58,7 +56,9 @@ namespace {
 			void* storage = (
 				(boost::python::converter::rvalue_from_python_storage<cv::Rect_<T>>*)data)->storage.bytes;
 
-			const boost::python::tuple& tup = boost::python::extract<const boost::python::tuple&>(obj_ptr);
+			namespace bp = boost::python;
+			bp::tuple tup(bp::handle<>(bp::borrowed(obj_ptr)));
+
 			T x = boost::python::extract<T>(tup[0]);
 			T y = boost::python::extract<T>(tup[1]);
 			T w = boost::python::extract<T>(tup[2]);
@@ -86,7 +86,7 @@ namespace {
 		}
 		static PyTypeObject const* get_pytype()
 		{
-			return &PyType_Type;
+			return &PyTuple_Type;
 		}
 	};
 
@@ -108,11 +108,9 @@ namespace {
 
 		static void* convertible(PyObject* obj_ptr)
 		{
-			boost::python::extract<const boost::python::tuple&> ex(obj_ptr);
-			if (!ex.check())
-				return nullptr;
-
-			auto tup = ex();
+			namespace bp = boost::python;
+			bp::tuple tup(bp::handle<>(bp::borrowed(obj_ptr)));
+			
 			if (boost::python::len(tup) != 2)
 				return nullptr;
 
@@ -126,7 +124,8 @@ namespace {
 			void* storage = (
 				(boost::python::converter::rvalue_from_python_storage<cv::Size_<T>>*)data)->storage.bytes;
 
-			const boost::python::tuple& tup = boost::python::extract<const boost::python::tuple&>(obj_ptr);
+			namespace bp = boost::python;
+			bp::tuple tup(bp::handle<>(bp::borrowed(obj_ptr)));
 
 			T w = boost::python::extract<T>(tup[0]);
 			T h = boost::python::extract<T>(tup[1]);
@@ -184,21 +183,37 @@ void py_regiser_core()
 	using object_recognition_toolkit::core::Clonable;
 	using object_recognition_toolkit::core::Clonable_Wrapper;
 
-
+#if(0)
 	to_python_converter<cv::Rect_<int>, ::rect_to_tuple<int>, true>();
 	to_python_converter<cv::Rect_<float>, ::rect_to_tuple<float>, true>();
 	to_python_converter<cv::Rect_<double>, ::rect_to_tuple<double>, true>();
 	to_python_converter<cv::Size_<int>, ::size_to_tuple<int>, true>();
 	to_python_converter<cv::Size_<float>, ::size_to_tuple<float>, true>();
 	to_python_converter<cv::Size_<double>, ::size_to_tuple<double>, true>();
-
+#endif
+#if(0)
 	::tuple_to_rect<int>();
 	::tuple_to_rect<float>();
 	::tuple_to_rect<double>();
 	::tuple_to_size<int>();
 	::tuple_to_size<float>();
 	::tuple_to_size<double>();
+#endif
 
+	typedef cv::Rect_<int> Rect;
+	typedef cv::Size_<int> Size;
+	
+	class_<Rect>("Rect")
+		.def_readwrite("x", &Rect::x)
+		.def_readwrite("y", &Rect::y)
+		.def_readwrite("width", &Rect::width)
+		.def_readwrite("height", &Rect::height)
+		;
+
+	class_<Size>("Size")		
+		.def_readwrite("width", &Size::width)
+		.def_readwrite("height", &Size::height)
+		;
 
 	class_<Named_Wrapper, boost::noncopyable>("Named")
 		.def("name", pure_virtual(&Named::name), return_value_policy<copy_const_reference>())
