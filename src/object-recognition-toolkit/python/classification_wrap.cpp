@@ -1,6 +1,5 @@
 #include <boost/python.hpp>
 
-#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 namespace object_recognition_toolkit
@@ -57,6 +56,16 @@ namespace object_recognition_toolkit
 			return new LinearSVC(bias, coefs_);
 		}
 
+		Classifier* create_MockPersonClassifier()
+		{
+			return new MockPersonClassifier();
+		}
+
+
+		Trainer* create_LinearSvcTrainer()
+		{
+			return new LinearSvcTrainer();
+		}
 	}
 }
 
@@ -77,7 +86,18 @@ void py_regiser_classification()
 		.def("Train", pure_virtual(&Trainer::Train), return_value_policy<manage_new_object>())
 		;
 
-	def("create_LinearSVC", create_LinearSVC, return_value_policy<manage_new_object>());
+	def("create_LinearSVC", 
+		create_LinearSVC, 
+		return_value_policy<manage_new_object>());
+
+	def("create_MockPersonClassifier",
+		create_MockPersonClassifier,
+		return_value_policy<manage_new_object>());
+
+	def("create_LinearSvcTrainer",
+		create_LinearSvcTrainer,
+		return_value_policy<manage_new_object>());
+
 	/*
 	class_<LinearSVC, bases<Classifier>>("LinearSVC", no_init)
 		.def("__init__", make_constructor(create_LinearSVC))

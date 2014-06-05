@@ -1,5 +1,3 @@
-#include "object-recognition-toolkit/python/python_ext.h"
-
 #include <opencv2/core/core.hpp>
 
 #include <boost/python.hpp>
@@ -317,4 +315,9 @@ namespace object_recognition_toolkit
 		}
 
 	}
+}
+
+void py_regiser_converters()
+{
+	object_recognition_toolkit::python::initialize_converters();
 }

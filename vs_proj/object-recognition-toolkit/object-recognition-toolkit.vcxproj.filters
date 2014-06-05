@@ -33,7 +33,6 @@
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
-    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
