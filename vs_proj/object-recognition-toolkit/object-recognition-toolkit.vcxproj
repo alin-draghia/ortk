@@ -75,6 +75,8 @@
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\converters.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\image_scanning_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\pyramid_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\python_ext.cpp" />
   </ItemGroup>

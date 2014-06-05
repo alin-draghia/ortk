@@ -15,6 +15,14 @@ namespace object_recognition_toolkit
 		{		
 			core::Matrix image;
 			core::Box box;
+
+			bool operator==(Window const& w) const {
+				return w.box == this->box;
+			}
+
+			bool operator!=(Window const& w) const { 
+				return w.box != this->box;
+			}
 		};
 
 	}

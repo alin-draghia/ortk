@@ -9,7 +9,7 @@ namespace object_recognition_toolkit
 	{
 		namespace bp = boost::python;
 
-		struct DetectorWrap
+		struct Detector_Wrapper
 			: Detector
 			, bp::wrapper < Detector >
 		{
@@ -59,12 +59,13 @@ namespace object_recognition_toolkit
 			}
 		};
 
-		void export_detection() {
-			using namespace boost::python;
-
-
-
-		}
-
 	}
+}
+
+void py_regiser_detection()
+{
+	using namespace boost::python;
+	using namespace object_recognition_toolkit::detection;
+
+
 }
