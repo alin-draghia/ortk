@@ -75,7 +75,6 @@ namespace object_recognition_toolkit
 void py_regiser_classification()
 {
 	using namespace boost::python;
-
 	using namespace object_recognition_toolkit::classification;
 
 	class_<Classifier_Wrapper, boost::noncopyable>("Classifier")
@@ -103,6 +102,4 @@ void py_regiser_classification()
 		.def("__init__", make_constructor(create_LinearSVC))
 		;
 		*/
-		
-
 }

@@ -94,6 +94,7 @@
     <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\feature_extraction_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\classification_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\pyramid_wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
