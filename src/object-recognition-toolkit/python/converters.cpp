@@ -39,7 +39,7 @@ namespace {
 	/*
 	cv::Point_<> -> ndarray
 	*/
-
+#if(0)
 	template <typename PointT> class Point_to_python_ndarray{
 	public:
 		static PyObject* convert(cv::Point_<PointT> pt){
@@ -55,6 +55,7 @@ namespace {
 			return boost::python::incref(arr_obj);
 		}
 	};
+#endif
 
 	/*
 	cv::Mat -> ndarray
