@@ -41,16 +41,19 @@ namespace object_recognition_toolkit {
 	}
 }
 
+#include "object-recognition-toolkit/python/python_ext.h"
+
 void py_regiser_feature_extraction()
 {
 	using namespace boost::python;
-
 	using namespace object_recognition_toolkit::feature_extraction;
+	using object_recognition_toolkit::python_ext::serialize_pickle;
+
 
 	class_<FeatureExtractor_Wrapper, boost::noncopyable>("FeatureExtractor")
 		.def("compute", pure_virtual(&FeatureExtractor::compute))
 		.def("lenght", pure_virtual(&FeatureExtractor::lenght))
-		;
+		.def_pickle(serialize_pickle<FeatureExtractor>());
 
 	def("create_HogFeatureExtractor", create_HogFeatureExtractor, return_value_policy<manage_new_object>());
 	

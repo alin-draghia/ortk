@@ -1,6 +1,7 @@
 #include <boost/python.hpp>
 
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 
 namespace object_recognition_toolkit
 {
@@ -76,10 +77,11 @@ void py_regiser_classification()
 {
 	using namespace boost::python;
 	using namespace object_recognition_toolkit::classification;
+	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 	class_<Classifier_Wrapper, boost::noncopyable>("Classifier")
 		.def("Predict", pure_virtual(&Classifier::Predict))
-		;
+		.def_pickle(serialize_pickle<Classifier>());
 
 	class_<Trainer_Wrapper, boost::noncopyable>("Trainer")
 		.def("Train", pure_virtual(&Trainer::Train), return_value_policy<manage_new_object>())

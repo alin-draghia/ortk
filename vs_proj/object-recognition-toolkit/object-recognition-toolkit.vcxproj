@@ -42,6 +42,7 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
+    <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
     <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>

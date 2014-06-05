@@ -39,11 +39,14 @@ namespace object_recognition_toolkit
 	}
 }
 
+#include "object-recognition-toolkit/python/python_ext.h"
+
 void py_regiser_non_maxima_suppression()
 {
 	using namespace boost::python;
 	using namespace object_recognition_toolkit;
 	using namespace object_recognition_toolkit::non_maxima_suppression;
+	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 	typedef std::vector<core::Box> BoxVector;
 	class_<BoxVector>("BoxVector")
@@ -59,7 +62,7 @@ void py_regiser_non_maxima_suppression()
 		.def("suppress", pure_virtual(&NonMaximaSuppressor::suppress))
 		.def("Name", pure_virtual(&NonMaximaSuppressor::name), return_value_policy<copy_const_reference>())
 		.def("Clone", pure_virtual(&NonMaximaSuppressor::Clone), return_value_policy<manage_new_object>())
-		;
+		.def_pickle(serialize_pickle<NonMaximaSuppressor>());
 
 	def("create_PassThroughNms", create_PassThroughNms, return_value_policy<manage_new_object>());
 }

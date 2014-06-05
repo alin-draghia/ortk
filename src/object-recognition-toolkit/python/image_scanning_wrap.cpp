@@ -35,11 +35,14 @@ namespace object_recognition_toolkit
 	}
 }
 
+#include "object-recognition-toolkit/python/python_ext.h"
+
 void py_regiser_image_scanning()
 {
 	using namespace boost::python;
 	using namespace object_recognition_toolkit;
 	using namespace object_recognition_toolkit::image_scanning;
+	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 	class_<Window>("Window")
 		.def_readwrite("image", &Window::image)
@@ -55,7 +58,7 @@ void py_regiser_image_scanning()
 		.def("compute", pure_virtual(&ImageScanner::compute))
 		.def("Name", pure_virtual(&ImageScanner::name), return_value_policy<copy_const_reference>())
 		.def("Clone", pure_virtual(&ImageScanner::Clone), return_value_policy<manage_new_object>())
-		;
+		.def_pickle(serialize_pickle<ImageScanner>());
 	
 	def("create_DenseImageScanner", create_DenseImageScanner, return_value_policy<manage_new_object>());
 }

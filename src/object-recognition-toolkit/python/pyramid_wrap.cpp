@@ -38,12 +38,14 @@ namespace object_recognition_toolkit
 	}
 }
 
+#include "object-recognition-toolkit/python/python_ext.h"
+
 void py_regiser_pyramid()
 {
 	using namespace boost::python;
 	using namespace object_recognition_toolkit;
 	using namespace object_recognition_toolkit::pyramid;
-
+	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 	class_<PyramidLevel>("PyramidLevel", init<const core::Matrix&, double>())
 		.def("GetScale", &PyramidLevel::GetScale)
@@ -62,7 +64,7 @@ void py_regiser_pyramid()
 		.def("Build", pure_virtual(&PyramidBuilder::Build))
 		.def("Name", pure_virtual(&PyramidBuilder::name), return_value_policy<copy_const_reference>())
 		.def("Clone", pure_virtual(&PyramidBuilder::Clone), return_value_policy<manage_new_object>())
-		;
+		.def_pickle(serialize_pickle<PyramidBuilder>());
 
 	def("create_FloatPyramidBuilder", create_FloatPyramidBuilder, return_value_policy<manage_new_object>());
 
