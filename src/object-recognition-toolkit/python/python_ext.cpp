@@ -7,7 +7,7 @@ extern void py_regiser_converters();
 extern void py_regiser_core();
 extern void py_regiser_classification();
 extern void py_regiser_feature_extraction();
-
+extern void py_regiser_pyramid();
 
 
 BOOST_PYTHON_MODULE(object_recognition_toolkit) {
@@ -17,5 +17,6 @@ BOOST_PYTHON_MODULE(object_recognition_toolkit) {
 	py_regiser_core();
 	py_regiser_classification();
 	py_regiser_feature_extraction();
+	py_regiser_pyramid();
 
 }
