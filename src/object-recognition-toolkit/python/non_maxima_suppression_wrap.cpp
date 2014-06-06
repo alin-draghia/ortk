@@ -32,9 +32,14 @@ namespace object_recognition_toolkit
 
 		};
 
-		NonMaximaSuppressor* create_PassThroughNms()
+		std::auto_ptr<NonMaximaSuppressor> create_PassThroughNms()
 		{
-			return new PassThroughNms();
+			return std::auto_ptr<NonMaximaSuppressor>(new PassThroughNms());
+		}
+
+		std::auto_ptr<NonMaximaSuppressor> create_GroupRectanglesNms()
+		{
+			return std::auto_ptr<NonMaximaSuppressor>(new GroupRectanglesNms());
 		}
 	}
 }
@@ -64,5 +69,8 @@ void py_regiser_non_maxima_suppression()
 		.def("Clone", pure_virtual(&NonMaximaSuppressor::Clone), return_value_policy<manage_new_object>())
 		.def_pickle(serialize_pickle<NonMaximaSuppressor>());
 
-	def("create_PassThroughNms", create_PassThroughNms, return_value_policy<manage_new_object>());
+	def("create_PassThroughNms", create_PassThroughNms);
+	def("create_GroupRectanglesNms", create_GroupRectanglesNms);
+
+	register_ptr_to_python<std::auto_ptr<NonMaximaSuppressor>>();
 }
