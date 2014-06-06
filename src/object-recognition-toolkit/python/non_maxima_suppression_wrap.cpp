@@ -69,6 +69,9 @@ void py_regiser_non_maxima_suppression()
 		.def("Clone", pure_virtual(&NonMaximaSuppressor::Clone), return_value_policy<manage_new_object>())
 		.def_pickle(serialize_pickle<NonMaximaSuppressor>());
 
+	class_<GroupRectanglesNms, bases<NonMaximaSuppressor>>("GroupRectanglesNms")
+		;
+
 	def("create_PassThroughNms", create_PassThroughNms);
 	def("create_GroupRectanglesNms", create_GroupRectanglesNms);
 
