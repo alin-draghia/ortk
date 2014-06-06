@@ -101,7 +101,7 @@ namespace object_recognition_toolkit
 
 		void DetectorBase::nonMaximumSuppression(std::vector<core::Box>& detections, std::vector<double>& confidences) const
 		{
-			// pass
+			this->GetNonMaximaSuppressor().suppress(detections, confidences);
 		}
 
 		PyramidBuilder& DetectorBase::GetPyramidBuilder() const
