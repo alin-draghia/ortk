@@ -12,8 +12,12 @@ extern void py_regiser_image_scanning();
 extern void py_regiser_non_maxima_suppression();
 extern void py_regiser_pyramid();
 
-BOOST_PYTHON_MODULE(object_recognition_toolkit) {
-
+#if defined(_DEBUG)
+BOOST_PYTHON_MODULE(object_recognition_toolkitd)
+#else
+BOOST_PYTHON_MODULE(object_recognition_toolkit)
+#endif
+{
 	py_regiser_classification();
 	py_regiser_converters();
 	py_regiser_core();
