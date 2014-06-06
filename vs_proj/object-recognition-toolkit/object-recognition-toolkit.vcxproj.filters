@@ -34,6 +34,7 @@
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
     <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="src\object-recognition-toolkit\python\pyramid_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\image_scanning_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

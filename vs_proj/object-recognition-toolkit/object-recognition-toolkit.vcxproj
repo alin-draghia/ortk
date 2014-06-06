@@ -39,6 +39,7 @@
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\image-scanner.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid_builder.h" />
     <ClInclude Include="include\object-recognition-toolkit\image-scanning\window.h" />
+    <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h" />
     <ClInclude Include="include\object-recognition-toolkit\object_recognition_toolkit.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\classification_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\core_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp" />

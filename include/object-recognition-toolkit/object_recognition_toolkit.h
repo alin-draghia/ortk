@@ -24,6 +24,7 @@
 
 #include "non_maxima_suppression/non_maxima_suppressor.h"
 #include "non_maxima_suppression/pass_through_nms.h"
+#include "non_maxima_suppression/group_rectangles_nms.h"
 
 #include "classification/classifier.h"
 #include "classification/trainer.h"
