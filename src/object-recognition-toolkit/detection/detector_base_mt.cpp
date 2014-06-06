@@ -25,6 +25,9 @@ namespace object_recognition_toolkit
 
 		void DetectorBaseMt::Detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{
+			detections.clear();
+			confidences.clear();
+
 			using object_recognition_toolkit::pyramid::PyramidLevel;
 
 			std::vector<image_scanning::Window> windows;
