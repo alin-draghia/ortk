@@ -14,20 +14,16 @@ namespace object_recognition_toolkit
 			: Classifier
 			, bp::wrapper < Classifier >
 		{
-
-			double Predict(const cv::Mat& instance) const
-			{
+			double Predict(const cv::Mat& instance) const {
 				return this->get_override("Predict")(instance);
 			}
-
 		};
 
 		struct Trainer_Wrapper
 			: Trainer
 			, bp::wrapper<Trainer>
 		{
-			std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels)
-			{
+			std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels) {
 				std::auto_ptr<Classifier> aptr = this->get_override("Train")();
 				return aptr;
 			}
@@ -41,21 +37,8 @@ namespace object_recognition_toolkit
 			return ptr;
 		}
 
-		Classifier* create_MockPersonClassifier()
-		{
-			return new MockPersonClassifier();
-		}
-
-
-		Trainer* create_LinearSvcTrainer()
-		{
-			return new LinearSvcTrainer();
-		}
 	}
 }
-
-#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-
 
 void py_regiser_classification()
 {
