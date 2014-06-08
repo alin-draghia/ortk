@@ -25,8 +25,6 @@ namespace object_recognition_toolkit
 	}
 }
 
-#include "object-recognition-toolkit/python/python_ext.h"
-
 void py_regiser_image_scanning()
 {
 	using namespace boost::python;
