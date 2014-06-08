@@ -81,8 +81,9 @@ void py_regiser_classification()
 
 
 
-	class_<Trainer_Wrapper, boost::noncopyable>("Trainer")
+	class_<Trainer_Wrapper, Trainer*, bases<Named, Clonable>>("Trainer")
 		.def("Train", &Trainer::Train)
+		.def_pickle(serialize_pickle<Trainer*>())
 		;
 
 }

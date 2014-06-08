@@ -14,5 +14,18 @@ namespace object_recognition_toolkit
 		{
 			throw std::runtime_error("not implemented, [this is supposed to be a base class]");
 		}
+
+		void Trainer::serialize(core::iarchive& ar, const unsigned int version)
+		{
+			(void)ar;
+			(void)version;
+		}
+
+
+		void Trainer::serialize(core::oarchive& ar, const unsigned int version)
+		{
+			(void)ar;
+			(void)version;
+		}
 	}
 }

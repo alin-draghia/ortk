@@ -39,9 +39,7 @@ namespace object_recognition_toolkit
 			cv::Size maxSize_;
 
 		private:
-			friend class boost::serialization::access;
-			void serialize(core::iarchive& ar, const unsigned int version);
-			void serialize(core::oarchive& ar, const unsigned int version);
+			DECLARE_SERIALIZABLE();
 		};
 	}
 }

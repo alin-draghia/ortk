@@ -27,9 +27,7 @@ namespace object_recognition_toolkit {
 			virtual int lenght() const = 0;
 
 		private:
-			friend class boost::serialization::access;
-			void serialize(core::iarchive& ar, const unsigned int version);
-			void serialize(core::oarchive& ar, const unsigned int version);
+			DECLARE_SERIALIZABLE();
 		};
 
 		

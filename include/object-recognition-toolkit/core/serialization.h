@@ -122,4 +122,10 @@ namespace boost
 BOOST_SERIALIZATION_SPLIT_FREE(cv::Mat);
 
 
+#define DECLARE_SERIALIZABLE() \
+	friend class boost::serialization::access; \
+	void serialize(object_recognition_toolkit::core::iarchive& ar, const unsigned int version); \
+	void serialize(object_recognition_toolkit::core::oarchive& ar, const unsigned int version); \
+
+
 #endif // SERIALIZATION_H_INCLUDED_

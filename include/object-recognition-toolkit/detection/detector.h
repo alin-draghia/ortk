@@ -32,9 +32,7 @@ namespace object_recognition_toolkit
 			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
 
 		private:
-			friend class boost::serialization::access;
-			void serialize(core::iarchive& ar, const unsigned int version);
-			void serialize(core::oarchive& ar, const unsigned int version);
+			DECLARE_SERIALIZABLE();
 		};
 	}
 }

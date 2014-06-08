@@ -8,6 +8,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "../core/public-api.h"
+#include "../core/serialization.h"
 #include "./classifier.h"
 
 namespace object_recognition_toolkit
@@ -21,6 +22,8 @@ namespace object_recognition_toolkit
 		public:
 			virtual ~Trainer();
 			virtual std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels);
+
+			DECLARE_SERIALIZABLE();
 		};
 	}
 }
