@@ -1,5 +1,5 @@
-#include <boost/python.hpp>
-
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 
@@ -18,9 +18,9 @@ BOOST_PYTHON_MODULE(object_recognition_toolkitd)
 BOOST_PYTHON_MODULE(object_recognition_toolkit)
 #endif
 {
-	py_regiser_classification();
 	py_regiser_converters();
 	py_regiser_core();
+	py_regiser_classification();	
 	py_regiser_detection();
 	py_regiser_feature_extraction();
 	py_regiser_image_scanning();

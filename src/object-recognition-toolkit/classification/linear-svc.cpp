@@ -1,5 +1,7 @@
 #include "object-recognition-toolkit/classification/linear-svc.h"
 
+#include <boost/serialization/vector.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace classification
@@ -39,6 +41,20 @@ namespace object_recognition_toolkit
 		core::Clonable* LinearSVC::Clone()
 		{
 			return new LinearSVC(*this);
+		}
+
+		void LinearSVC::serialize(core::iarchive& ar, const unsigned int version)
+		{
+			ar >> bias_;
+			ar >> coefs_;
+			ar >> boost::serialization::base_object<Classifier>(*this);
+		}
+
+		void LinearSVC::serialize(core::oarchive& ar, const unsigned int version)
+		{
+			ar << bias_;
+			ar << coefs_;
+			ar << boost::serialization::base_object<Classifier>(*this);
 		}
 
 	}

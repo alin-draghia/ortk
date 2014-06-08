@@ -1,5 +1,5 @@
-#include <boost/python.hpp>
-#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 namespace object_recognition_toolkit
@@ -16,16 +16,6 @@ namespace object_recognition_toolkit
 			{
 				return this->get_override("compute")();
 			}
-
-			const std::string& name() const
-			{
-				return this->get_override("name")();
-			}
-
-			Clonable* Clone()
-			{
-				return this->get_override("Clone")();
-			}
 		};
 
 		ImageScanner* create_DenseImageScanner(core::Size windowSize, core::Size windowStep, core::Size padding)
@@ -40,7 +30,7 @@ namespace object_recognition_toolkit
 void py_regiser_image_scanning()
 {
 	using namespace boost::python;
-	using namespace object_recognition_toolkit;
+	using namespace object_recognition_toolkit::core;
 	using namespace object_recognition_toolkit::image_scanning;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
@@ -54,10 +44,8 @@ void py_regiser_image_scanning()
 		.def(vector_indexing_suite<WindowVector>())
 		;
 
-	class_<ImageScanner_Wrapper, boost::noncopyable>("ImageScanner")
-		.def("compute", pure_virtual(&ImageScanner::compute))
-		.def("Name", pure_virtual(&ImageScanner::name), return_value_policy<copy_const_reference>())
-		.def("Clone", pure_virtual(&ImageScanner::Clone), return_value_policy<manage_new_object>())
+	class_<ImageScanner_Wrapper, boost::noncopyable, bases<Named, Clonable>>("ImageScanner")
+		.def("compute", pure_virtual(&ImageScanner::compute))		
 		.def_pickle(serialize_pickle<ImageScanner>());
 	
 	def("create_DenseImageScanner", create_DenseImageScanner, return_value_policy<manage_new_object>());

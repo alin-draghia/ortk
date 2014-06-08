@@ -1,7 +1,8 @@
-#include <opencv2/core/core.hpp>
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 
-#include <boost/python.hpp>
-#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+
+#include <opencv2/core/core.hpp>
 
 #define HAVE_ROUND
 #include <Python.h>

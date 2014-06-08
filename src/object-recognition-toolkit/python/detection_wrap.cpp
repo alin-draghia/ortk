@@ -1,5 +1,5 @@
-#include <boost/python.hpp>
-
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 
@@ -18,15 +18,6 @@ namespace object_recognition_toolkit
 				this->get_override("Detect")(image, detections, confidences, treshold);
 			}			
 
-			const std::string& name() const
-			{
-				return this->get_override("name")();
-			}
-
-			Clonable* Clone()
-			{
-				return this->get_override("Clone")();
-			}
 		};
 
 
@@ -38,11 +29,6 @@ namespace object_recognition_toolkit
 			{
 				return this->get_override("Train")(positive, negative);
 			}			
-
-			const std::string& name() const
-			{
-				return this->get_override("name")();
-			}
 
 		};
 
@@ -88,14 +74,13 @@ namespace object_recognition_toolkit
 void py_regiser_detection()
 {
 	using namespace boost::python;
+	using namespace object_recognition_toolkit::core;
 	using namespace object_recognition_toolkit::detection;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 
-	class_<Detector_Wrapper, boost::noncopyable>("Detector")
+	class_<Detector_Wrapper, boost::noncopyable, bases<Named, Clonable>>("Detector")
 		.def("Detect", pure_virtual(&Detector::Detect))
-		.def("Name", pure_virtual(&Detector::name), return_value_policy<copy_const_reference>())
-		.def("Clone", pure_virtual(&Detector::Clone), return_value_policy<manage_new_object>())
 		.def_pickle(serialize_pickle<Detector>())
 		;
 

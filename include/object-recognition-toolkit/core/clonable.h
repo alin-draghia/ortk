@@ -11,10 +11,10 @@ namespace object_recognition_toolkit
 		class PUBLIC_API Clonable
 		{
 		public:
-			virtual ~Clonable() = 0;
+			virtual ~Clonable();
 
 		public:
-			virtual Clonable* Clone() = 0;
+			virtual Clonable* Clone();
 		};
 	}
 }

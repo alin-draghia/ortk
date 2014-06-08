@@ -35,6 +35,7 @@
     <ClInclude Include="include\object-recognition-toolkit\core\configurable.h" />
     <ClInclude Include="include\object-recognition-toolkit\python\python_ext.h" />
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.h" />
+    <ClInclude Include="src\object-recognition-toolkit\python\boost_python_precomp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="src\object-recognition-toolkit\python\image_scanning_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\boost_python_precomp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

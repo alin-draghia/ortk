@@ -1,5 +1,5 @@
-#include <boost/python.hpp>
-
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 namespace {
@@ -162,13 +162,9 @@ namespace object_recognition_toolkit
 		{
 			Clonable* Clone()
 			{
-				return this->get_override("Clone")();
+				return this->get_override("Clone")();				
 			}
 		};
-
-		Named* test_factory() {
-			return new feature_extraction::HogFeatureExtractor();
-		}
 
 	}
 }
@@ -215,15 +211,29 @@ void py_regiser_core()
 		.def_readwrite("height", &Size::height)
 		;
 
-	class_<Named_Wrapper, boost::noncopyable>("Named")
-		.def("name", pure_virtual(&Named::name), return_value_policy<copy_const_reference>())
+
+	typedef std::vector<int> VecI32;
+	class_<VecI32>("VecI32")
+		.def(vector_indexing_suite<VecI32>())
 		;
 
-	class_<Clonable_Wrapper, boost::noncopyable>("Clonable")
-		.def("Clone", pure_virtual(&Clonable::Clone), return_value_policy<manage_new_object>())
+	typedef std::vector<float> VecF32;
+	class_<VecF32>("VecF32")
+		.def(vector_indexing_suite<VecF32>())
 		;
 
-	def("test_factory", object_recognition_toolkit::core::test_factory, return_value_policy<manage_new_object>());
+	typedef std::vector<double> VecF64;
+	class_<VecF64>("VecF64")
+		.def(vector_indexing_suite<VecF64>())
+		;
+
+	class_<Named_Wrapper, boost::noncopyable, Named*>("Named")
+		.def("name", &Named::name, return_value_policy<copy_const_reference>())
+		;
+
+	class_<Clonable_Wrapper, boost::noncopyable, Clonable*>("Clonable")
+		.def("Clone", &Clonable::Clone, return_value_policy<manage_new_object>())
+		;
 }
 
 

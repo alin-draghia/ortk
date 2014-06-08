@@ -1,5 +1,5 @@
-#include <boost/python.hpp>
-
+#include "boost_python_precomp.h"
+#include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 namespace object_recognition_toolkit {
@@ -9,7 +9,7 @@ namespace object_recognition_toolkit {
 
 		struct FeatureExtractor_Wrapper
 			: FeatureExtractor
-			, bp::wrapper<FeatureExtractor>
+			, bp::wrapper < FeatureExtractor >
 		{
 			core::FeatureVector compute(const core::Matrix& image) const
 			{
@@ -21,15 +21,6 @@ namespace object_recognition_toolkit {
 				return this->get_override("lenght")();
 			}
 
-			const std::string& name() const
-			{
-				return this->get_override("name")();
-			}
-
-			Clonable* Clone()
-			{
-				return this->get_override("Clone")();
-			}
 		};
 
 
@@ -46,15 +37,16 @@ namespace object_recognition_toolkit {
 void py_regiser_feature_extraction()
 {
 	using namespace boost::python;
+	using namespace object_recognition_toolkit::core;
 	using namespace object_recognition_toolkit::feature_extraction;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
 
-	class_<FeatureExtractor_Wrapper, boost::noncopyable>("FeatureExtractor")
+	class_< FeatureExtractor_Wrapper, boost::noncopyable, bases<Named, Clonable>>("FeatureExtractor")
 		.def("compute", pure_virtual(&FeatureExtractor::compute))
 		.def("lenght", pure_virtual(&FeatureExtractor::lenght))
 		.def_pickle(serialize_pickle<FeatureExtractor>());
 
 	def("create_HogFeatureExtractor", create_HogFeatureExtractor, return_value_policy<manage_new_object>());
-	
+
 }

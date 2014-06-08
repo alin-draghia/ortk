@@ -12,8 +12,8 @@ namespace object_recognition_toolkit
 		class PUBLIC_API Named
 		{
 		public:
-			virtual ~Named() = 0;
-			virtual const std::string& name() const = 0;
+			virtual ~Named();
+			virtual const std::string& name() const;
 		};
 	}
 }

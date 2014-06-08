@@ -17,7 +17,8 @@ namespace object_recognition_toolkit
 			: public Classifier
 		{
 		public:
-			LinearSVC(const float bias, std::vector<float>& coefs);
+			LinearSVC() = default;
+			LinearSVC(float bias, std::vector<float>& coefs);
 			virtual ~LinearSVC();
 
 			virtual double Predict(const core::FeatureVector& instance) const;
@@ -27,6 +28,11 @@ namespace object_recognition_toolkit
 
 		public:
 			virtual core::Clonable* Clone();
+
+		private:
+			friend class boost::serialization::access;
+			void serialize(core::iarchive& ar, const unsigned int version);
+			void serialize(core::oarchive& ar, const unsigned int version);
 
 		private:
 			float bias_;

@@ -25,10 +25,10 @@ namespace object_recognition_toolkit
 			, public core::Clonable
 		{
 		public:
-			virtual ~Classifier() = 0;
+			virtual ~Classifier();
 
 		public:
-			virtual double Predict(const core::FeatureVector& instance) const = 0;
+			virtual double Predict(const core::FeatureVector& instance) const;
 
 		private:
 			friend class boost::serialization::access;

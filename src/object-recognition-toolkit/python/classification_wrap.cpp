@@ -1,7 +1,6 @@
-#include <boost/python.hpp>
-
-#include "object-recognition-toolkit/object_recognition_toolkit.h"
+#include "boost_python_precomp.h"
 #include "object-recognition-toolkit/python/python_ext.h"
+#include "object-recognition-toolkit/object_recognition_toolkit.h"
 
 namespace object_recognition_toolkit
 {
@@ -15,20 +14,12 @@ namespace object_recognition_toolkit
 			: Classifier
 			, bp::wrapper < Classifier >
 		{
+
 			double Predict(const cv::Mat& instance) const
 			{
 				return this->get_override("Predict")(instance);
 			}
 
-			const std::string& name() const
-			{
-				return this->get_override("name")();
-			}
-
-			Clonable* Clone()
-			{
-				return this->get_override("Clone")();
-			}
 		};
 
 		struct Trainer_Wrapper
@@ -43,18 +34,10 @@ namespace object_recognition_toolkit
 
 
 
-		Classifier* create_LinearSVC(double bias, const cv::Mat_<float>& coefs)
+		std::auto_ptr<LinearSVC> create_LinearSVC(float bias, std::vector<float>& coefs)
 		{
-			std::vector<float> coefs_ = coefs;
-			std::cout << "create_LinearSVC()" << std::endl;
-			std::cout << "bias=" << bias << std::endl;
-			std::cout << "coefs=";
-			for (auto& val : coefs_)
-				std::cout << val << ", ";
-			
-			std::cout << std::endl;
-
-			return new LinearSVC(bias, coefs_);
+			std::auto_ptr<LinearSVC> ptr(new LinearSVC(bias, coefs));
+			return ptr;
 		}
 
 		Classifier* create_MockPersonClassifier()
@@ -76,32 +59,29 @@ namespace object_recognition_toolkit
 void py_regiser_classification()
 {
 	using namespace boost::python;
+	using namespace object_recognition_toolkit::core;
 	using namespace object_recognition_toolkit::classification;
+
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
-	class_<Classifier_Wrapper, boost::noncopyable>("Classifier")
-		.def("Predict", pure_virtual(&Classifier::Predict))
-		.def_pickle(serialize_pickle<Classifier>());
+	class_<Classifier_Wrapper, Classifier*, bases<Named, Clonable>>("Classifier")
+		.def("Predict", &Classifier::Predict)
+		.def_pickle(serialize_pickle<Classifier*>())
+		;
+
+	class_<MockPersonClassifier, MockPersonClassifier*, bases<Classifier>>("MockPersonClassifier")
+		.def_pickle(serialize_pickle<MockPersonClassifier*>())
+		;
+
+	class_<LinearSVC, LinearSVC*, bases<Classifier>>("LinearSVC")
+		.def("__init__", make_constructor(create_LinearSVC))
+		.def_pickle(serialize_pickle<LinearSVC*>())
+		;
+
+
 
 	class_<Trainer_Wrapper, boost::noncopyable>("Trainer")
 		.def("Train", pure_virtual(&Trainer::Train), return_value_policy<manage_new_object>())
 		;
 
-	def("create_LinearSVC", 
-		create_LinearSVC, 
-		return_value_policy<manage_new_object>());
-
-	def("create_MockPersonClassifier",
-		create_MockPersonClassifier,
-		return_value_policy<manage_new_object>());
-
-	def("create_LinearSvcTrainer",
-		create_LinearSvcTrainer,
-		return_value_policy<manage_new_object>());
-
-	/*
-	class_<LinearSVC, bases<Classifier>>("LinearSVC", no_init)
-		.def("__init__", make_constructor(create_LinearSVC))
-		;
-		*/
 }
