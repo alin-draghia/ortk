@@ -10,7 +10,7 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		std::auto_ptr<Classifier> Trainer::Train(const cv::Mat& features, const cv::Mat& labels)
+		Classifier* Trainer::Train(const cv::Mat& features, const cv::Mat& labels)
 		{
 			throw std::runtime_error("not implemented, [this is supposed to be a base class]");
 		}

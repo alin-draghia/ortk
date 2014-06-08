@@ -30,13 +30,11 @@ namespace object_recognition_toolkit
 			virtual core::Clonable* Clone();
 
 		private:
-			friend class boost::serialization::access;
-			void serialize(core::iarchive& ar, const unsigned int version);
-			void serialize(core::oarchive& ar, const unsigned int version);
-
-		private:
 			float bias_;
 			std::vector<float> coefs_;
+
+
+			DECLARE_SERIALIZABLE();
 		};
 
 	}

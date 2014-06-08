@@ -75,7 +75,7 @@ namespace object_recognition_toolkit {
 		}
 
 
-		std::auto_ptr<Classifier> LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
+		Classifier* LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
 		{
 
 			std::unique_ptr<LinearSvcClassifier__> cls(new LinearSvcClassifier__());
@@ -89,10 +89,22 @@ namespace object_recognition_toolkit {
 			bool train_ok = cls->svm_.train(features, labels, {}, {}, params);
 
 			if (train_ok) {
-				return std::auto_ptr<Classifier>(cls.release());
+				return cls.release();
 			}
 
 			throw std::runtime_error("training failed");
+		}
+
+
+		const std::string& LinearSvcTrainer::name() const
+		{
+			static const std::string name = "LinearSvcTrainer::LinearSvcTrainer";
+			return name;
+		}
+
+		core::Clonable* LinearSvcTrainer::Clone()
+		{
+			return new LinearSvcTrainer(*this);
 		}
 
 		double LinearSvcTrainer::getC() const

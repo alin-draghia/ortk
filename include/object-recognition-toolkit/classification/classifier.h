@@ -30,10 +30,7 @@ namespace object_recognition_toolkit
 		public:
 			virtual double Predict(const core::FeatureVector& instance) const;
 
-		private:
-			friend class boost::serialization::access;
-			void serialize(core::iarchive& ar, const unsigned int version);
-			void serialize(core::oarchive& ar, const unsigned int version);
+			DECLARE_SERIALIZABLE();
 		};
 	}
 }

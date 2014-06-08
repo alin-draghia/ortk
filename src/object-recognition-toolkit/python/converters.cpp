@@ -130,7 +130,7 @@ namespace {
 		*/
 		static void* convertible(PyObject* obj_ptr){
 			if (!PyArray_Check(obj_ptr)) return NULL;
-			if (PyArray_NDIM(obj_ptr)<2) return NULL;
+			if (PyArray_NDIM(obj_ptr)>CV_MAX_DIM) return NULL;
 			return obj_ptr;
 		}
 
@@ -144,8 +144,8 @@ namespace {
 			Py_ssize_t * shape = PyArray_DIMS(obj_ptr);
 			Py_ssize_t * strides = PyArray_STRIDES(obj_ptr);
 			int itemsize = PyArray_ITEMSIZE(obj_ptr);
-			size_t steps[2]; int size[2]; // ndim >=2 assured by check in convertible
-			for (int i = 0; i<2; ++i){
+			size_t steps[CV_MAX_DIM]; int size[CV_MAX_DIM]; // ndim >=2 assured by check in convertible
+			for (int i = 0; i<ndim; ++i){
 				steps[i] = strides[i]; // PyArray strides are number of elements, not bytes
 				size[i] = (int)shape[i];
 			}
@@ -182,7 +182,7 @@ namespace {
 			void * storage = ((boost::python::converter::rvalue_from_python_storage<cv::Mat> *) data)->storage.bytes;
 
 			// Construct cv::Mat
-			new (storage)cv::Mat(2, size, cv_depth, arr_data, steps);
+			new (storage)cv::Mat(ndim, size, cv_depth, arr_data, steps);
 
 			data->convertible = storage;
 		}

@@ -29,8 +29,13 @@ namespace object_recognition_toolkit
 
 			virtual ~LinearSvcTrainer();
 
-			virtual std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels);
+			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
 
+		public:
+			virtual const std::string& name() const;
+
+		public:
+			virtual core::Clonable* Clone();
 
 		public:
 			double getC() const;

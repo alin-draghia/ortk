@@ -23,9 +23,9 @@ namespace object_recognition_toolkit
 			: Trainer
 			, bp::wrapper<Trainer>
 		{
-			std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels) {
-				std::auto_ptr<Classifier> aptr = this->get_override("Train")();
-				return aptr;
+			Classifier* Train(const cv::Mat& features, const cv::Mat& labels) {
+				Classifier* ptr = this->get_override("Train")();
+				return ptr;
 			}
 		};
 
@@ -63,8 +63,12 @@ void py_regiser_classification()
 		;
 
 	class_<Trainer_Wrapper, Trainer*, bases<Named, Clonable>>("Trainer")
-		.def("Train", &Trainer::Train)
+		.def("Train", &Trainer::Train, return_value_policy<manage_new_object>())
 		.def_pickle(serialize_pickle<Trainer*>())
+		;
+
+	class_<LinearSvcTrainer, LinearSvcTrainer*, bases<Trainer>>("LinearSvcTrainer")
+		.def_pickle(serialize_pickle<LinearSvcTrainer*>())
 		;
 
 }

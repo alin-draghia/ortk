@@ -7,8 +7,8 @@ namespace object_recognition_toolkit
 	{
 
 
-		Classifier::~Classifier() {
-			std::cerr << __FUNCTION__ << "name=" << this->name() << std::endl;
+		Classifier::~Classifier() 
+		{
 		}
 
 		double Classifier::Predict(const core::FeatureVector& instance) const
