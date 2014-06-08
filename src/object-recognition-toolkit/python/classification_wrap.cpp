@@ -35,9 +35,9 @@ namespace object_recognition_toolkit
 
 
 
-		std::auto_ptr<LinearSVC> create_LinearSVC(float bias, std::vector<float>& coefs)
+		std::auto_ptr<LinearClassifier> create_LinearSVC(float bias, std::vector<float>& coefs)
 		{
-			std::auto_ptr<LinearSVC> ptr(new LinearSVC(bias, coefs));
+			std::auto_ptr<LinearClassifier> ptr(new LinearClassifier(bias, coefs));
 			return ptr;
 		}
 
@@ -74,9 +74,9 @@ void py_regiser_classification()
 		.def_pickle(serialize_pickle<MockPersonClassifier*>())
 		;
 
-	class_<LinearSVC, LinearSVC*, bases<Classifier>>("LinearSVC")
+	class_<LinearClassifier, LinearClassifier*, bases<Classifier>>("LinearSVC")
 		.def("__init__", make_constructor(create_LinearSVC))
-		.def_pickle(serialize_pickle<LinearSVC*>())
+		.def_pickle(serialize_pickle<LinearClassifier*>())
 		;
 
 

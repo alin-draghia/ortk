@@ -13,13 +13,13 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 
-		class PUBLIC_API LinearSVC
+		class PUBLIC_API LinearClassifier
 			: public Classifier
 		{
 		public:
-			LinearSVC() = default;
-			LinearSVC(float bias, std::vector<float>& coefs);
-			virtual ~LinearSVC();
+			LinearClassifier() = default;
+			LinearClassifier(float bias, std::vector<float>& coefs);
+			virtual ~LinearClassifier();
 
 			virtual double Predict(const core::FeatureVector& instance) const;
 

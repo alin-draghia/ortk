@@ -28,7 +28,7 @@
 
 #include "classification/classifier.h"
 #include "classification/trainer.h"
-#include "classification/linear-svc.h"
+#include "classification/linear_classifier.h"
 #include "classification/linear-svc-trainer.h"
 #include "classification/mock-person-classifier.h"
 

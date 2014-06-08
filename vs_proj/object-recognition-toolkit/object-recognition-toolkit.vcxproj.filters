@@ -9,7 +9,6 @@
     <ClInclude Include="include\object-recognition-toolkit\image-pyramid\pyramid-level.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
-    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
@@ -37,6 +36,7 @@
     <ClInclude Include="include\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.h" />
     <ClInclude Include="src\object-recognition-toolkit\python\boost_python_precomp.h" />
     <ClInclude Include="src\object-recognition-toolkit\precomp.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear_classifier.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\object-recognition-toolkit\feature-extraction\feature-extractor.cpp" />
@@ -45,7 +45,6 @@
     <ClCompile Include="src\object-recognition-toolkit\image-scanning\dense-image-scanner.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\mock-person-classifier.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc-trainer.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\detector.cpp" />
@@ -104,6 +103,7 @@
     <ClCompile Include="src\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\boost_python_precomp.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\precomp.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear_classifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

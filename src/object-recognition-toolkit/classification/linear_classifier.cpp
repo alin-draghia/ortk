@@ -1,5 +1,5 @@
 #include "precomp.h"
-#include "object-recognition-toolkit/classification/linear-svc.h"
+#include "object-recognition-toolkit/classification/linear_classifier.h"
 
 #include <boost/serialization/vector.hpp>
 
@@ -8,23 +8,23 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 
-		LinearSVC::LinearSVC(const float bias, std::vector<float>& coefs)
+		LinearClassifier::LinearClassifier(const float bias, std::vector<float>& coefs)
 			: bias_{ bias }
 			, coefs_{ coefs }
 		{
 		}
 
-		LinearSVC::~LinearSVC()
+		LinearClassifier::~LinearClassifier()
 		{
 		}
 
-		const std::string& LinearSVC::name() const
+		const std::string& LinearClassifier::name() const
 		{
-			static const std::string name = "LinearSVC";
+			static const std::string name = "LinearClassifier";
 			return name;
 		}
 
-		double LinearSVC::Predict(const core::FeatureVector& instance) const
+		double LinearClassifier::Predict(const core::FeatureVector& instance) const
 		{
 			if (instance.cols != coefs_.size()) {
 				throw std::runtime_error("Invalid instance vector size");
@@ -39,19 +39,19 @@ namespace object_recognition_toolkit
 			return conf;
 		}
 
-		core::Clonable* LinearSVC::Clone()
+		core::Clonable* LinearClassifier::Clone()
 		{
-			return new LinearSVC(*this);
+			return new LinearClassifier(*this);
 		}
 
-		void LinearSVC::serialize(core::iarchive& ar, const unsigned int version)
+		void LinearClassifier::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> bias_;
 			ar >> coefs_;
 			ar >> boost::serialization::base_object<Classifier>(*this);
 		}
 
-		void LinearSVC::serialize(core::oarchive& ar, const unsigned int version)
+		void LinearClassifier::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << bias_;
 			ar << coefs_;

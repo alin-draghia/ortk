@@ -13,7 +13,7 @@
   <ItemGroup>
     <ClInclude Include="include\object-recognition-toolkit\classification\classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc-trainer.h" />
-    <ClInclude Include="include\object-recognition-toolkit\classification\linear-svc.h" />
+    <ClInclude Include="include\object-recognition-toolkit\classification\linear_classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\mock-person-classifier.h" />
     <ClInclude Include="include\object-recognition-toolkit\classification\trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\clonable.h" />
@@ -121,7 +121,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">precomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)precomp.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="src\object-recognition-toolkit\classification\linear-svc.cpp">
+    <ClCompile Include="src\object-recognition-toolkit\classification\linear_classifier.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">precomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)precomp.pch</PrecompiledHeaderOutputFile>
