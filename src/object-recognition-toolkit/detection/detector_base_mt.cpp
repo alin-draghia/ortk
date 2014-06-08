@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/detection/detector_base_mt.h"
 
 #include <omp.h>

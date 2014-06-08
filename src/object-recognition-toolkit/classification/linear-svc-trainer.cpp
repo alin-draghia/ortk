@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include <memory>
 
 #include <opencv2/opencv.hpp>

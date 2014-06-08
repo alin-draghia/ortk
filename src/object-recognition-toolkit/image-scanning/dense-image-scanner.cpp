@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include <object-recognition-toolkit/image-scanning/dense-image-scanner.h>
 
 namespace object_recognition_toolkit

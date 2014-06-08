@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/classification/linear-svc.h"
 
 #include <boost/serialization/vector.hpp>

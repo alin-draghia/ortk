@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/non_maxima_suppression/non_maxima_suppressor.h"
 
 namespace object_recognition_toolkit

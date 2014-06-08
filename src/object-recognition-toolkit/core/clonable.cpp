@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/core/clonable.h"
 
 #include <exception>

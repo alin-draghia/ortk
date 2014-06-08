@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include <string>
 
 #include <object-recognition-toolkit/feature-extraction/feature-extractor.h>

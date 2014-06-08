@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/detection/detector.h"
 
 namespace object_recognition_toolkit

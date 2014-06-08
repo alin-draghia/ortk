@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/non_maxima_suppression/pass_through_nms.h"
 
 namespace object_recognition_toolkit

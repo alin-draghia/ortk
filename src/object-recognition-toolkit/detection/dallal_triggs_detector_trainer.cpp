@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/detection/dallal_triggs_detector_trainer.h"
 #include "object-recognition-toolkit/detection/detector_base_mt.h"
 #include "object-recognition-toolkit/detection/detector_builder.h"

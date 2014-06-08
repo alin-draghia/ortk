@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include <object-recognition-toolkit/feature-extraction/hog-feature-extractor.h>
 
 

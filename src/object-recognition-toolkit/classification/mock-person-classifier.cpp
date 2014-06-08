@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/classification/mock-person-classifier.h"
 
 namespace object_recognition_toolkit

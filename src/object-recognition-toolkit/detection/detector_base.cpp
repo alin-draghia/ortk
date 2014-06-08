@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/detection/detector_base.h"
 
 #include "object-recognition-toolkit/image-pyramid/float_pyramid_builder.h"

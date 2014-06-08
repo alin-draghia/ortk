@@ -1,3 +1,4 @@
+#include "precomp.h"
 #include "object-recognition-toolkit/non_maxima_suppression/group_rectangles_nms.h"
 
 namespace object_recognition_toolkit
