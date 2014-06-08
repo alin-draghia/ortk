@@ -132,7 +132,7 @@ namespace object_recognition_toolkit
 				} else {
 
 					classifier.reset(
-						trainer->Train(X, y)
+						trainer->Train(X, y).release()
 						);
 
 					std::ofstream ofs(stage_classifier_filename);

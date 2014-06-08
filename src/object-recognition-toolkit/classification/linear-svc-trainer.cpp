@@ -12,18 +12,21 @@ namespace object_recognition_toolkit {
 
 
 		LinearSvcTrainer::LinearSvcTrainer( )
+			: C_(1.0)
 		{
-
 		}
 
+		LinearSvcTrainer::LinearSvcTrainer(double C)
+			: C_(C)
+		{
+		}
 
 		LinearSvcTrainer::~LinearSvcTrainer( )
 		{
-
 		}
 
 
-		Classifier* LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
+		std::auto_ptr<Classifier> LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
 		{
 
 			std::unique_ptr<LinearSvcClassifier> cls(new LinearSvcClassifier( ));
@@ -31,31 +34,29 @@ namespace object_recognition_toolkit {
 #if(USE_DLIB)
 #else
 
-
-
 			cv::SVMParams params;
 			params.svm_type = cv::SVM::C_SVC;
 			params.kernel_type = cv::SVM::LINEAR;
-			//params.C = 0.1;
+			params.C = this->getC();
 			params.term_crit = cv::TermCriteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS, 1000, 0.00001);
 
-			//bool train_ok = cls->svm_.train(features, labels, { }, { }, params);
-
-			cv::ParamGrid C_grid;
-			C_grid.min_val = 0.0001;
-			C_grid.max_val = 1000.0;
-			C_grid.step = 10.0;
-
-			int k_fold = 5;
-			bool train_ok = cls->svm_.train_auto(features, labels, { }, { }, params, k_fold, C_grid);
-
-			cv::SVMParams actual_params = cls->svm_.get_params( );
+			bool train_ok = cls->svm_.train(features, labels, { }, { }, params);
 
 			if ( train_ok ) {
-				return cls.release( );
+				return std::auto_ptr<Classifier>(cls.release());
 			}
 #endif
-			return nullptr;
+			throw std::runtime_error("training failed");
+		}
+
+		double LinearSvcTrainer::getC() const
+		{
+			return this->C_;
+		}
+
+		void LinearSvcTrainer::setC(double C)
+		{
+			this->C_ = C;
 		}
 
 

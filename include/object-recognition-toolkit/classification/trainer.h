@@ -15,10 +15,12 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 		class PUBLIC_API Trainer
+			: public core::Named
+			, public core::Clonable
 		{
 		public:
 			virtual ~Trainer();
-			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels) = 0;
+			virtual std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels);
 		};
 	}
 }

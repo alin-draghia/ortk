@@ -25,9 +25,11 @@ namespace object_recognition_toolkit
 		{
 		public:
 			LinearSvcTrainer();
+			LinearSvcTrainer(double C);
+
 			virtual ~LinearSvcTrainer();
 
-			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
+			virtual std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels);
 
 		public:
 			class PUBLIC_API LinearSvcClassifier 
@@ -57,6 +59,14 @@ namespace object_recognition_toolkit
 				void serialize(core::iarchive& ar, const unsigned int version);
 				void serialize(core::oarchive& ar, const unsigned int version);
 			};
+
+		public:
+			double getC() const;
+			void setC(double C);
+
+
+		private:
+			double C_;
 		};
 	}
 }

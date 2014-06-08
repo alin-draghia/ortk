@@ -26,9 +26,10 @@ namespace object_recognition_toolkit
 			: Trainer
 			, bp::wrapper<Trainer>
 		{
-			Classifier* Train(const cv::Mat& features, const cv::Mat& labels)
+			std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels)
 			{
-				return this->get_override("Train")();
+				std::auto_ptr<Classifier> aptr = this->get_override("Train")();
+				return aptr;
 			}
 		};
 
@@ -81,7 +82,7 @@ void py_regiser_classification()
 
 
 	class_<Trainer_Wrapper, boost::noncopyable>("Trainer")
-		.def("Train", pure_virtual(&Trainer::Train), return_value_policy<manage_new_object>())
+		.def("Train", &Trainer::Train)
 		;
 
 }
