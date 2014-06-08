@@ -74,12 +74,10 @@ void py_regiser_classification()
 		.def_pickle(serialize_pickle<MockPersonClassifier*>())
 		;
 
-	class_<LinearClassifier, LinearClassifier*, bases<Classifier>>("LinearSVC")
+	class_<LinearClassifier, LinearClassifier*, bases<Classifier>>("LinearClassifier")
 		.def("__init__", make_constructor(create_LinearSVC))
 		.def_pickle(serialize_pickle<LinearClassifier*>())
 		;
-
-
 
 	class_<Trainer_Wrapper, Trainer*, bases<Named, Clonable>>("Trainer")
 		.def("Train", &Trainer::Train)

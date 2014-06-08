@@ -31,34 +31,6 @@ namespace object_recognition_toolkit
 
 			virtual std::auto_ptr<Classifier> Train(const cv::Mat& features, const cv::Mat& labels);
 
-		public:
-			class PUBLIC_API LinearSvcClassifier 
-				: public Classifier
-			{
-			public:
-				LinearSvcClassifier();
-				virtual ~LinearSvcClassifier();
-
-				virtual double Predict(const core::FeatureVector& instance) const;
-
-			public:
-				virtual const std::string& name() const;
-
-			public:
-				virtual core::Clonable* Clone();
-
-			private:
-				friend class LinearSvcTrainer;
-
-				#if(USE_DLIB)
-				#else
-				cv::SVM svm_;
-				#endif
-			private:
-				friend class boost::serialization::access;
-				void serialize(core::iarchive& ar, const unsigned int version);
-				void serialize(core::oarchive& ar, const unsigned int version);
-			};
 
 		public:
 			double getC() const;
