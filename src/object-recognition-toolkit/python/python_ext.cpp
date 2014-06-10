@@ -6,6 +6,7 @@
 extern void py_regiser_classification();
 extern void py_regiser_converters();
 extern void py_regiser_core();
+extern void py_regiser_dataset();
 extern void py_regiser_detection();
 extern void py_regiser_feature_extraction();
 extern void py_regiser_image_scanning();
@@ -20,6 +21,7 @@ BOOST_PYTHON_MODULE(object_recognition_toolkit)
 {
 	py_regiser_converters();
 	py_regiser_core();
+	py_regiser_dataset();
 	py_regiser_classification();	
 	py_regiser_detection();
 	py_regiser_feature_extraction();

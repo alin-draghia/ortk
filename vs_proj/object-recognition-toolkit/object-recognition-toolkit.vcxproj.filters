@@ -104,6 +104,7 @@
     <ClCompile Include="src\object-recognition-toolkit\precomp.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\classification\linear_classifier.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\detection\bootstrapping_detector_trainer.cpp" />
+    <ClCompile Include="src\object-recognition-toolkit\python\dataset_wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

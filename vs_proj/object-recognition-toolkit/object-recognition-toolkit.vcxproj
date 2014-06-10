@@ -89,6 +89,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)boost_python_precomp.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)boost_python_precomp.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="src\object-recognition-toolkit\python\dataset_wrap.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\python\detection_wrap.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">boost_python_precomp.h</PrecompiledHeaderFile>
