@@ -15,12 +15,14 @@ namespace object_recognition_toolkit
 	{
 		class PUBLIC_API DetectorTrainer
 			: public core::Named
+			, public core::Clonable
 		{
 		public:
-			virtual ~DetectorTrainer() = 0;
+			virtual ~DetectorTrainer();
 
 		public:
-			virtual Detector* Train(const dataset::Dataset& positive, const dataset::Dataset& negative) = 0;
+			virtual Detector* TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative);
+			virtual Detector* TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages);
 
 		private:
 			DECLARE_SERIALIZABLE();

@@ -36,7 +36,7 @@
 #include "detection/detector_base.h"
 #include "detection/detector_base_mt.h"
 #include "detection/detector_trainer.h"
-#include "detection/dallal_triggs_detector_trainer.h"
+#include "detection/bootstrapping_detector_trainer.h"
 #include "detection/detector_builder.h"
 
 

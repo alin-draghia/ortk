@@ -22,5 +22,15 @@ namespace object_recognition_toolkit
 			(void)version;
 		}
 
+		Detector* DetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
+		{
+			throw std::runtime_error("not implemented");
+		}
+
+		Detector* DetectorTrainer::TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
+		{
+			throw std::runtime_error("not implemented");
+		}
+
 	}
 }

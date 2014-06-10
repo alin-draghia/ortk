@@ -13,6 +13,7 @@ namespace object_recognition_toolkit
 {
 	namespace dataset
 	{
+		using Rectangle = dlib::rectangle;
 		using Box = dlib::image_dataset_metadata::box;
 		using Image = dlib::image_dataset_metadata::image;
 		using Dataset = dlib::image_dataset_metadata::dataset;
@@ -24,6 +25,13 @@ namespace object_recognition_toolkit
 		void PUBLIC_API LoadDatasetPascalXml(const std::vector<std::string>& filenames, Dataset& dataset);
 
 		void PUBLIC_API LoadDatasetFiles(const std::vector<std::string>& filenames, Dataset& dataset);
+
+
+		/*
+		use label="FULL_IMAGE" to extract full images and ignore labels;
+		use label="DONT_CARE" to extract all annotated boxes;
+		*/
+		void PUBLIC_API ExtractImages(const Dataset& dataset, std::vector<core::Matrix>& images, const std::string& label="FULL_IMAGE", bool color=false);
 
 	}
 }

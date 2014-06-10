@@ -25,10 +25,16 @@ namespace object_recognition_toolkit
 			: DetectorTrainer
 			, bp::wrapper<DetectorTrainer>
 		{
-			Detector* Train(const dataset::Dataset& positive, const dataset::Dataset& negative)
+
+			Detector* TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
 			{
-				return this->get_override("Train")(positive, negative);
-			}			
+				return this->get_override("TrainWithDataset")(positive, negative);
+			}
+
+			Detector* TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
+			{
+				return this->get_override("TrainWithImages")(positiveImages, negativeImages);
+			}
 
 		};
 
@@ -84,9 +90,10 @@ void py_regiser_detection()
 		.def_pickle(serialize_pickle<Detector>())
 		;
 
-	class_<DetectorTrainer_Wrapper, boost::noncopyable>("DetectorTrainer")
-		.def("Train", pure_virtual(&DetectorTrainer::Train), return_value_policy<manage_new_object>())
-		.def("Name", pure_virtual(&DetectorTrainer::name), return_value_policy<copy_const_reference>())
+	class_<DetectorTrainer_Wrapper, DetectorTrainer*, bases<Named, Clonable>>("DetectorTrainer")
+		.def("TrainWithDataset", &DetectorTrainer::TrainWithDataset, return_value_policy<manage_new_object>())
+		.def("TrainWithImages", &DetectorTrainer::TrainWithImages, return_value_policy<manage_new_object>())
+		.def("Name", &DetectorTrainer::name, return_value_policy<copy_const_reference>())
 		.def_pickle(serialize_pickle<DetectorTrainer>())
 		;
 

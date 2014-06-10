@@ -24,7 +24,7 @@
     <ClInclude Include="include\object-recognition-toolkit\core\public-api.h" />
     <ClInclude Include="include\object-recognition-toolkit\core\serialization.h" />
     <ClInclude Include="include\object-recognition-toolkit\dataset\dataset.h" />
-    <ClInclude Include="include\object-recognition-toolkit\detection\dallal_triggs_detector_trainer.h" />
+    <ClInclude Include="include\object-recognition-toolkit\detection\bootstrapping_detector_trainer.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base.h" />
     <ClInclude Include="include\object-recognition-toolkit\detection\detector_base_mt.h" />
@@ -179,7 +179,7 @@
     </ClCompile>
     <ClCompile Include="src\object-recognition-toolkit\dataset\dataset.cpp" />
     <ClCompile Include="src\object-recognition-toolkit\dataset\imglab\convert_pascal_v1.cpp" />
-    <ClCompile Include="src\object-recognition-toolkit\detection\dallal_triggs_detector_trainer.cpp">
+    <ClCompile Include="src\object-recognition-toolkit\detection\bootstrapping_detector_trainer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">precomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)precomp.pch</PrecompiledHeaderOutputFile>
