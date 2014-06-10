@@ -114,7 +114,8 @@ void py_regiser_dataset()
 
 	{
 		class_<Image>("Image")
-			.add_property("filename", &Image::filename)
+			//.add_property("filename", &Image::filename)
+			.def_readwrite("filename", &Image::filename)
 			.add_property("boxes", &Image::boxes)
 			;
 
