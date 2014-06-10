@@ -49,5 +49,46 @@ namespace object_recognition_toolkit
 				dataset.images.emplace_back(filename);
 			}
 		}
+
+		void ExtractImages(const Dataset& dataset, std::vector<core::Matrix>& images, const std::string& label, bool color)
+		{
+			static const std::string FULL_IMAGE = "FULL_IMAGE";
+			static const std::string DONT_CARE = "DONT_CARE";
+
+			for (auto& dataset_image : dataset.images)
+			{
+				
+				const std::string& filename = dataset_image.filename;
+				core::Matrix full_image = core::imread(filename, color);
+
+				if (label == FULL_IMAGE) {
+					images.push_back(full_image);
+					continue;
+				}
+				
+				for (auto& box : dataset_image.boxes) {
+
+					if ((label != DONT_CARE) && (box.label != label)) {
+						// ignore if it does not have the right label
+						continue;
+					}
+
+					// crop the image;
+					const dlib::rectangle& box_rect = box.rect;
+					int x = (int)box_rect.left();
+					int y = (int)box_rect.top();
+					int w = (int)box_rect.width();
+					int h = (int)box_rect.height();
+
+					core::Box roi(x, y, w, h);
+
+					core::Matrix crop_image;
+					full_image(roi).copyTo(crop_image);
+
+					images.push_back(crop_image);
+					
+				}
+			}
+		}
 	}
 }
