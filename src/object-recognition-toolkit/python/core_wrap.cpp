@@ -110,7 +110,7 @@ namespace {
 		{
 			namespace bp = boost::python;
 			bp::tuple tup(bp::handle<>(bp::borrowed(obj_ptr)));
-			
+
 			if (boost::python::len(tup) != 2)
 				return nullptr;
 
@@ -162,78 +162,92 @@ namespace object_recognition_toolkit
 		{
 			Clonable* Clone()
 			{
-				return this->get_override("Clone")();				
+				return this->get_override("Clone")();
 			}
 		};
 
 	}
 }
 
-
-
-void py_regiser_core()
+template<class T>
+class no_compare_indexing_suite
+	: public boost::python::vector_indexing_suite < T, true, no_compare_indexing_suite<T> >
 {
-	using namespace boost::python;
-	using object_recognition_toolkit::core::Named;
-	using object_recognition_toolkit::core::Named_Wrapper;
-	using object_recognition_toolkit::core::Clonable;
-	using object_recognition_toolkit::core::Clonable_Wrapper;
+public:
+	static bool contains(T &container, typename T::value_type const &key)
+	{
+		return false;
+	}
+};
+
+	void py_regiser_core()
+	{
+		using namespace boost::python;
+		using namespace object_recognition_toolkit::core;
 
 #if(0)
-	to_python_converter<cv::Rect_<int>, ::rect_to_tuple<int>, true>();
-	to_python_converter<cv::Rect_<float>, ::rect_to_tuple<float>, true>();
-	to_python_converter<cv::Rect_<double>, ::rect_to_tuple<double>, true>();
-	to_python_converter<cv::Size_<int>, ::size_to_tuple<int>, true>();
-	to_python_converter<cv::Size_<float>, ::size_to_tuple<float>, true>();
-	to_python_converter<cv::Size_<double>, ::size_to_tuple<double>, true>();
+		to_python_converter<cv::Rect_<int>, ::rect_to_tuple<int>, true>();
+		to_python_converter<cv::Rect_<float>, ::rect_to_tuple<float>, true>();
+		to_python_converter<cv::Rect_<double>, ::rect_to_tuple<double>, true>();
+		to_python_converter<cv::Size_<int>, ::size_to_tuple<int>, true>();
+		to_python_converter<cv::Size_<float>, ::size_to_tuple<float>, true>();
+		to_python_converter<cv::Size_<double>, ::size_to_tuple<double>, true>();
 #endif
 #if(0)
-	::tuple_to_rect<int>();
-	::tuple_to_rect<float>();
-	::tuple_to_rect<double>();
-	::tuple_to_size<int>();
-	::tuple_to_size<float>();
-	::tuple_to_size<double>();
+		::tuple_to_rect<int>();
+		::tuple_to_rect<float>();
+		::tuple_to_rect<double>();
+		::tuple_to_size<int>();
+		::tuple_to_size<float>();
+		::tuple_to_size<double>();
 #endif
 
-	typedef cv::Rect_<int> Rect;
-	typedef cv::Size_<int> Size;
-	
-	class_<Rect>("Rect")
-		.def_readwrite("x", &Rect::x)
-		.def_readwrite("y", &Rect::y)
-		.def_readwrite("width", &Rect::width)
-		.def_readwrite("height", &Rect::height)
-		;
+		typedef cv::Rect_<int> Rect;
+		typedef cv::Size_<int> Size;
 
-	class_<Size>("Size")		
-		.def_readwrite("width", &Size::width)
-		.def_readwrite("height", &Size::height)
-		;
+		class_<Rect>("Rect")
+			.def_readwrite("x", &Rect::x)
+			.def_readwrite("y", &Rect::y)
+			.def_readwrite("width", &Rect::width)
+			.def_readwrite("height", &Rect::height)
+			;
+
+		class_<Size>("Size")
+			.def_readwrite("width", &Size::width)
+			.def_readwrite("height", &Size::height)
+			;
 
 
-	typedef std::vector<int> VecI32;
-	class_<VecI32>("VecI32")
-		.def(vector_indexing_suite<VecI32>())
-		;
+		typedef std::vector<int> VecI32;
+		class_<VecI32>("VecI32")
+			.def(vector_indexing_suite<VecI32>())
+			;
 
-	typedef std::vector<float> VecF32;
-	class_<VecF32>("VecF32")
-		.def(vector_indexing_suite<VecF32>())
-		;
+		typedef std::vector<float> VecF32;
+		class_<VecF32>("VecF32")
+			.def(vector_indexing_suite<VecF32>())
+			;
 
-	typedef std::vector<double> VecF64;
-	class_<VecF64>("VecF64")
-		.def(vector_indexing_suite<VecF64>())
-		;
+		typedef std::vector<double> VecF64;
+		class_<VecF64>("VecF64")
+			.def(vector_indexing_suite<VecF64>())
+			;
 
-	class_<Named_Wrapper, boost::noncopyable, Named*>("Named")
-		.def("name", &Named::name, return_value_policy<copy_const_reference>())
-		;
 
-	class_<Clonable_Wrapper, boost::noncopyable, Clonable*>("Clonable")
-		.def("Clone", &Clonable::Clone, return_value_policy<manage_new_object>())
-		;
-}
+		typedef std::vector<Matrix> MatrixVec;
+		class_<MatrixVec>("MatrixVec")
+			.def(no_compare_indexing_suite<MatrixVec>())
+			;
+
+
+
+		class_<Named_Wrapper, boost::noncopyable, Named*>("Named")
+			.def("name", &Named::name, return_value_policy<copy_const_reference>())
+			;
+
+		class_<Clonable_Wrapper, boost::noncopyable, Clonable*>("Clonable")
+			.def("Clone", &Clonable::Clone, return_value_policy<manage_new_object>())
+			;
+	}
 
 
