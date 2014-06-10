@@ -239,7 +239,12 @@ public:
 			.def(no_compare_indexing_suite<MatrixVec>())
 			;
 
-
+		{ // exporting vector of string
+			typedef std::vector<std::string> VecStr;
+			class_<VecStr>("VecStr", "vector of string")
+				.def(vector_indexing_suite<VecStr>())
+				;
+		}
 
 		class_<Named_Wrapper, boost::noncopyable, Named*>("Named")
 			.def("name", &Named::name, return_value_policy<copy_const_reference>())
