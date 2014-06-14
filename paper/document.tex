@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{book}
+\documentclass[12pt,a4paper]{article}
 \title{Tehnici de Machine Learning in procesarea si recunoasterea imaginilor}
 \author{Alin Draghia}
 \date{2014}
@@ -10,18 +10,27 @@
 \tableofcontents
 
 
-\chapter{Motivatie}
-
+\pagebreak
 \section{Motivatie}
 
 
-Recunoastre obiectelor reprezinta o problema centrala de cercetare in cadrul Computer Vision.
+Recunoasterea obiectelor in imagini a cunoscut o crestere de interes atat in 
+
+Recunoastre obiectelor in imagini reprezinta o problema centrala de cercetare in cadrul Computer Vision.
 In ultima perioada, un numar mare de algoritmi au fost dezvoltati, dat fiind faptul ca, privind mai in detaliu, 
-"Recunoasterea obiectelor" este un termen umbrela pentru o mare varietate de aplicatii, fiecare aplicatie
+"recunoasterea obiectelor" este un termen umbrela pentru o mare varietate de aplicatii, fiecare aplicatie
 cu cerinte si constrangeri proprii.
 
 
-Dezvoltarea rapida a sistemelor de calcul ne-a permis folosirea recunoasterii de obiecte automata in tot mai multe aplicatii pornind de la aplicatii industriale pana la cele medicale, sau aplicatii de cautare pe internet folosing imaginile.
+Pentru dezvoltarea algoritmilor de recunoastere a obiectelor sunt necesare cunostine de procesare a imaginilor si machine learning.
+Pe langa acestea sunt adesea necesare si componente de parsare fisiere (xml, json, yaml sau chiar fisiere binare), programare paralela 
+si distribuita.
+
+Dezvoltarea rapida a sistemelor de calcul ne-a permis folosirea recunoasterii de obiecte automata in tot mai multe aplicatii pornind de la aplicatii industriale pana la cele medicale, 
+sau aplicatii de cautare pe internet folosing imaginile.
+
+
+Exemple de aplicatii care foloses recunoasterea de imagini sunt: Masina autonoma, supravegherea in cadrul aeroporturilor, Numararea obiectelor si controlul calitatii.
 
 
 Documentele de cercetare din cadrul acestui domeniu sunt adesea foarte greu de inteles, ele fiind foarte concise si 
@@ -37,18 +46,20 @@ Deobicei acesti algoritmi de recunoastere a obiectelor necesita "antrenare".
 Cele mai multe librarii software nu furnizeaza si componenta cu care se poate "antrena" un algoritm.
 
 
+
 Propun scrierea unei librarii software care sa furnizeze o baza de dezvoltare a algoritmilor de recunoastere a obiectelor,
 care sa fie usor de inteles si de modificat. 
+Libraria va fii scrisa in C++ si Python. 
 Aceasta librarie intentionez sa o folosesc pentru initierea incepatorilor cat si pentru dezvoltarea de prototipuri.
 Libraria trebuie sa fie compatibila si cu alte pachete software si sa poata lucra cu formate de date standardizate din domeniu.
 
 
 
-\chapter{Machine Learning}
+\section{Machine Learning}
 
-\chapter{Procesarea Imaginilor}
+\section{Procesarea Imaginilor}
 
-\chapter{Recunoasterea Obiectelor}
+\section{Recunoasterea Obiectelor}
 
 
 \end{document}
