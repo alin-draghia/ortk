@@ -187,7 +187,6 @@ vs_proj/train-person-detector-2/stage-0-results/
 vs_proj/train-person-detector-2/stage-1-results/
 vs_proj/train-person-detector-2/stage-2-results/
 3rd-party/dlib-18.7/
-paper/
 *.cls
 *.yaml
 vs_proj/train-person-detector-2/train_data_v1/
