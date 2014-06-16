@@ -14,54 +14,44 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		BootstrappingDetectorTrainer::BootstrappingDetectorTrainer(const Params& params)
-			: params_(params)
-		{
-		}
-
 		BootstrappingDetectorTrainer::~BootstrappingDetectorTrainer()
 		{
 		}
 
-		const std::string& BootstrappingDetectorTrainer::name() const
+
+		boost::shared_ptr<DetectorTrainer> BootstrappingDetectorTrainer::Clone() const
 		{
-			static const std::string name = "BootstrappingDetectorTrainer";
-			return name;
+			return boost::shared_ptr<DetectorTrainer>(new BootstrappingDetectorTrainer(*this));
 		}
 
-		core::Clonable* BootstrappingDetectorTrainer::Clone()
-		{
-			return new BootstrappingDetectorTrainer(*this);
-		}
-
-		Detector* BootstrappingDetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
+		boost::shared_ptr<Detector> BootstrappingDetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
 		{
 			core::Matrix X_pos;
 			core::Matrix X_neg, X_neg_total;
-			auto numStages = params_.numStages;
-			auto numPositives = params_.numPositives;
-			auto numNegatives = params_.numNegatives;
-			auto trainer = params_.trainer;
-			auto featureExtractor = params_.featureExtractor;
-			auto featureLenght = featureExtractor->lenght();
+			auto num_iterations = this->num_iterations;
+			auto num_positives = this->num_positives;
+			auto num_negatives = this->num_negatives;
+			auto trainer = this->trainer;
+			auto feature_extractor = this->feature_extractor;
+			auto feature_lenght = feature_extractor->Lenght();
 
 
-			X_pos.create(0, featureLenght, CV_32F);
-			X_pos.reserve(numPositives);
+			X_pos.create(0, feature_lenght, CV_32F);
+			X_pos.reserve(num_positives);
 
-			X_neg.create(0, featureLenght, CV_32F);
-			X_neg.reserve(numNegatives);
+			X_neg.create(0, feature_lenght, CV_32F);
+			X_neg.reserve(num_negatives);
 
-			X_neg_total.create(0, featureLenght, CV_32F);
-			X_neg_total.reserve(numNegatives * numStages);
+			X_neg_total.create(0, feature_lenght, CV_32F);
+			X_neg_total.reserve(num_negatives * num_iterations);
 
-			std::string& data_directory = params_.data_directory;
+			std::string& data_directory = this->data_directory;
 			if (!fs::exists(fs::path(data_directory))) {
 				fs::create_directories(fs::path(data_directory));
 			}
 
-			std::unique_ptr<detection::Detector> detector;
-			std::unique_ptr<classification::Classifier> classifier;
+			boost::shared_ptr<detection::Detector> detector;
+			boost::shared_ptr<classification::Classifier> classifier;
 
 
 			fs::path positive_features_filename
@@ -81,19 +71,13 @@ namespace object_recognition_toolkit
 			}
 
 
-			for (size_t stage = 0; stage < numStages; stage++)
+			for (size_t iteration = 0; iteration < num_iterations; iteration++)
 			{
-				fs::path stage_classifier_filename
-					= fs::path(data_directory) / fs::path("classifier-stage-" + std::to_string(stage) + ".dat");
-
-				fs::path stage_detector_filename
-					= fs::path(data_directory) / fs::path("detector-stage-" + std::to_string(stage) + ".dat");
+	
+				OnBeginIteration(iteration);
 
 				fs::path stage_negative_features_filename
-					= fs::path(data_directory) / fs::path("negative-features-stage-" + std::to_string(stage) + ".yaml");
-
-
-				std::cerr << "Training stage " << std::to_string(stage) << " ... ";
+					= fs::path(data_directory) / fs::path("negative-features-stage-" + std::to_string(iteration) + ".yaml");
 
 				if (fs::exists(stage_negative_features_filename)) {
 					cv::FileStorage storage;
@@ -101,7 +85,7 @@ namespace object_recognition_toolkit
 					storage["features"] >> X_neg;
 				}
 				else {
-					X_neg = extractNegatives(negative, classifier.get());
+					X_neg = extractNegatives(negative, classifier);
 					cv::FileStorage storage;
 					storage.open(stage_negative_features_filename, cv::FileStorage::WRITE);
 					storage << "features" << X_neg;
@@ -130,46 +114,18 @@ namespace object_recognition_toolkit
 				y.push_back(y_pos);
 				y.push_back(y_neg);
 
-				if (fs::exists(stage_classifier_filename)) {
-					std::ifstream ifs(stage_classifier_filename);
-					core::iarchive ia(ifs);
-					ia >> classifier;
-				}
-				else {
+				classifier = trainer->Train(X, y);
+				OnClassifier(classifier);
+				
+				OnEndIteration(iteration);
 
-					classifier.reset(
-						trainer->Train(X, y)
-						);
-
-					std::ofstream ofs(stage_classifier_filename);
-					core::oarchive oa(ofs);
-					oa << classifier;
-				}
-
-				if (fs::exists(stage_detector_filename)) {
-					std::ifstream ifs(stage_detector_filename);
-					core::iarchive ia(ifs);
-					ia >> detector;
-				}
-				else {
-
-					detector.reset(
-						buildDetector(classifier.get())
-						);
-
-					std::ofstream ofs(stage_detector_filename);
-					core::oarchive oa(ofs);
-					oa << detector;
-				}
-
-				std::cerr << "done" << std::endl;
 			}
 
-			return detector.release();
+			return detector;
 		}
 
 
-		Detector* BootstrappingDetectorTrainer::TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
+		boost::shared_ptr<Detector> BootstrappingDetectorTrainer::TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
 		{
 			core::Matrix
 				X_pos,
@@ -184,32 +140,32 @@ namespace object_recognition_toolkit
 				;
 				*/
 
-			auto trainer = params_.trainer;
-			auto featureExtractor = params_.featureExtractor;
+			auto trainer = this->trainer;
+			auto feature_extractor = this->feature_extractor;
 
-			const int numStages = (int)params_.numStages;
-			const int numPositives = (int)params_.numPositives;
-			const int numNegatives = (int)params_.numNegatives;
-			const int totalNumNegatives = (int)numNegatives * (int)numStages;
-			const int featureLenght = (int)featureExtractor->lenght();
+			auto num_iterations = this->num_iterations;
+			auto num_positives = this->num_positives;
+			auto num_negatives = this->num_negatives;
+			const int total_num_negatives = (int)num_negatives * (int)num_iterations;
+			const int feature_lenght = (int)feature_extractor->Lenght();
 
-			const std::string& data_directory = params_.data_directory;
+			const std::string& data_directory = this->data_directory;
 
-			X_pos.create(0, featureLenght, CV_32F);
-			X_pos.reserve(numPositives);
+			X_pos.create(0, feature_lenght, CV_32F);
+			X_pos.reserve(num_positives);
 
-			X_neg.create(0, featureLenght, CV_32F);
-			X_neg.reserve(numNegatives);
+			X_neg.create(0, feature_lenght, CV_32F);
+			X_neg.reserve(num_negatives);
 
-			X_neg_total.create(0, featureLenght, CV_32F);
-			X_neg_total.reserve(totalNumNegatives);
+			X_neg_total.create(0, feature_lenght, CV_32F);
+			X_neg_total.reserve(total_num_negatives);
 
 			if (!fs::exists(fs::path(data_directory))) {
 				fs::create_directories(fs::path(data_directory));
 			}
 
-			std::unique_ptr<detection::Detector> detector;
-			std::unique_ptr<classification::Classifier> classifier;
+			boost::shared_ptr<detection::Detector> detector;
+			boost::shared_ptr<classification::Classifier> classifier;
 
 
 			fs::path positive_features_filename
@@ -223,26 +179,19 @@ namespace object_recognition_toolkit
 			}
 			else {
 				//X_pos = extractPositives(positive);
-				extractFeaturesFromPositiveImages(positiveImages, X_pos, numPositives);
+				extractFeaturesFromPositiveImages(positiveImages, X_pos, num_positives);
 				cv::FileStorage fileStorage;
 				fileStorage.open(positive_features_filename, cv::FileStorage::WRITE);
 				fileStorage << "features" << X_pos;
 			}
 
 
-			for (size_t stage = 0; stage < numStages; stage++)
+			for (size_t iteration = 0; iteration < num_iterations; iteration++)
 			{
-				fs::path stage_classifier_filename
-					= fs::path(data_directory) / fs::path("classifier-stage-" + std::to_string(stage) + ".dat");
-
-				fs::path stage_detector_filename
-					= fs::path(data_directory) / fs::path("detector-stage-" + std::to_string(stage) + ".dat");
+				OnBeginIteration(iteration);
 
 				fs::path stage_negative_features_filename
-					= fs::path(data_directory) / fs::path("negative-features-stage-" + std::to_string(stage) + ".yaml");
-
-
-				std::cerr << "Training stage " << std::to_string(stage) << " ... ";
+					= fs::path(data_directory) / fs::path("negative-features-stage-" + std::to_string(iteration) + ".yaml");
 
 				if (fs::exists(stage_negative_features_filename)) {
 					cv::FileStorage storage;
@@ -251,7 +200,7 @@ namespace object_recognition_toolkit
 				}
 				else {
 					//X_neg = extractNegatives(negative, classifier.get());
-					extractFeaturesFromNegativeImages(positiveImages, X_pos, numNegatives, classifier.get());
+					extractFeaturesFromNegativeImages(positiveImages, X_pos, num_negatives, classifier);
 					cv::FileStorage storage;
 					storage.open(stage_negative_features_filename, cv::FileStorage::WRITE);
 					storage << "features" << X_neg;
@@ -280,42 +229,14 @@ namespace object_recognition_toolkit
 				y.push_back(y_pos);
 				y.push_back(y_neg);
 
-				if (fs::exists(stage_classifier_filename)) {
-					std::ifstream ifs(stage_classifier_filename);
-					core::iarchive ia(ifs);
-					ia >> classifier;
-				}
-				else {
+				classifier = trainer->Train(X, y);
+				OnClassifier(classifier);
 
-					classifier.reset(
-						trainer->Train(X, y)
-						);
+				OnEndIteration(iteration);
 
-					std::ofstream ofs(stage_classifier_filename);
-					core::oarchive oa(ofs);
-					oa << classifier;
-				}
-
-				if (fs::exists(stage_detector_filename)) {
-					std::ifstream ifs(stage_detector_filename);
-					core::iarchive ia(ifs);
-					ia >> detector;
-				}
-				else {
-
-					detector.reset(
-						buildDetector(classifier.get())
-						);
-
-					std::ofstream ofs(stage_detector_filename);
-					core::oarchive oa(ofs);
-					oa << detector;
-				}
-
-				std::cerr << "done" << std::endl;
 			}
 
-			return detector.release();
+			return detector;
 		}
 
 		struct done_collecting_samples{};
@@ -332,17 +253,17 @@ namespace object_recognition_toolkit
 
 		void BootstrappingDetectorTrainer::extractFeaturesFromPositiveImages(const std::vector<core::Matrix>& images, core::Matrix& features, const size_t numSamples) const
 		{
-			auto featureExtractor = params_.featureExtractor;
-			size_t featureLenght = featureExtractor->lenght();
+			auto feature_extractor = this->feature_extractor;
+			size_t feature_lenght = feature_extractor->Lenght();
 
 
-			features.create(0, featureLenght, CV_32F);
+			features.create(0, feature_lenght, CV_32F);
 			features.reserve(numSamples);
 
 			size_t count = 0;
 			for (const core::Matrix& image : images)
 			{
-				core::FeatureVector features = featureExtractor->compute(image);
+				core::FeatureVector features = feature_extractor->Compute(image);
 				cv::Mat_<float> fv(features);
 				cv::Mat_<float> fv0 = fv.reshape(1, 1);
 
@@ -357,15 +278,15 @@ namespace object_recognition_toolkit
 
 		}
 
-		void BootstrappingDetectorTrainer::extractFeaturesFromNegativeImages(const std::vector<core::Matrix>& images, core::Matrix& features, const size_t numSamples, classification::Classifier* classifier) const
+		void BootstrappingDetectorTrainer::extractFeaturesFromNegativeImages(const std::vector<core::Matrix>& images, core::Matrix& features, const size_t numSamples, boost::shared_ptr<classification::Classifier> classifier) const
 		{
-			auto featureExtractor = params_.featureExtractor;
-			auto imageScanner = params_.imageScanner;
-			auto pyramidBuilder = params_.pyramidBuilder;
-			size_t featureLenght = featureExtractor->lenght();
+			auto feature_extractor = this->feature_extractor;
+			auto image_scanner = this->image_scanner;
+			auto pyramid_builder = this->pyramid_builder;
+			size_t feature_lenght = feature_extractor->Lenght();
 			
 
-			features.create(0, featureLenght, CV_32F);
+			features.create(0, feature_lenght, CV_32F);
 			features.reserve(numSamples);
 
 			try
@@ -379,17 +300,23 @@ namespace object_recognition_toolkit
 					for (const core::Matrix& image : images)
 					{
 	
-						auto windows = imageScanner->compute(image);
+						auto windows = image_scanner->compute(image);
 
 						std::random_shuffle(std::begin(windows), std::end(windows));
 						windows.resize(windows_to_keep_per_image);
 
 						for (auto& window : windows) {
-							core::FeatureVector features = featureExtractor->compute(window.image);
+							core::FeatureVector features = feature_extractor->Compute(window.image);
 							cv::Mat_<float> fv(features);
 							cv::Mat_<float> fv0 = fv.reshape(1, 1);
 							features.push_back(fv0);
 							count += 1;
+
+							if (this->callback) {
+								this->callback->OnNegativeSample(count, window.image, features, 0.0);
+							}
+
+
 							if (count == numSamples) {
 								throw done_collecting_samples();
 							}
@@ -404,7 +331,7 @@ namespace object_recognition_toolkit
 					for (const core::Matrix& image : images)
 					{
 
-						pyramid::Pyramid pyramid = pyramidBuilder->Build(image);
+						pyramid::Pyramid pyramid = pyramid_builder->Build(image);
 						int pyramid_num_levels = pyramid.GetNumLevels();
 
 
@@ -413,18 +340,24 @@ namespace object_recognition_toolkit
 							const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
 							auto windows =
-								imageScanner->compute(pyramid_level.GetImage());
+								image_scanner->compute(pyramid_level.GetImage());
 
 							for (auto& window : windows)
 							{
-								core::FeatureVector features = featureExtractor->compute(window.image);
+								core::FeatureVector features = feature_extractor->Compute(window.image);
 
-								if (classifier->Predict(features))
+								double score = classifier->Predict(features);
+								if (score > 0.0)
 								{
 									cv::Mat_<float> fv(features);
 									cv::Mat_<float> fv0 = fv.reshape(1, 1);
 									features.push_back(fv0);
 									count += 1;
+
+									if (this->callback) {
+										this->callback->OnNegativeSample(count, window.image, features, score);
+									}
+
 									if (count == numSamples) {
 										throw done_collecting_samples();
 									}
@@ -441,13 +374,13 @@ namespace object_recognition_toolkit
 
 		core::Matrix BootstrappingDetectorTrainer::extractPositives(const dataset::Dataset& positive) const
 		{
-			auto featureExtractor = params_.featureExtractor;
-			size_t featureLenght = featureExtractor->lenght();
-			size_t numSamples = params_.numPositives;
+			auto feature_extractor = this->feature_extractor;
+			size_t feature_lenght = feature_extractor->Lenght();
+			size_t num_positives = this->num_positives;
 
 			core::Matrix X;
-			X.create(0, featureLenght, CV_32F);
-			X.reserve(numSamples);
+			X.create(0, feature_lenght, CV_32F);
+			X.reserve(num_positives);
 
 			try {
 
@@ -466,8 +399,9 @@ namespace object_recognition_toolkit
 							continue;
 						}
 
-						core::Matrix image0 = image(roi);
-						core::FeatureVector features = featureExtractor->compute(image0);
+						core::Matrix image0;
+						image(roi).copyTo(image0);
+						core::FeatureVector features = feature_extractor->Compute(image0);
 						cv::Mat_<float> fv(features);
 						cv::Mat_<float> fv0 = fv.reshape(1, 1);
 
@@ -475,7 +409,13 @@ namespace object_recognition_toolkit
 						X.push_back(fv0);
 
 						count += 1;
-						if (count == numSamples) {
+						
+						if (this->callback) {
+							this->callback->OnPositiveSample(count, image0, features);
+						}
+
+
+						if (count == num_positives) {
 							throw done_collecting_samples();
 						}
 
@@ -488,17 +428,17 @@ namespace object_recognition_toolkit
 			return X;
 		}
 
-		core::Matrix BootstrappingDetectorTrainer::extractNegatives(const dataset::Dataset& negative, classification::Classifier* classifier) const
+		core::Matrix BootstrappingDetectorTrainer::extractNegatives(const dataset::Dataset& negative, boost::shared_ptr<classification::Classifier> classifier) const
 		{
-			auto featureExtractor = params_.featureExtractor;
-			auto imageScanner = params_.imageScanner;
-			auto pyramidBuilder = params_.pyramidBuilder;
-			size_t featureLenght = featureExtractor->lenght();
-			size_t numSamples = params_.numNegatives;
+			auto feature_extractor = this->feature_extractor;
+			auto image_scanner = this->image_scanner;
+			auto pyramid_builder = this->pyramid_builder;
+			size_t feature_lenght = feature_extractor->Lenght();
+			size_t num_negatives = this->num_negatives;
 
 			core::Matrix X;
-			X.create(0, featureLenght, CV_32F);
-			X.reserve(numSamples);
+			X.create(0, feature_lenght, CV_32F);
+			X.reserve(num_negatives);
 
 			try
 			{
@@ -514,18 +454,25 @@ namespace object_recognition_toolkit
 						core::Matrix image = core::imread(filename, false);
 
 						auto windows =
-							imageScanner->compute(image);
+							image_scanner->compute(image);
 
 						std::random_shuffle(std::begin(windows), std::end(windows));
 						windows.resize(windows_to_keep_per_image);
 
 						for (auto& window : windows) {
-							core::FeatureVector features = featureExtractor->compute(window.image);
+
+							auto window_im = window.image.clone();
+							core::FeatureVector features = feature_extractor->Compute(window_im);
 							cv::Mat_<float> fv(features);
 							cv::Mat_<float> fv0 = fv.reshape(1, 1);
 							X.push_back(fv0);
 							count += 1;
-							if (count == numSamples) {
+
+							if (this->callback) {
+								this->callback->OnNegativeSample(count, window_im, features, 0.0);
+							}
+
+							if (count == num_negatives) {
 								throw done_collecting_samples();
 							}
 						}
@@ -541,30 +488,51 @@ namespace object_recognition_toolkit
 						auto& filename = dataset_im.filename;
 						core::Matrix image = core::imread(filename, false);
 
-						pyramid::Pyramid pyramid = pyramidBuilder->Build(image);
+						pyramid::Pyramid pyramid = pyramid_builder->Build(image);
 						int pyramid_num_levels = pyramid.GetNumLevels();
 
+						std::vector<core::Matrix> window_images;
 
 						for (int pyramid_level_index = 0; pyramid_level_index < pyramid_num_levels; pyramid_level_index++)
 						{
 							const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
 							auto windows =
-								imageScanner->compute(pyramid_level.GetImage());
+								image_scanner->compute(pyramid_level.GetImage());
 
 							for (auto& window : windows)
 							{
-								core::FeatureVector features = featureExtractor->compute(window.image);
+								auto window_im = window.image.clone();
+								window_images.push_back(window_im);
 
-								if (classifier->Predict(features))
-								{
-									cv::Mat_<float> fv(features);
-									cv::Mat_<float> fv0 = fv.reshape(1, 1);
-									X.push_back(fv0);
-									count += 1;
-									if (count == numSamples) {
-										throw done_collecting_samples();
-									}
+							}
+						}
+
+
+						core::Matrix features(window_images.size(), feature_extractor->Lenght(), CV_32F);
+						feature_extractor->ComputeMulti(window_images, features);
+
+		
+
+						core::Matrix scores(features.rows, 1, CV_64F);
+						classifier->PredictMulti(features, scores);
+
+						
+
+						for (int i = 0; i < scores.rows; i++) {
+							double score = scores.at<double>(i);
+							if (score > 0.0)
+							{
+							
+								X.push_back(features.row(i));
+								count += 1;
+
+								if (this->callback) {
+									this->callback->OnNegativeSample(count, window_images[i], features.row(i), score);
+								}
+
+								if (count == num_negatives) {
+									throw done_collecting_samples();
 								}
 							}
 						}
@@ -578,51 +546,19 @@ namespace object_recognition_toolkit
 			return X;
 		}
 
-		Detector* BootstrappingDetectorTrainer::buildDetector(classification::Classifier* classifier)
+		void BootstrappingDetectorTrainer::OnBeginIteration(int iteration)
 		{
-			std::stringstream ss;
+			if (this->callback) { this->callback->OnBeginIteration(iteration); }
+		}
 
-			{
-				auto pyramidBuilder = params_.pyramidBuilder.get();
-				auto imageScanner = params_.imageScanner.get();
-				auto featureExtractor = params_.featureExtractor.get();
-				auto nonMaximaSuppressor = params_.nonMaxSupperssor.get();
+		void BootstrappingDetectorTrainer::OnClassifier(boost::shared_ptr<classification::Classifier> classifier)
+		{
+			if (this->callback) { this->callback->OnClassifier(classifier); }
+		}
 
-
-				core::oarchive oa(ss);
-				oa << pyramidBuilder;
-				oa << imageScanner;
-				oa << featureExtractor;
-				oa << nonMaximaSuppressor;
-				oa << classifier;
-			}
-
-			{
-				pyramid::PyramidBuilder* pyramidBuilder;
-				image_scanning::ImageScanner* imageScanner;
-				feature_extraction::FeatureExtractor* featureExtractor;
-				non_maxima_suppression::NonMaximaSuppressor* nonMaximaSuppressor;
-				classification::Classifier* classifier0;
-
-				core::iarchive ia(ss);
-				ia >> pyramidBuilder;
-				ia >> imageScanner;
-				ia >> featureExtractor;
-				ia >> nonMaximaSuppressor;
-				ia >> classifier0;
-
-				DetectorBaseMT_Builder detectorBuilder;
-				detectorBuilder.PutPyramidBuilder(std::shared_ptr<pyramid::PyramidBuilder>(pyramidBuilder));
-				detectorBuilder.PutImageScanner(std::shared_ptr<image_scanning::ImageScanner>(imageScanner));
-				detectorBuilder.PutFeatureExtractor(std::shared_ptr<feature_extraction::FeatureExtractor>(featureExtractor));
-				detectorBuilder.PutNonMaximaSuppressor(std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor>(nonMaximaSuppressor));
-				detectorBuilder.PutClassifier(std::shared_ptr<classification::Classifier>(classifier0));
-
-
-				std::unique_ptr<detection::Detector> detector{ detectorBuilder.Build() };
-
-				return detector.release();
-			}
+		void BootstrappingDetectorTrainer::OnEndIteration(int iteration)
+		{
+			if (this->callback) { this->callback->OnEndIteration(iteration); }
 		}
 
 		void BootstrappingDetectorTrainer::serialize(core::iarchive& ar, const unsigned int version)

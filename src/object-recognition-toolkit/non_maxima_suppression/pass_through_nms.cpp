@@ -1,6 +1,8 @@
 #include "precomp.h"
 #include "object-recognition-toolkit/non_maxima_suppression/pass_through_nms.h"
 
+#include <boost/make_shared.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace non_maxima_suppression
@@ -14,15 +16,9 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& PassThroughNms::name() const
+		boost::shared_ptr<NonMaximaSuppressor> PassThroughNms::Clone() const
 		{
-			static const std::string name = "PassThroughNms";
-			return name;
-		}
-
-		core::Clonable* PassThroughNms::Clone()
-		{
-			return new PassThroughNms(*this);
+			return boost::make_shared<PassThroughNms>(*this);
 		}
 
 		void PassThroughNms::suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const

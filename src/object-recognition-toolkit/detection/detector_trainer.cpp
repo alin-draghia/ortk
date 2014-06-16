@@ -10,6 +10,21 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		boost::shared_ptr<DetectorTrainer> DetectorTrainer::Clone() const
+		{
+			throw core::NotImplementedError();
+		}
+
+		boost::shared_ptr<Detector> DetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
+		{
+			throw core::NotImplementedError();
+		}
+
+		boost::shared_ptr<Detector> DetectorTrainer::TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
+		{
+			throw core::NotImplementedError();
+		}
+
 		void DetectorTrainer::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;
@@ -20,16 +35,6 @@ namespace object_recognition_toolkit
 		{
 			(void)ar;
 			(void)version;
-		}
-
-		Detector* DetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
-		{
-			throw std::runtime_error("not implemented");
-		}
-
-		Detector* DetectorTrainer::TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
-		{
-			throw std::runtime_error("not implemented");
 		}
 
 	}

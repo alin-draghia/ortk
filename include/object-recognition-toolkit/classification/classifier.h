@@ -16,19 +16,22 @@
 #include "../core/clonable.h"
 #include "../core/serialization.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace classification
 	{
 		class PUBLIC_API Classifier
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
-			virtual ~Classifier();
+			virtual ~Classifier() = 0;
+			
+			virtual boost::shared_ptr<Classifier> Clone() const = 0;
 
 		public:
-			virtual double Predict(const core::FeatureVector& instance) const;
+			virtual double Predict(core::FeatureVector const& x) const = 0;
+			virtual void PredictMulti(core::Matrix const& X, core::Matrix& y) const = 0;
 
 			DECLARE_SERIALIZABLE();
 		};

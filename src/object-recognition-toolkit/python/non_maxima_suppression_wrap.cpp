@@ -2,7 +2,8 @@
 #include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
-
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 namespace object_recognition_toolkit
 {
@@ -12,8 +13,13 @@ namespace object_recognition_toolkit
 
 		struct NonMaximaSuppressor_Wrapper
 			: NonMaximaSuppressor
-			, bp::wrapper<NonMaximaSuppressor>
+			, bp::wrapper < NonMaximaSuppressor >
 		{
+
+			boost::shared_ptr<NonMaximaSuppressor> Clone() const
+			{
+				return this->get_override("Clone")();
+			}
 
 			void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const
 			{
@@ -22,14 +28,14 @@ namespace object_recognition_toolkit
 
 		};
 
-		std::auto_ptr<NonMaximaSuppressor> create_PassThroughNms()
+		boost::shared_ptr<NonMaximaSuppressor> create_PassThroughNms()
 		{
-			return std::auto_ptr<NonMaximaSuppressor>(new PassThroughNms());
+			return boost::shared_ptr<NonMaximaSuppressor>(new PassThroughNms());
 		}
 
-		std::auto_ptr<NonMaximaSuppressor> create_GroupRectanglesNms()
+		boost::shared_ptr<NonMaximaSuppressor> create_GroupRectanglesNms()
 		{
-			return std::auto_ptr<NonMaximaSuppressor>(new GroupRectanglesNms());
+			return boost::shared_ptr<NonMaximaSuppressor>(new GroupRectanglesNms());
 		}
 	}
 }
@@ -43,20 +49,30 @@ void py_regiser_non_maxima_suppression()
 	using namespace object_recognition_toolkit::non_maxima_suppression;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
-	typedef std::vector<Box> BoxVector;
-	class_<BoxVector>("BoxVector")
-		.def(vector_indexing_suite<BoxVector>())
-		;
+	{
+		typedef std::vector<Box> BoxVector;
+		class_<BoxVector>("BoxVector")
+			.def(vector_indexing_suite<BoxVector>())
+			;
+	}
+	{
+		class_<NonMaximaSuppressor_Wrapper, boost::noncopyable>("NonMaximaSuppressor")
+			.def("Clone", pure_virtual(&NonMaximaSuppressor::Clone))
+			.def("suppress", pure_virtual(&NonMaximaSuppressor::suppress), args("detections", "confidences"))
+			.enable_pickling()
+			;
+		register_ptr_to_python<boost::shared_ptr<NonMaximaSuppressor>>();
+	}
+	{
+		class_<PassThroughNms, bases<NonMaximaSuppressor>>("PassThroughNms", init<>())
+			.def_pickle(serialize_pickle<PassThroughNms>())
+			;
+	}
 
-	class_<NonMaximaSuppressor_Wrapper, boost::noncopyable, bases<Named,Clonable>>("NonMaximaSuppressor")
-		.def("suppress", pure_virtual(&NonMaximaSuppressor::suppress))
-		.def_pickle(serialize_pickle<NonMaximaSuppressor>());
-
-	class_<GroupRectanglesNms, bases<NonMaximaSuppressor>>("GroupRectanglesNms")
-		;
-
-	def("create_PassThroughNms", create_PassThroughNms);
-	def("create_GroupRectanglesNms", create_GroupRectanglesNms);
-
-	register_ptr_to_python<std::auto_ptr<NonMaximaSuppressor>>();
+	{
+		class_<GroupRectanglesNms, bases<NonMaximaSuppressor>>("GroupRectanglesNms", init<>())
+			.def_pickle(serialize_pickle<GroupRectanglesNms>())
+			;
+	}
+	
 }

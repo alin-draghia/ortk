@@ -17,19 +17,21 @@
 #include "../classification/classifier.h"
 #include "../non_maxima_suppression/non_maxima_suppressor.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace detection
 	{
 		class PUBLIC_API Detector
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
-			virtual ~Detector() = 0;
+			virtual ~Detector();
+
+			virtual boost::shared_ptr<Detector> Clone() const;
 
 		public:
-			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold=0.0) const = 0;
+			virtual void Detect(core::Matrix const& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
 		private:
 			DECLARE_SERIALIZABLE();

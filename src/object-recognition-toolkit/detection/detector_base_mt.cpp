@@ -18,11 +18,20 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& DetectorBaseMt::name() const
+
+		boost::shared_ptr<Detector> DetectorBaseMt::Clone() const
 		{
-			static const std::string name = "DetectorBaseMt";
-			return name;
+			std::stringstream ss;
+			core::oarchive oa(ss);
+			oa << this;
+
+			core::iarchive ia(ss);
+			DetectorBaseMt* ptr;
+			ia >> ptr;
+
+			return boost::shared_ptr<Detector>(ptr);
 		}
+
 
 		void DetectorBaseMt::Detect(const cv::Mat& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
 		{

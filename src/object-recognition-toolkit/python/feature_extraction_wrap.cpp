@@ -2,6 +2,8 @@
 #include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
+#include <boost/make_shared.hpp>
+
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
@@ -11,22 +13,29 @@ namespace object_recognition_toolkit {
 			: FeatureExtractor
 			, bp::wrapper < FeatureExtractor >
 		{
-			core::FeatureVector compute(const core::Matrix& image) const
-			{
-				return this->get_override("compute")(image);
+			boost::shared_ptr<FeatureExtractor> Clone() const { 
+				return  this->get_override("Clone")();
+			}
+			
+			core::FeatureVector Compute(const core::Matrix& image) const {
+				return this->get_override("Compute")(image);
 			}
 
-			int lenght() const
+			void ComputeMulti(std::vector<core::Matrix> const& images, core::Matrix& features) const
 			{
-				return this->get_override("lenght")();
+				this->get_override("ComputeMulti")(images, features);
+			}
+
+			int Lenght() const {
+				return this->get_override("Lenght")();
 			}
 
 		};
 
 
-		FeatureExtractor* create_HogFeatureExtractor()
+		boost::shared_ptr<FeatureExtractor> create_HogFeatureExtractor(cv::Size winSize, cv::Size blockSize, cv::Size blockStride, cv::Size cellSize, int nBins)
 		{
-			return new HogFeatureExtractor();
+			return boost::make_shared<HogFeatureExtractor>(winSize, blockSize, blockStride, cellSize, nBins);
 		}
 
 	}
@@ -41,12 +50,28 @@ void py_regiser_feature_extraction()
 	using namespace object_recognition_toolkit::feature_extraction;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
+	{
+		class_<FeatureExtractor_Wrapper, boost::noncopyable>("FeatureExtractor")
+			.def("Clone", pure_virtual(&FeatureExtractor::Clone))
+			.def("Compute", pure_virtual(&FeatureExtractor::Compute), args("image"))
+			.def("ComputeMulti", pure_virtual(&FeatureExtractor::ComputeMulti), args("images", "features"))
+			.def("Lenght", pure_virtual(&FeatureExtractor::Lenght))
+			.enable_pickling()
+			;
 
-	class_< FeatureExtractor_Wrapper, boost::noncopyable, bases<Named, Clonable>>("FeatureExtractor")
-		.def("compute", pure_virtual(&FeatureExtractor::compute))
-		.def("lenght", pure_virtual(&FeatureExtractor::lenght))
-		.def_pickle(serialize_pickle<FeatureExtractor>());
-
-	def("create_HogFeatureExtractor", create_HogFeatureExtractor, return_value_policy<manage_new_object>());
+		register_ptr_to_python<boost::shared_ptr<FeatureExtractor> >();
+	}
+	
+	{
+		class_<HogFeatureExtractor, bases<FeatureExtractor>>("HogFeatureExtractor", init<>())
+			.def(init<Size, Size, Size, Size, int>(args("win_size", "block_size", "block_stride", "cell_sizze", "n_bins")))
+			.def_readwrite("win_size", &HogFeatureExtractor::winSize_)
+			.def_readwrite("block_size", &HogFeatureExtractor::blockSize_)
+			.def_readwrite("block_stride", &HogFeatureExtractor::blockStride_)
+			.def_readwrite("cell_size", &HogFeatureExtractor::cellSize_)
+			.def_readwrite("n_bins", &HogFeatureExtractor::nBins_)
+			.def_pickle(serialize_pickle<HogFeatureExtractor>())
+			;
+	}
 
 }

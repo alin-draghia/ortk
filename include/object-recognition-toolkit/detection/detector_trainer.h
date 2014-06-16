@@ -9,20 +9,22 @@
 #include "../dataset/dataset.h"
 #include "./detector.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace detection
 	{
 		class PUBLIC_API DetectorTrainer
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
 			virtual ~DetectorTrainer();
 
+			virtual boost::shared_ptr<DetectorTrainer> Clone() const;
+
 		public:
-			virtual Detector* TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative);
-			virtual Detector* TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages);
+			virtual boost::shared_ptr<Detector> TrainWithDataset(dataset::Dataset const& positive, dataset::Dataset const & negative);
+			virtual boost::shared_ptr<Detector> TrainWithImages(std::vector<core::Matrix> const & positiveImages, std::vector<core::Matrix> const& negativeImages);
 
 		private:
 			DECLARE_SERIALIZABLE();

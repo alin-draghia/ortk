@@ -21,13 +21,11 @@ namespace object_recognition_toolkit
 			MockPersonClassifier();
 			virtual ~MockPersonClassifier();
 
-			virtual double Predict(const core::FeatureVector& instance) const;
+			virtual double Predict(core::FeatureVector const& x) const;
+			virtual void PredictMulti(core::Matrix const& X, core::Matrix& y) const;
 
 		public:
-			virtual const std::string& name() const;
-
-		public:
-			virtual core::Clonable* Clone();
+			virtual boost::shared_ptr<Classifier> Clone() const;
 
 		private:
 			static float b_;

@@ -10,6 +10,16 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		boost::shared_ptr<NonMaximaSuppressor> NonMaximaSuppressor::Clone() const
+		{
+			throw core::NotImplementedError();
+		}
+
+		void NonMaximaSuppressor::suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const
+		{
+			throw core::NotImplementedError();
+		}
+
 		void NonMaximaSuppressor::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;

@@ -14,29 +14,30 @@ namespace object_recognition_toolkit {
 
 
 		class PUBLIC_API HogFeatureExtractor
-			: public FeatureExtractor 
+			: public FeatureExtractor
 		{
 		public:
 			HogFeatureExtractor();
+			HogFeatureExtractor(cv::Size winSize, cv::Size blockSize, cv::Size blockStride, cv::Size cellSize, int nBins);
 			virtual ~HogFeatureExtractor();
 
 		public:
-			virtual const std::string& name() const;
+			virtual boost::shared_ptr<FeatureExtractor> Clone() const;
 
 		public:
-			virtual core::Clonable* Clone();
+			virtual core::FeatureVector Compute(const core::Matrix& image) const;
+			virtual void ComputeMulti(std::vector<core::Matrix> const& images, core::Matrix& features) const;
+			virtual int Lenght() const;
 
 		public:
-			virtual core::FeatureVector compute(const core::Matrix& image) const;
-			virtual int lenght() const;
-
-		private:
-			cv::HOGDescriptor hog_;
 			cv::Size winSize_;
 			cv::Size blockSize_;
 			cv::Size blockStride_;
 			cv::Size cellSize_;
 			int nBins_;
+
+		private:
+			cv::HOGDescriptor hog_;
 
 		private:
 			DECLARE_SERIALIZABLE();

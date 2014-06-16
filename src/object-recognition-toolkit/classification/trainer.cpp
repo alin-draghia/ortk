@@ -10,9 +10,16 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		Classifier* Trainer::Train(const cv::Mat& features, const cv::Mat& labels)
+
+		boost::shared_ptr<Trainer> Trainer::Clone() const
 		{
-			throw std::runtime_error("not implemented, [this is supposed to be a base class]");
+			throw core::NotImplementedError();
+		}
+
+
+		boost::shared_ptr<Classifier> Trainer::Train(const cv::Mat& X, const cv::Mat& y)
+		{
+			throw core::NotImplementedError();
 		}
 
 		void Trainer::serialize(core::iarchive& ar, const unsigned int version)

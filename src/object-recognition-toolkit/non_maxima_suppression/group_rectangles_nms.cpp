@@ -1,6 +1,8 @@
 #include "precomp.h"
 #include "object-recognition-toolkit/non_maxima_suppression/group_rectangles_nms.h"
 
+#include <boost/make_shared.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace non_maxima_suppression
@@ -14,15 +16,10 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& GroupRectanglesNms::name() const
-		{
-			static const std::string name = "GroupRectanglesNms";
-			return name;
-		}
 
-		core::Clonable* GroupRectanglesNms::Clone()
+		boost::shared_ptr<NonMaximaSuppressor> GroupRectanglesNms::Clone() const
 		{
-			return new GroupRectanglesNms(*this);
+			return boost::make_shared<GroupRectanglesNms>(*this);
 		}
 
 		void GroupRectanglesNms::suppress(std::vector<cv::Rect>& detections, std::vector<double>& confidences) const
@@ -47,3 +44,6 @@ namespace object_recognition_toolkit
 
 	}
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(object_recognition_toolkit::non_maxima_suppression::GroupRectanglesNms);

@@ -21,6 +21,11 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+
 #include <opencv2/opencv.hpp>
+
+
 
 #endif // PRECOMP_HEADER_INCLUDED_

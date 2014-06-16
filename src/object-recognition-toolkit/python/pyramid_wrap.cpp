@@ -2,6 +2,7 @@
 #include "object-recognition-toolkit/python/python_ext.h"
 #include "object-recognition-toolkit/object_recognition_toolkit.h"
 
+#include <boost/make_shared.hpp>
 
 namespace object_recognition_toolkit
 {
@@ -11,25 +12,50 @@ namespace object_recognition_toolkit
 		namespace bp = boost::python;
 
 		struct PyramidBuilder_Wrapper
-			: PyramidBuilder
-			, bp::wrapper < PyramidBuilder >
-		{
+			: public PyramidBuilder
+			, public bp::wrapper < PyramidBuilder >
+		{		
 
-			Pyramid Build(const core::Matrix& image) const
+			virtual ~PyramidBuilder_Wrapper() {}
+
+			Pyramid Build(core::Matrix const& image) const
 			{
 				return this->get_override("Build")(image);
 			}
 
+
+			boost::shared_ptr<PyramidBuilder> Clone() const
+			{
+				return this->get_override("Clone")();
+			}
+
 		};
 
-		PyramidBuilder* create_FloatPyramidBuilder(double scaleFactor, cv::Size minSize, cv::Size maxSize)
+		boost::shared_ptr<PyramidBuilder> create_FloatPyramidBuilder(double scaleFactor, cv::Size minSize, cv::Size maxSize)
 		{
-			return new FloatPyramidBuilder(scaleFactor, minSize, maxSize);
+			return boost::make_shared<FloatPyramidBuilder>(scaleFactor, minSize, maxSize);
+		}
+
+
+		boost::shared_ptr<PyramidBuilder> PyramidBuilder_Clone(boost::shared_ptr<PyramidBuilder> self) {
+			auto other = self->Clone();
+			return other;
+		}
+
+
+		Pyramid PyramidBuilder_Build(boost::shared_ptr<PyramidBuilder> self, core::Matrix const& image){
+			auto pyr = self->Build(image);
+			return pyr;
 		}
 	}
 }
 
+
+
 #include "object-recognition-toolkit/python/python_ext.h"
+
+
+
 
 void py_regiser_pyramid()
 {
@@ -38,23 +64,41 @@ void py_regiser_pyramid()
 	using namespace object_recognition_toolkit::pyramid;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
-	class_<PyramidLevel>("PyramidLevel", init<const Matrix&, double>())
+	class_<PyramidLevel>("PyramidLevel", init<const Matrix&, double>((arg("image"),arg("scale"))))
 		.def("GetScale", &PyramidLevel::GetScale)
 		.def("GetImage", &PyramidLevel::GetImage, return_value_policy<copy_const_reference>())
-		.def("Transform", &PyramidLevel::Transform<int>)
-		.def("Invert", &PyramidLevel::Invert<int>);
-
-	class_<Pyramid>("Pyramid")
-		.def("AddLevel", &Pyramid::AddLevel)
-		.def("Clear", &Pyramid::Clear)
-		.def("GetNumLevels", &Pyramid::GetNumLevels)
-		.def("GetLevel", &Pyramid::GetLevel, return_value_policy<copy_const_reference>())
+		.def("Transform", &PyramidLevel::Transform<int>, arg("box"))
+		.def("Invert", &PyramidLevel::Invert<int>, arg("box"))
 		;
 
-	class_<PyramidBuilder_Wrapper, boost::noncopyable, bases<Named, Clonable>>("PyramidBuilder")
-		.def("Build", pure_virtual(&PyramidBuilder::Build))
-		.def_pickle(serialize_pickle<PyramidBuilder>());
+	class_<Pyramid>("Pyramid", init<>())
+		.def("AddLevel", &Pyramid::AddLevel, arg("level"))
+		.def("Clear", &Pyramid::Clear)
+		.def("GetNumLevels", &Pyramid::GetNumLevels)
+		.def("GetLevel", &Pyramid::GetLevel, arg("index"), return_value_policy<copy_const_reference>())
+		;
 
-	def("create_FloatPyramidBuilder", create_FloatPyramidBuilder, return_value_policy<manage_new_object>());
+	{
+		class_<PyramidBuilder_Wrapper, boost::noncopyable>("PyramidBuilder")
+			.def("Clone", pure_virtual(&PyramidBuilder::Clone))
+			.def("Build", pure_virtual(&PyramidBuilder::Build), arg("image"))
+			.enable_pickling()
+			;
+		register_ptr_to_python<boost::shared_ptr<PyramidBuilder>>();
+	}
 
+	{
+		class_<FloatPyramidBuilder, bases<PyramidBuilder>>("FloatPyramidBuilder", init<>())
+			.def(init<double, Size, Size>(args("scale_factor", "min_size", "max_size")))
+			.def_pickle(serialize_pickle<FloatPyramidBuilder>())
+			;
+			
+	}	
+
+	{
+		def("PyramidBuilder_Clone", &PyramidBuilder_Clone);
+		def("PyramidBuilder_Build", &PyramidBuilder_Build, args("self", "image"));
+	}
 }
+
+

@@ -27,6 +27,7 @@ namespace object_recognition_toolkit
 				std::ostringstream os;
 				core::oarchive oa(os); 
 				oa << item;
+				
 				return boost::python::make_tuple(os.str());
 			}
 

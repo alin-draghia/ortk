@@ -27,11 +27,9 @@ namespace object_recognition_toolkit
 		public:
 			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
-		public:
-			virtual const std::string& name() const;
 
 		public:
-			virtual core::Clonable* Clone();
+			virtual boost::shared_ptr<Detector> Clone() const;
 
 		protected:
 			virtual void buildPyramid(const core::Matrix& image, pyramid::Pyramid& pyramid) const;
@@ -47,12 +45,12 @@ namespace object_recognition_toolkit
 			virtual classification::Classifier& GetClassifier() const;
 			virtual non_maxima_suppression::NonMaximaSuppressor& GetNonMaximaSuppressor() const;
 
-		private:
-			std::unique_ptr<pyramid::PyramidBuilder> pyramidBuilder_;
-			std::unique_ptr<image_scanning::ImageScanner> imageScanner_;
-			std::unique_ptr<feature_extraction::FeatureExtractor> featureExtractor_;
-			std::unique_ptr<classification::Classifier> classifier_;
-			std::unique_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor_;
+		public:
+			boost::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder_;
+			boost::shared_ptr<image_scanning::ImageScanner> imageScanner_;
+			boost::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor_;
+			boost::shared_ptr<classification::Classifier> classifier_;
+			boost::shared_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor_;
 
 		private:
 			DECLARE_SERIALIZABLE();

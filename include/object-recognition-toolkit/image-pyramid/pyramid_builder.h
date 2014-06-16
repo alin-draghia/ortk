@@ -13,19 +13,22 @@
 #include "./pyramid-level.h"
 #include "./pyramid.h"
 
+#include <boost/shared_array.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace pyramid
 	{
 		class PUBLIC_API PyramidBuilder
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
-			virtual ~PyramidBuilder() = 0;
+			virtual ~PyramidBuilder();
 
 		public:
-			virtual Pyramid Build(const core::Matrix& image) const = 0;
+			virtual boost::shared_ptr<PyramidBuilder> Clone() const;
+
+		public:
+			virtual Pyramid Build(core::Matrix const& image) const;
 			
 		private:
 			DECLARE_SERIALIZABLE();

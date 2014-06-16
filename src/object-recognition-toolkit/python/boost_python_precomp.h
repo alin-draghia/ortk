@@ -15,6 +15,9 @@
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #pragma warning(pop)
 
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+
 #include <opencv2/opencv.hpp>
 
 #endif // BOOST_PYTHON_PRECOMP_HEADER_INCLUDED_

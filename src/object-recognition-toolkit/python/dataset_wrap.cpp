@@ -135,11 +135,11 @@ void py_regiser_dataset()
 
 
 	{
-		def("LoadDatasetDlib", &LoadDatasetDlib);
-		def("SaveDatasetDlib", &SaveDatasetDlib);
-		def("LoadDatasetPascalV1", &LoadDatasetPascalV1);
-		def("LoadDatasetPascalXml", &LoadDatasetPascalXml);
-		def("LoadDatasetFiles", &LoadDatasetFiles);
-		def("ExtractImages", &ExtractImages);
+		def("LoadDatasetDlib", &LoadDatasetDlib, (arg("filename"), arg("dataset")));
+		def("SaveDatasetDlib", &SaveDatasetDlib, (arg("filename"), arg("dataset")));
+		def("LoadDatasetPascalV1", &LoadDatasetPascalV1, (arg("filenames"), arg("dataset"), arg("basepath")));
+		def("LoadDatasetPascalXml", &LoadDatasetPascalXml, (arg("filenames"), arg("dataset")));
+		def("LoadDatasetFiles", &LoadDatasetFiles, (arg("filenames"), arg("dataset")));
+		def("ExtractImages", &ExtractImages, (arg("dataset"), arg("images"), arg("label"), arg("color")));
 	}
 }
