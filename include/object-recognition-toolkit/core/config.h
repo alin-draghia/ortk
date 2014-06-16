@@ -6,6 +6,7 @@
 #define HAVE_VLFEAT 0
 #define HAVE_DLIB 0
 #define HAVE_EIGEN 0
+#define HAVE_ARMADILLO 0
 #define HAVE_MATIO 0
 #define HAVE_BOOST_SERIALIZE 1
 #define HAVE_BOOST_PYTHON 0
