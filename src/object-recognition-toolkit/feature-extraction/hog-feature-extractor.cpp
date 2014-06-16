@@ -1,6 +1,7 @@
 #include "precomp.h"
 #include <object-recognition-toolkit/feature-extraction/hog-feature-extractor.h>
 
+#include <omp.h>
 
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
@@ -50,10 +51,17 @@ namespace object_recognition_toolkit {
 
 		void HogFeatureExtractor::ComputeMulti(std::vector<core::Matrix> const& images, core::Matrix& features) const
 		{
-			features.reserve(images.size());
+			int num_images = (int)images.size( );
+			
+			int num_threads = omp_get_max_threads();
+			std::vector<boost::shared_ptr<FeatureExtractor>> extractors_pool;
+			for ( int i = 0; i < num_threads; i++ )
+				extractors_pool.push_back(this->Clone( ));
 
-			for (auto& image : images) {
-				features.push_back(this->Compute(image));
+			#pragma omp parallel for
+			for( int i = 0; i < num_images; i++ ) {
+				int thread_id = omp_get_thread_num();
+				features.row(i) = extractors_pool[thread_id]->Compute(images[i]);
 			}
 		}
 

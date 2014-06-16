@@ -491,10 +491,12 @@ namespace object_recognition_toolkit
 						pyramid::Pyramid pyramid = pyramid_builder->Build(image);
 						int pyramid_num_levels = pyramid.GetNumLevels();
 
-						std::vector<core::Matrix> window_images;
+						
 
 						for (int pyramid_level_index = 0; pyramid_level_index < pyramid_num_levels; pyramid_level_index++)
 						{
+							std::vector<core::Matrix> window_images;
+
 							const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
 							auto windows =
@@ -506,36 +508,35 @@ namespace object_recognition_toolkit
 								window_images.push_back(window_im);
 
 							}
-						}
+
+							core::Matrix features(window_images.size(), feature_extractor->Lenght(), CV_32F);
+							feature_extractor->ComputeMulti(window_images, features);
 
 
-						core::Matrix features(window_images.size(), feature_extractor->Lenght(), CV_32F);
-						feature_extractor->ComputeMulti(window_images, features);
+							core::Matrix scores(features.rows, 1, CV_64F);
+							classifier->PredictMulti(features, scores);
 
-		
+							for ( int i = 0; i < scores.rows; i++ ) {
+								double score = scores.at<double>(i);
+								if ( score > 0.0 ) {
 
-						core::Matrix scores(features.rows, 1, CV_64F);
-						classifier->PredictMulti(features, scores);
+									X.push_back(features.row(i));
+									count += 1;
 
-						
+									if ( this->callback ) {
+										this->callback->OnNegativeSample(count, window_images[i], features.row(i), score);
+									}
 
-						for (int i = 0; i < scores.rows; i++) {
-							double score = scores.at<double>(i);
-							if (score > 0.0)
-							{
-							
-								X.push_back(features.row(i));
-								count += 1;
-
-								if (this->callback) {
-									this->callback->OnNegativeSample(count, window_images[i], features.row(i), score);
-								}
-
-								if (count == num_negatives) {
-									throw done_collecting_samples();
+									if ( count == num_negatives ) {
+										throw done_collecting_samples();
+									}
 								}
 							}
+
 						}
+
+
+						
 
 					}
 				}
