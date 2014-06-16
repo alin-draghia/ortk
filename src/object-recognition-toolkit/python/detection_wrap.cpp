@@ -13,64 +13,30 @@ namespace object_recognition_toolkit
 			: Detector
 			, bp::wrapper < Detector >
 		{
-			void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const
-			{
-				this->get_override("Detect")(image, detections, confidences, treshold);
-			}			
-
+			boost::shared_ptr<Detector> Clone() const { return this->get_override("Clone")(); }
+			void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const { this->get_override("Detect")(image, detections, confidences, treshold); }
 		};
-
 
 		struct DetectorTrainer_Wrapper
 			: DetectorTrainer
-			, bp::wrapper<DetectorTrainer>
+			, bp::wrapper < DetectorTrainer >
 		{
-
-			Detector* TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
-			{
-				return this->get_override("TrainWithDataset")(positive, negative);
-			}
-
-			Detector* TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages)
-			{
-				return this->get_override("TrainWithImages")(positiveImages, negativeImages);
-			}
-
+			boost::shared_ptr<DetectorTrainer> Clone() const { return this->get_override("Clone")(); }
+			boost::shared_ptr<Detector> TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative){ return this->get_override("TrainWithDataset")(positive, negative); }
+			boost::shared_ptr<Detector> TrainWithImages(const std::vector<core::Matrix>& positiveImages, const std::vector<core::Matrix>& negativeImages){ return this->get_override("TrainWithImages")(positiveImages, negativeImages); }
 		};
 
-
-		Detector* build_Detector(
-			std::auto_ptr<pyramid::PyramidBuilder> pyramidBuilder,
-			std::auto_ptr<image_scanning::ImageScanner> imageScanner, 
-			std::auto_ptr<feature_extraction::FeatureExtractor> featureExtractor, 
-			std::auto_ptr<classification::Classifier> classifier, 
-			std::auto_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor)
+		struct BootstrappingDetectorTrainerCallback_Wrapper
+			: BootstrappingDetectorTrainerCallback
+			, bp::wrapper < BootstrappingDetectorTrainerCallback >
 		{
-			DetectorBase_Builder builder;
-			builder.PutPyramidBuilder(std::shared_ptr<pyramid::PyramidBuilder>(pyramidBuilder.release()));
-			builder.PutImageScanner(std::shared_ptr<image_scanning::ImageScanner>(imageScanner.release()));
-			builder.PutFeatureExtractor(std::shared_ptr<feature_extraction::FeatureExtractor>(featureExtractor.release()));
-			builder.PutClassifier(std::shared_ptr<classification::Classifier>(classifier.release()));
-			builder.PutNonMaximaSuppressor(std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor>(nonMaximaSuppressor.release()));
-			return builder.Build();
-		}
+			void OnBeginIteration(int iteration) { this->get_override("OnBeginIteration")(iteration); }
+			void OnClassifier(boost::shared_ptr<classification::Classifier> classifier) { this->get_override("OnClassifier")(classifier); }
+			void OnEndIteration(int iteration){ this->get_override("OnEndIteration")(iteration); }
+			void OnPositiveSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector) { this->get_override("OnPositiveSample")(count, image, features_vector); }
+			void OnNegativeSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector, double score) { this->get_override("OnNegativeSample")(count, image, features_vector, score); }
+		};
 
-
-		Detector* build_DetectorMT(
-			std::auto_ptr<pyramid::PyramidBuilder> pyramidBuilder,
-			std::auto_ptr<image_scanning::ImageScanner> imageScanner,
-			std::auto_ptr<feature_extraction::FeatureExtractor> featureExtractor,
-			std::auto_ptr<classification::Classifier> classifier,
-			std::auto_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor)
-		{
-			DetectorBaseMT_Builder builder;
-			builder.PutPyramidBuilder(std::shared_ptr<pyramid::PyramidBuilder>(pyramidBuilder.release()));
-			builder.PutImageScanner(std::shared_ptr<image_scanning::ImageScanner>(imageScanner.release()));
-			builder.PutFeatureExtractor(std::shared_ptr<feature_extraction::FeatureExtractor>(featureExtractor.release()));
-			builder.PutClassifier(std::shared_ptr<classification::Classifier>(classifier.release()));
-			builder.PutNonMaximaSuppressor(std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor>(nonMaximaSuppressor.release()));
-			return builder.Build();
-		}
 	}
 }
 
@@ -84,20 +50,68 @@ void py_regiser_detection()
 	using namespace object_recognition_toolkit::detection;
 	using object_recognition_toolkit::python_ext::serialize_pickle;
 
+	{
+		class_<Detector_Wrapper, boost::noncopyable>("Detector")
+			.def("Clone", pure_virtual(&Detector::Clone))
+			.def("Detect", pure_virtual(&Detector::Detect), (arg("image"), arg("detections"), arg("confidences"), arg("treshold")))
+			.enable_pickling()
+			;
+		register_ptr_to_python<boost::shared_ptr<Detector>>();
+	}
 
-	class_<Detector_Wrapper, boost::noncopyable, bases<Named, Clonable>>("Detector")
-		.def("Detect", pure_virtual(&Detector::Detect))
-		.def_pickle(serialize_pickle<Detector>())
-		;
+	{
+		class_<DetectorBase, bases<Detector>>("DetectorBase", init<>())
+			.def_readwrite("pyramid_builder", &DetectorBase::pyramidBuilder_)
+			.def_readwrite("image_scanner", &DetectorBase::imageScanner_)
+			.def_readwrite("feature_extractor", &DetectorBase::featureExtractor_)
+			.def_readwrite("classifier", &DetectorBase::classifier_)
+			.def_readwrite("non_maxima_suppressor", &DetectorBase::nonMaximaSuppressor_)
+			.def_pickle(serialize_pickle<DetectorBase>())
+			;
+	}
 
-	class_<DetectorTrainer_Wrapper, DetectorTrainer*, bases<Named, Clonable>>("DetectorTrainer")
-		.def("TrainWithDataset", &DetectorTrainer::TrainWithDataset, return_value_policy<manage_new_object>())
-		.def("TrainWithImages", &DetectorTrainer::TrainWithImages, return_value_policy<manage_new_object>())
-		.def("Name", &DetectorTrainer::name, return_value_policy<copy_const_reference>())
-		.def_pickle(serialize_pickle<DetectorTrainer>())
-		;
+	{
+		class_<DetectorBaseMt, bases<DetectorBase>>("DetectorBaseMt", init<>())
+			.def_pickle(serialize_pickle<DetectorBaseMt>())
+			;
+	}
 
+	{
+		class_<DetectorTrainer_Wrapper, boost::noncopyable>("DetectorTrainer")
+			.def("Clone", pure_virtual(&DetectorTrainer::Clone))
+			.def("TrainWithDataset", pure_virtual(&DetectorTrainer::TrainWithDataset), (arg("positives"), arg("negatives")))
+			.def("TrainWithImages", pure_virtual(&DetectorTrainer::TrainWithImages), (arg("positives"), arg("negatives")))
+			.enable_pickling()
+			;
+		register_ptr_to_python<boost::shared_ptr<DetectorTrainer>>();
+	}
 
-	def("build_Detector", build_Detector, return_value_policy<manage_new_object>());
-	def("build_DetectorMT", build_DetectorMT, return_value_policy<manage_new_object>());
+	{
+		class_<BootstrappingDetectorTrainerCallback_Wrapper, boost::noncopyable>("BootstrappingDetectorTrainerCallback")
+			.def("OnBeginIteration", pure_virtual(&BootstrappingDetectorTrainerCallback::OnBeginIteration), args("iteration"))
+			.def("OnClassifier", pure_virtual(&BootstrappingDetectorTrainerCallback::OnClassifier), args("classifier"))
+			.def("OnEndIteration", pure_virtual(&BootstrappingDetectorTrainerCallback::OnEndIteration), args("iteration"))
+			.def("OnPositiveSample", pure_virtual(&BootstrappingDetectorTrainerCallback::OnPositiveSample), (arg("count"), arg("image"), arg("feature_vector")))
+			.def("OnNegativeSample", pure_virtual(&BootstrappingDetectorTrainerCallback::OnNegativeSample), (arg("count"), arg("image"), arg("feature_vector"), arg("score")))
+			.enable_pickling()
+			;
+
+		register_ptr_to_python<boost::shared_ptr<BootstrappingDetectorTrainerCallback>>();
+
+		class_<BootstrappingDetectorTrainer, bases<DetectorTrainer>>("BootstrappingDetectorTrainer", init<>())
+			.def_readwrite("num_iterations", &BootstrappingDetectorTrainer::num_iterations)
+			.def_readwrite("num_positives", &BootstrappingDetectorTrainer::num_positives)
+			.def_readwrite("num_negatives", &BootstrappingDetectorTrainer::num_negatives)
+			.def_readwrite("detector_size", &BootstrappingDetectorTrainer::detector_size)
+			.def_readwrite("data_directory", &BootstrappingDetectorTrainer::data_directory)
+			.def_readwrite("pyramid_builder", &BootstrappingDetectorTrainer::pyramid_builder)
+			.def_readwrite("image_scanner", &BootstrappingDetectorTrainer::image_scanner)
+			.def_readwrite("feature_extractor", &BootstrappingDetectorTrainer::feature_extractor)
+			.def_readwrite("trainer", &BootstrappingDetectorTrainer::trainer)
+			.def_readwrite("non_max_supperssor", &BootstrappingDetectorTrainer::non_max_supperssor)
+			.def_readwrite("callback", &BootstrappingDetectorTrainer::callback)
+			.def_pickle(serialize_pickle<BootstrappingDetectorTrainer>())
+			;
+	}
+
 }

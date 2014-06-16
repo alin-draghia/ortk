@@ -1,6 +1,8 @@
 #include "precomp.h"
 #include <object-recognition-toolkit/image-scanning/dense-image-scanner.h>
 
+#include <boost/make_shared.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace image_scanning
@@ -21,15 +23,9 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& DenseImageScanner::name() const
+		boost::shared_ptr<ImageScanner> DenseImageScanner::Clone() const
 		{
-			static const std::string name = "DenseImageScanner";
-			return name;
-		}
-
-		core::Clonable* DenseImageScanner::Clone()
-		{
-			return new DenseImageScanner(*this);
+			return boost::make_shared<DenseImageScanner>(*this);
 		}
 
 		cv::Size DenseImageScanner::GetWindowSize() const

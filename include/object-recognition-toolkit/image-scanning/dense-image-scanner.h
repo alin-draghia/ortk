@@ -15,17 +15,12 @@ namespace object_recognition_toolkit
 		class PUBLIC_API DenseImageScanner
 			: public ImageScanner
 		{
-			DenseImageScanner();
-
 		public:
+			DenseImageScanner();
 			DenseImageScanner(core::Size windowSize, core::Size windowStep, core::Size padding);
 			~DenseImageScanner();
 
-		public:
-			virtual const std::string& name() const;
-
-		public:
-			virtual core::Clonable* Clone();
+			virtual boost::shared_ptr<ImageScanner> Clone() const;
 
 		public:
 			virtual std::vector<Window> compute(const core::Matrix& image) const;
@@ -35,7 +30,7 @@ namespace object_recognition_toolkit
 			core::Size GetWindowStep() const;
 			core::Size GetPadding() const;
 
-		private:
+		public:
 			core::Size windowSize_;
 			core::Size windowStep_;
 			core::Size padding_;

@@ -11,6 +11,7 @@
 #include "../core/clonable.h"
 #include "../core/serialization.h"
 
+#include <boost/shared_ptr.hpp>
 
 namespace object_recognition_toolkit
 {
@@ -18,14 +19,14 @@ namespace object_recognition_toolkit
 	{
 
 		class PUBLIC_API NonMaximaSuppressor
-			: public core::Named
-			, public core::Clonable
 		{
 		public:			
-			virtual ~NonMaximaSuppressor() = 0;
+			virtual ~NonMaximaSuppressor();
 
+			virtual boost::shared_ptr<NonMaximaSuppressor> Clone() const;
+	
 		public:
-			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const = 0;
+			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
 		private:
 			DECLARE_SERIALIZABLE();

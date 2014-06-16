@@ -10,6 +10,8 @@ namespace object_recognition_toolkit
 {
 	namespace core
 	{
+		class NotImplementedError : public std::exception {};
+
 		using Matrix = cv::Mat;
 		using Box = cv::Rect;
 		using Size = cv::Size;

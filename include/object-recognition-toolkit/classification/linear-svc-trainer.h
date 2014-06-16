@@ -29,13 +29,10 @@ namespace object_recognition_toolkit
 
 			virtual ~LinearSvcTrainer();
 
-			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
+			virtual boost::shared_ptr<Classifier> Train(const cv::Mat& X, const cv::Mat& y);
 
 		public:
-			virtual const std::string& name() const;
-
-		public:
-			virtual core::Clonable* Clone();
+			virtual boost::shared_ptr<Trainer> Clone() const;
 
 		public:
 			double getC() const;

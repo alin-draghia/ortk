@@ -8,9 +8,9 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 
-		LinearClassifier::LinearClassifier(const float bias, std::vector<float>& coefs)
-			: bias_{ bias }
-			, coefs_{ coefs }
+		LinearClassifier::LinearClassifier(const float b, std::vector<float>& w)
+			: b_{ b }
+			, w_{ w }
 		{
 		}
 
@@ -18,43 +18,45 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& LinearClassifier::name() const
+		double LinearClassifier::Predict(const core::FeatureVector& x) const
 		{
-			static const std::string name = "LinearClassifier";
-			return name;
-		}
-
-		double LinearClassifier::Predict(const core::FeatureVector& instance) const
-		{
-			if (instance.cols != coefs_.size()) {
+			if (x.cols != w_.size()) {
 				throw std::runtime_error("Invalid instance vector size");
 			}
 
-			double conf = bias_;
+			double conf = b_;
 
-			for (int i = 0; i < static_cast<int>(coefs_.size()); i++) {
-				conf += coefs_[i] * instance.at<float>(i);
+			for (int i = 0; i < static_cast<int>(w_.size()); i++) {
+				conf += w_[i] * x.at<float>(i);
 			}
 
 			return conf;
 		}
 
-		core::Clonable* LinearClassifier::Clone()
+		void LinearClassifier::PredictMulti(core::Matrix const& X, core::Matrix& y) const
 		{
-			return new LinearClassifier(*this);
+			y.create(X.rows, 1, CV_64F);
+			for (int i = 0; i < X.rows; i++) {
+				y.at<double>(i) = this->Predict(X.row(i));
+			}
+		}
+
+		boost::shared_ptr<Classifier> LinearClassifier::Clone() const
+		{
+			return boost::shared_ptr<Classifier>(new LinearClassifier(*this));
 		}
 
 		void LinearClassifier::serialize(core::iarchive& ar, const unsigned int version)
 		{
-			ar >> bias_;
-			ar >> coefs_;
+			ar >> b_;
+			ar >> w_;
 			ar >> boost::serialization::base_object<Classifier>(*this);
 		}
 
 		void LinearClassifier::serialize(core::oarchive& ar, const unsigned int version)
 		{
-			ar << bias_;
-			ar << coefs_;
+			ar << b_;
+			ar << w_;
 			ar << boost::serialization::base_object<Classifier>(*this);
 		}
 

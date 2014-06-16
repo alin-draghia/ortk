@@ -10,6 +10,16 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		boost::shared_ptr<PyramidBuilder> PyramidBuilder::Clone() const
+		{
+			throw core::NotImplementedError();
+		}
+
+		Pyramid PyramidBuilder::Build(const core::Matrix& image) const
+		{
+			throw core::NotImplementedError();
+		}
+
 		void PyramidBuilder::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;

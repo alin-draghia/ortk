@@ -14,16 +14,12 @@ namespace object_recognition_toolkit
 		class PUBLIC_API FloatPyramidBuilder
 			: public PyramidBuilder
 		{
-			FloatPyramidBuilder();
 		public:
+			FloatPyramidBuilder();
 			FloatPyramidBuilder(double scaleFactor, cv::Size minSize, cv::Size maxSize);
 			virtual ~FloatPyramidBuilder();
 
-		public:
-			virtual const std::string& name() const;
-
-		public:
-			virtual core::Clonable* Clone();
+			virtual  boost::shared_ptr<PyramidBuilder> Clone() const;
 
 		public:
 			virtual Pyramid Build(const core::Matrix& image) const;

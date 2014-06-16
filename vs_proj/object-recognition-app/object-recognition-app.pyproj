@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>train_detector.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
     <WorkingDirectory>../bin/</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -14,6 +14,8 @@
     <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,10 +31,23 @@
     <PtvsTargetsFile>$(VSToolsPath)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="my_hog.py" />
     <Compile Include="main.py" />
+    <Compile Include="my_svm.py" />
+    <Compile Include="train_detector.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="..\bin\cv2.pyd">
+      <Name>cv2.pyd</Name>
+      <PythonExtension>..\bin\cv2.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="..\bin\object_recognition_toolkitd.pyd">
+      <Name>object_recognition_toolkitd.pyd</Name>
+      <PythonExtension>..\bin\object_recognition_toolkitd.pyd</PythonExtension>
+    </Reference>
   </ItemGroup>
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
   <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

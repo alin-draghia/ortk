@@ -16,12 +16,13 @@ namespace object_recognition_toolkit
 	namespace classification
 	{
 		class PUBLIC_API Trainer
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
 			virtual ~Trainer();
-			virtual Classifier* Train(const cv::Mat& features, const cv::Mat& labels);
+
+			virtual boost::shared_ptr<Classifier> Train(cv::Mat const& X, cv::Mat const& y);
+
+			virtual boost::shared_ptr<Trainer> Clone() const;
 
 			DECLARE_SERIALIZABLE();
 		};

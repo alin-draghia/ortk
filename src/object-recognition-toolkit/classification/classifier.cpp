@@ -11,9 +11,16 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		double Classifier::Predict(const core::FeatureVector& instance) const
+
+		boost::shared_ptr<Classifier> Classifier::Clone() const
 		{
-			throw std::runtime_error("not implemented, [~pure_virtual]");
+			throw core::NotImplementedError();
+		}
+
+
+		double Classifier::Predict(const core::FeatureVector& x) const
+		{
+			throw core::NotImplementedError();
 		}
 
 		void Classifier::serialize(core::iarchive& ar, const unsigned int version)

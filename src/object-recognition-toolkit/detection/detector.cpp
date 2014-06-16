@@ -10,6 +10,16 @@ namespace object_recognition_toolkit
 		{
 		}
 
+		boost::shared_ptr<Detector> Detector::Clone() const
+		{
+			throw core::NotImplementedError();
+		}
+
+		void Detector::Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold) const
+		{ 
+			throw core::NotImplementedError();
+		}
+
 		void Detector::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			(void)ar;

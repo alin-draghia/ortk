@@ -1,6 +1,8 @@
 #include "precomp.h"
 #include "object-recognition-toolkit/image-pyramid/float_pyramid_builder.h"
 
+#include <boost/make_shared.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace pyramid
@@ -22,15 +24,10 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& FloatPyramidBuilder::name() const
-		{
-			static const std::string name = "FloatImagePyramid";
-			return name;
-		}
 
-		core::Clonable* FloatPyramidBuilder::Clone()
+		boost::shared_ptr<PyramidBuilder> FloatPyramidBuilder::Clone() const
 		{
-			return new FloatPyramidBuilder(*this);
+			return boost::make_shared<FloatPyramidBuilder>(*this);
 		}
 		
 		double FloatPyramidBuilder::GetScaleFactor() const

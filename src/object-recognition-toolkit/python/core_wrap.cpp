@@ -166,6 +166,23 @@ namespace object_recognition_toolkit
 			}
 		};
 
+		void print_name(Named* ptr)
+		{
+			std::cout << ptr->name() << std::endl;
+		}
+
+		struct Size_pickle_suite : bp::pickle_suite
+		{
+			static bp::tuple getinitargs(const cv::Size_<int>& s) { 
+				return bp::make_tuple(s.width, s.height);
+			}
+		};
+
+		struct Rect_pickle_suite : bp::pickle_suite {
+			static bp::tuple getinitargs(const cv::Rect_<int>& r) {
+				return bp::make_tuple(r.x, r.y, r.width, r.height);
+			}
+		};
 	}
 }
 
@@ -205,17 +222,23 @@ public:
 		typedef cv::Rect_<int> Rect;
 		typedef cv::Size_<int> Size;
 
-		class_<Rect>("Rect")
+		class_<Rect>("Rect", init<>())
+			.def(init<int, int, int, int>((arg("x"), arg("y"), arg("width"), arg("height"))))
 			.def_readwrite("x", &Rect::x)
 			.def_readwrite("y", &Rect::y)
 			.def_readwrite("width", &Rect::width)
 			.def_readwrite("height", &Rect::height)
+			.def_pickle(Rect_pickle_suite())
 			;
 
-		class_<Size>("Size")
+		class_<Size> ("Size", init<>())
+			.def(init<int, int>((arg("width"),arg("height"))))
 			.def_readwrite("width", &Size::width)
 			.def_readwrite("height", &Size::height)
+			.def_pickle(Size_pickle_suite())
 			;
+
+
 
 
 		typedef std::vector<int> VecI32;
@@ -234,9 +257,9 @@ public:
 			;
 
 
-		typedef std::vector<Matrix> MatrixVec;
-		class_<MatrixVec>("MatrixVec")
-			.def(no_compare_indexing_suite<MatrixVec>())
+		typedef std::vector<Matrix> VecMat;
+		class_<VecMat>("VecMat")
+			.def(no_compare_indexing_suite<VecMat>())
 			;
 
 		{ // exporting vector of string
@@ -253,6 +276,9 @@ public:
 		class_<Clonable_Wrapper, boost::noncopyable, Clonable*>("Clonable")
 			.def("Clone", &Clonable::Clone, return_value_policy<manage_new_object>())
 			;
+
+
+		def("print_name", print_name);
 	}
 
 

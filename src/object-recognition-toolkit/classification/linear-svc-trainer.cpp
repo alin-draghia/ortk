@@ -19,23 +19,27 @@ namespace object_recognition_toolkit {
 			LinearSvcClassifier__() = default;
 			virtual ~LinearSvcClassifier__() = default;
 
-			virtual double Predict(const core::FeatureVector& instance) const {
-				return (double)svm_.predict(instance, true) * -1.0;
+			virtual double Predict(const core::FeatureVector& x) const {
+				return (double)svm_.predict(x, true) * -1.0;
 			}
 
-			virtual const std::string& name() const {
-				static const std::string name = "LinearSvcTrainer::LinearSvcClassifier";
-				return name;
+			void PredictMulti(core::Matrix const& X, core::Matrix& y) const
+			{
+				y.create(X.rows, 1, CV_64F);
+				for (int i = 0; i < X.rows; i++) {
+					y.at<double>(i) = this->Predict(X.row(i));
+				}
 			}
 
-			virtual core::Clonable* Clone() {
+
+			virtual boost::shared_ptr<Classifier> Clone() const {
 				std::stringstream ss; // clone via serialization
 				core::oarchive oa(ss);
 				oa << this;
 				core::iarchive ia(ss);
 				LinearSvcClassifier__* ptr;
 				ia >> ptr;
-				return ptr;
+				return boost::shared_ptr<Classifier>(ptr);
 			}
 
 			friend class LinearSvcTrainer;
@@ -75,7 +79,7 @@ namespace object_recognition_toolkit {
 		}
 
 
-		Classifier* LinearSvcTrainer::Train(const cv::Mat& features, const cv::Mat& labels)
+		boost::shared_ptr<Classifier> LinearSvcTrainer::Train(const cv::Mat& X, const cv::Mat& y)
 		{
 
 			std::unique_ptr<LinearSvcClassifier__> cls(new LinearSvcClassifier__());
@@ -86,25 +90,20 @@ namespace object_recognition_toolkit {
 			params.C = this->getC();
 			params.term_crit = cv::TermCriteria(CV_TERMCRIT_ITER + CV_TERMCRIT_EPS, 1000, 0.00001);
 
-			bool train_ok = cls->svm_.train(features, labels, {}, {}, params);
+			bool train_ok = cls->svm_.train(X, y, {}, {}, params);
 
 			if (train_ok) {
-				return cls.release();
+				return boost::shared_ptr<Classifier>(cls.release());
 			}
 
 			throw std::runtime_error("training failed");
 		}
 
 
-		const std::string& LinearSvcTrainer::name() const
-		{
-			static const std::string name = "LinearSvcTrainer::LinearSvcTrainer";
-			return name;
-		}
 
-		core::Clonable* LinearSvcTrainer::Clone()
+		boost::shared_ptr<Trainer> LinearSvcTrainer::Clone() const
 		{
-			return new LinearSvcTrainer(*this);
+			return boost::shared_ptr<Trainer>(new LinearSvcTrainer(*this));
 		}
 
 		double LinearSvcTrainer::getC() const

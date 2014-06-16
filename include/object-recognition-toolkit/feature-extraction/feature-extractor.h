@@ -11,20 +11,23 @@
 #include "../core/clonable.h"
 #include "../core/serialization.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace object_recognition_toolkit {
 	namespace feature_extraction {
 
 
 		class PUBLIC_API FeatureExtractor
-			: public core::Named
-			, public core::Clonable
 		{
 		public:
-			virtual ~FeatureExtractor( ) = 0;
+			virtual ~FeatureExtractor() = 0;
 			
+			virtual boost::shared_ptr<FeatureExtractor> Clone() const = 0;
+
 		public:
-			virtual core::FeatureVector compute(const core::Matrix& image) const = 0;
-			virtual int lenght() const = 0;
+			virtual core::FeatureVector Compute(core::Matrix const& image) const = 0;
+			virtual void ComputeMulti(std::vector<core::Matrix> const& images, core::Matrix& features) const = 0;
+			virtual int Lenght() const = 0;
 
 		private:
 			DECLARE_SERIALIZABLE();

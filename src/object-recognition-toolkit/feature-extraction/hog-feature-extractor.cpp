@@ -14,18 +14,22 @@ namespace object_recognition_toolkit {
 		{
 		}
 
+		HogFeatureExtractor::HogFeatureExtractor(cv::Size winSize, cv::Size blockSize, cv::Size blockStride, cv::Size cellSize, int nBins)
+			: winSize_{ winSize }
+			, blockSize_{ blockSize }
+			, blockStride_{ blockStride }
+			, nBins_{ nBins }
+		{
+
+		}
+
 
 		HogFeatureExtractor::~HogFeatureExtractor()
 		{
 		}
 
-		const std::string& HogFeatureExtractor::name() const
-		{
-			static const std::string name = "HogFeatureExtractor";
-			return name;
-		}
 
-		core::Clonable* HogFeatureExtractor::Clone()
+		boost::shared_ptr<FeatureExtractor> HogFeatureExtractor::Clone() const
 		{
 			std::stringstream ss;
 			core::oarchive oa(ss);			
@@ -34,18 +38,27 @@ namespace object_recognition_toolkit {
 			core::iarchive ia(ss);
 			HogFeatureExtractor* ptr;
 			ia >> ptr;
-			return ptr;
+			return boost::shared_ptr<FeatureExtractor>(ptr);
 		}
 
-		core::FeatureVector HogFeatureExtractor::compute(const cv::Mat& image) const
+		core::FeatureVector HogFeatureExtractor::Compute(const cv::Mat& image) const
 		{
 			std::vector<float> feats;
 			hog_.compute(image, feats);
-			return core::FeatureVector(feats, true);
+			return core::FeatureVector(feats, true).reshape(1, 1);
+		}
+
+		void HogFeatureExtractor::ComputeMulti(std::vector<core::Matrix> const& images, core::Matrix& features) const
+		{
+			features.reserve(images.size());
+
+			for (auto& image : images) {
+				features.push_back(this->Compute(image));
+			}
 		}
 
 
-		int HogFeatureExtractor::lenght() const
+		int HogFeatureExtractor::Lenght() const
 		{
 			return (int)hog_.getDescriptorSize();
 		}

@@ -22,13 +22,9 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& DetectorBase::name() const
-		{
-			static const std::string name = "DetectorBase";
-			return name;
-		}
 
-		core::Clonable* DetectorBase::Clone()
+		
+		boost::shared_ptr<Detector> DetectorBase::Clone() const
 		{
 			std::stringstream ss;
 			core::oarchive oa(ss);			
@@ -38,8 +34,7 @@ namespace object_recognition_toolkit
 			DetectorBase* ptr;
 			ia >> ptr;
 
-			return ptr;
-
+			return boost::shared_ptr<Detector>(ptr);
 		}
 
 		void DetectorBase::Detect(const core::Matrix& image, std::vector<cv::Rect>& detections, std::vector<double>& confidences, double treshold) const
@@ -95,7 +90,7 @@ namespace object_recognition_toolkit
 
 		void DetectorBase::extractFeatures(const core::Matrix& image, core::FeatureVector& features) const
 		{
-			features = this->GetFeatureExtracotr().compute(image);
+			features = this->GetFeatureExtracotr().Compute(image);
 		}
 
 		void DetectorBase::classify(const core::FeatureVector& features, double& confidence) const

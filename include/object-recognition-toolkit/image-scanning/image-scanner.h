@@ -14,20 +14,22 @@
 #include "../core/serialization.h"
 #include "window.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace object_recognition_toolkit
 {
 	namespace image_scanning
 	{
 
 		class PUBLIC_API ImageScanner
-			: public core::Named
-			, public core::Clonable
 		{
 		public:			
-			virtual ~ImageScanner() = 0;		
-	
+			virtual ~ImageScanner();
+
+			virtual boost::shared_ptr<ImageScanner> Clone() const;
+
 		public:			
-			virtual std::vector<Window> compute(const core::Matrix& image) const = 0;
+			virtual std::vector<Window> compute(core::Matrix const& image) const;
 
 		private:
 			DECLARE_SERIALIZABLE();

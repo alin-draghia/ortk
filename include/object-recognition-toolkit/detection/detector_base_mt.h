@@ -26,11 +26,11 @@ namespace object_recognition_toolkit
 			DetectorBaseMt();
 			virtual ~DetectorBaseMt();
 
+			virtual boost::shared_ptr<Detector> Clone() const;
+
 		public:
 			virtual void Detect(const core::Matrix& image, std::vector<core::Box>& detections, std::vector<double>& confidences, double treshold = 0.0) const;
 
-		public:
-			virtual const std::string& name() const;
 
 		private:
 			DECLARE_SERIALIZABLE();

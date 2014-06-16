@@ -15,22 +15,25 @@ namespace object_recognition_toolkit
 		{
 		}
 
-		const std::string& MockPersonClassifier::name() const
-		{
-			static const std::string name = "MockPersonClassifier";
-			return name;
-		}
 
-		double MockPersonClassifier::Predict(const core::FeatureVector& instance) const
+		double MockPersonClassifier::Predict(const core::FeatureVector& x) const
 		{
 			double conf = b_;
 
-			const float* ptr = instance.ptr<float>();
+			const float* ptr = x.ptr<float>();
 			for (size_t i = 0; i < w_.size(); i++) {
 				conf += w_[i] * ptr[i];
 			}
 
 			return conf;
+		}
+
+		void MockPersonClassifier::PredictMulti(core::Matrix const& X, core::Matrix& y) const
+		{
+			y.create(X.rows, 1, CV_64F);
+			for (int i = 0; i < X.rows; i++) {
+				y.at<double>(i) = this->Predict(X.row(i));
+			}
 		}
 
 		void MockPersonClassifier::serialize(core::iarchive& ar, const unsigned int version)
@@ -43,9 +46,9 @@ namespace object_recognition_toolkit
 			ar << boost::serialization::base_object<Classifier>(*this);
 		}
 
-		core::Clonable* MockPersonClassifier::Clone()
+		boost::shared_ptr<Classifier> MockPersonClassifier::Clone() const
 		{
-			return new MockPersonClassifier(*this);
+			return boost::shared_ptr<Classifier>(new MockPersonClassifier(*this));
 		}
 
 

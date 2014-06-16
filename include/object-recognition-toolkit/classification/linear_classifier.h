@@ -18,20 +18,18 @@ namespace object_recognition_toolkit
 		{
 		public:
 			LinearClassifier() = default;
-			LinearClassifier(float bias, std::vector<float>& coefs);
+			LinearClassifier(float b, std::vector<float>& w);
 			virtual ~LinearClassifier();
 
-			virtual double Predict(const core::FeatureVector& instance) const;
+			virtual double Predict(core::FeatureVector const& x) const;
+			virtual void PredictMulti(core::Matrix const& X, core::Matrix& y) const;
 
 		public:
-			virtual const std::string& name() const;
+			virtual boost::shared_ptr<Classifier> Clone() const;
 
 		public:
-			virtual core::Clonable* Clone();
-
-		private:
-			float bias_;
-			std::vector<float> coefs_;
+			float b_;
+			std::vector<float> w_;
 
 
 			DECLARE_SERIALIZABLE();

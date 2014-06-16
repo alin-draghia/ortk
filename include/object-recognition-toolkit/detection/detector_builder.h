@@ -8,6 +8,7 @@
 
 #include "./detector.h"
 
+#include <boost/shared_ptr.hpp>
 
 namespace object_recognition_toolkit
 {
@@ -20,21 +21,21 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBuilder() = 0;
 
 		public:
-			virtual Detector* Build() const = 0;
+			virtual boost::shared_ptr<Detector> Build() const = 0;
 
 		public:
-			void PutPyramidBuilder(std::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder);
-			void PutImageScanner(std::shared_ptr<image_scanning::ImageScanner> imageScanner);
-			void PutFeatureExtractor(std::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor);
-			void PutClassifier(std::shared_ptr<classification::Classifier> classifier);
-			void PutNonMaximaSuppressor(std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor);
+			void PutPyramidBuilder(boost::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder);
+			void PutImageScanner(boost::shared_ptr<image_scanning::ImageScanner> imageScanner);
+			void PutFeatureExtractor(boost::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor);
+			void PutClassifier(boost::shared_ptr<classification::Classifier> classifier);
+			void PutNonMaximaSuppressor(boost::shared_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor);
 			
 		protected:
-			std::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder_;
-			std::shared_ptr<image_scanning::ImageScanner> imageScanner_;
-			std::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor_;
-			std::shared_ptr<classification::Classifier> classifier_;
-			std::shared_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor_;
+			boost::shared_ptr<pyramid::PyramidBuilder> pyramidBuilder_;
+			boost::shared_ptr<image_scanning::ImageScanner> imageScanner_;
+			boost::shared_ptr<feature_extraction::FeatureExtractor> featureExtractor_;
+			boost::shared_ptr<classification::Classifier> classifier_;
+			boost::shared_ptr<non_maxima_suppression::NonMaximaSuppressor> nonMaximaSuppressor_;
 		};
 
 		class PUBLIC_API  DetectorBase_Builder
@@ -44,7 +45,7 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBase_Builder();
 
 		public:
-			virtual Detector* Build() const;
+			virtual boost::shared_ptr<Detector> Build() const;
 		};
 
 		class PUBLIC_API  DetectorBaseMT_Builder
@@ -54,7 +55,7 @@ namespace object_recognition_toolkit
 			virtual ~DetectorBaseMT_Builder();
 
 		public:
-			virtual Detector* Build() const;
+			virtual boost::shared_ptr<Detector> Build() const;
 		};
 
 	}

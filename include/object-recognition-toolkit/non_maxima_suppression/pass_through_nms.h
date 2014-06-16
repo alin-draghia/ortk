@@ -18,11 +18,7 @@ namespace object_recognition_toolkit
 			PassThroughNms();
 			virtual ~PassThroughNms();
 
-		public:
-			virtual const std::string& name() const;
-
-		public:
-			virtual core::Clonable* Clone();
+			virtual boost::shared_ptr<NonMaximaSuppressor> Clone() const;
 
 		public:
 			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
