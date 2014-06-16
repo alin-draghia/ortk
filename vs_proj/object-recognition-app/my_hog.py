@@ -19,7 +19,7 @@ os.environ['PATH'] += (';../3rd-party/opencv/x64/vc12/bin')
 os.environ['PATH'] += (';../packages/boost_serialization-vc120.1.55.0.16/lib/native/address-model-64/lib')
 
 
-import object_recognition_toolkitd as objrec_tk
+import object_recognition_toolkit as objrec_tk
 
 
 def _compute_multi(extractor, image):

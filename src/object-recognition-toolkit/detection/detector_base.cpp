@@ -50,6 +50,48 @@ namespace object_recognition_toolkit
 
 			int pyramid_levels_count = pyramid.GetNumLevels();
 
+			std::vector<core::Matrix> window_images;
+			std::vector<core::Box> window_boxes;
+			core::Matrix features;
+			core::Matrix scores;
+
+
+			window_images.reserve(100000);
+			window_boxes.reserve(100000);
+
+			for (int pyramid_level_index = 0; pyramid_level_index < pyramid_levels_count; pyramid_level_index++)
+			{
+				const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
+
+				std::vector<image_scanning::Window> windows;
+				const core::Matrix& pyramid_level_image = pyramid_level.GetImage();
+
+				this->scanImage(pyramid_level_image, windows);
+
+				for (size_t i = 0; i < windows.size(); i++)
+				{
+					window_images.push_back(windows[i].image);
+					window_boxes.push_back(pyramid_level.Invert(windows[i].box));
+				}
+			}
+
+			features.create(window_images.size(), featureExtractor_->Lenght(), CV_32F);
+			scores.create(window_images.size(), 1, CV_64F);
+
+			featureExtractor_->ComputeMulti(window_images, features);
+			classifier_->PredictMulti(features, scores);
+
+			for (int i = 0; i < scores.rows; i++)
+			{
+				if (scores.at<double>(i) > treshold) 
+				{
+					detections.push_back(window_boxes[i]);
+					confidences.push_back(scores.at<double>(i));
+				}
+			}
+			
+
+#if(0)
 			for (int pyramid_level_index = 0; pyramid_level_index < pyramid_levels_count; pyramid_level_index++)
 			{
 				const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
@@ -73,6 +115,7 @@ namespace object_recognition_toolkit
 					}
 				}
 			}
+#endif
 
 			this->nonMaximumSuppression(detections, confidences);
 

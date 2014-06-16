@@ -62,7 +62,7 @@ namespace object_recognition_toolkit
 						Window w;
 
 						w.box = { x, y, windowSize_.width, windowSize_.height };
-						w.image = image(w.box);
+						image(w.box).copyTo(w.image);
 
 						windows.push_back(w);
 					}

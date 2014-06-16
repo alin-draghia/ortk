@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>train_detector.py</StartupFile>
+    <StartupFile>test_detector.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
     <WorkingDirectory>../bin/</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -34,6 +34,7 @@
     <Compile Include="my_hog.py" />
     <Compile Include="main.py" />
     <Compile Include="my_svm.py" />
+    <Compile Include="test_detector.py" />
     <Compile Include="train_detector.py" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +44,10 @@
     <Reference Include="..\bin\cv2.pyd">
       <Name>cv2.pyd</Name>
       <PythonExtension>..\bin\cv2.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="..\bin\object_recognition_toolkit.pyd">
+      <Name>object_recognition_toolkit.pyd</Name>
+      <PythonExtension>..\bin\object_recognition_toolkit.pyd</PythonExtension>
     </Reference>
     <Reference Include="..\bin\object_recognition_toolkitd.pyd">
       <Name>object_recognition_toolkitd.pyd</Name>

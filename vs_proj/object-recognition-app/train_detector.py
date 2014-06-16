@@ -13,7 +13,7 @@ os.environ['PATH'] += (';../packages/boost_serialization-vc120.1.55.0.16/lib/nat
 pid = os.getpid()
 print('PID={}'.format(pid))
 
-from object_recognition_toolkitd import *
+from object_recognition_toolkit import *
 from my_hog import *
 from my_svm import *
 
