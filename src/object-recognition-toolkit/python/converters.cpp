@@ -72,15 +72,31 @@ namespace {
 			// get Mat dimensions and shape
 			int nd = (mat.channels()>1) ? 3 : 2;
 			Py_ssize_t shape[100];
-			shape[0] = mat.rows; shape[1] = mat.cols;
-			if (nd == 3) shape[2] = 3;
+			shape[0] = mat.rows; 
+			shape[1] = mat.cols;
+			if (nd == 3) 
+				shape[2] = 3;
+
 			// get Mat type
 			int np_type;
 			CV_DEPTH_TO_NP_TYPE_RETPYNONE(mat.depth(), np_type);
 			//construct ndarray from data
+
+#define __FIX_REFERENCE_LEAK_WITH_MEMORY_COPY__ 1
+
+#if(__FIX_REFERENCE_LEAK_WITH_MEMORY_COPY__)
+			PyObject * arr_obj = PyArray_SimpleNew(nd, shape, np_type);
+			void * arr_data = PyArray_DATA(arr_obj);
+			size_t num_bytes = mat.total() * mat.elemSize();
+			memcpy_s(arr_data, num_bytes, mat.data, num_bytes);
+			return arr_obj;
+#else
 			PyObject * arr_obj = PyArray_SimpleNewFromData(nd, shape, np_type, (void*)mat.data);
 			mat.addref();
 			return boost::python::incref(arr_obj);
+#endif		
+			
+			
 		}
 
 	};
@@ -88,7 +104,7 @@ namespace {
 	/*
 	cv::Mat_<T> -> ndarray
 	*/
-
+#if(0)
 	template <typename T>
 	class Mat_T_to_python_ndarray{
 
@@ -110,7 +126,7 @@ namespace {
 		}
 
 	};
-
+#endif
 
 	/*
 	ndarray -> cv::Mat
@@ -192,7 +208,7 @@ namespace {
 	/*
 	ndarray -> cv::Mat_<T>
 	*/
-
+#if(0)
 	template <typename T>
 	class Mat_T_from_python_ndarray{
 	public:
@@ -247,6 +263,7 @@ namespace {
 			data->convertible = storage;
 		}
 	};
+#endif
 
 }
 
@@ -264,6 +281,7 @@ namespace object_recognition_toolkit
 			// cv::Mat -> ndarray
 			boost::python::to_python_converter<cv::Mat, Mat_to_python_ndarray>();
 
+#if(0)
 			boost::python::to_python_converter<cv::Mat_<unsigned char>, Mat_T_to_python_ndarray<unsigned char> >();
 			boost::python::to_python_converter<cv::Mat_<cv::Vec2b>, Mat_T_to_python_ndarray<cv::Vec2b> >();
 			boost::python::to_python_converter<cv::Mat_<cv::Vec3b>, Mat_T_to_python_ndarray<cv::Vec3b> >();
@@ -287,10 +305,12 @@ namespace object_recognition_toolkit
 			boost::python::to_python_converter<cv::Mat_<double>, Mat_T_to_python_ndarray<double> >();
 			boost::python::to_python_converter<cv::Mat_<cv::Vec2d>, Mat_T_to_python_ndarray<cv::Vec2d> >();
 			boost::python::to_python_converter<cv::Mat_<cv::Vec3d>, Mat_T_to_python_ndarray<cv::Vec3d> >();
+#endif
 
 			// ndarray -> cv::Mat
 			Mat_from_python_ndarray();
 
+#if(0)
 			Mat_T_from_python_ndarray<unsigned char>();
 			Mat_T_from_python_ndarray<cv::Vec2b>();
 			Mat_T_from_python_ndarray<cv::Vec3b>();
@@ -314,12 +334,39 @@ namespace object_recognition_toolkit
 			Mat_T_from_python_ndarray<double>();
 			Mat_T_from_python_ndarray<cv::Vec2d>();
 			Mat_T_from_python_ndarray<cv::Vec3d>();
+#endif
 		}
 
+	}
+}
+
+namespace
+{
+	cv::Mat memory_leak_0(int w, int h, int type) {
+		return cv::Mat::eye(h, w, type);
+	}
+
+	void memory_leak_1(int w, int h, int type, int count, std::vector<cv::Mat>& vec) {
+		for (int i = 0; i < count; i++){
+			vec.push_back(cv::Mat::eye(h, w, type));
+		}
+	}
+
+	void memory_leak_2(cv::Mat m) {
+		std::cerr << "recv mat" << std::endl;
+	}
+
+	void memory_leak_3(cv::Mat const& m) {
+		std::cerr << "recv mat" << std::endl;
 	}
 }
 
 void py_regiser_converters()
 {
 	object_recognition_toolkit::python::initialize_converters();
+
+	//boost::python::def("memory_leak_0", memory_leak_0);
+	//boost::python::def("memory_leak_1", memory_leak_1);
+	//boost::python::def("memory_leak_2", memory_leak_2);
+	//boost::python::def("memory_leak_3", memory_leak_3);
 }
