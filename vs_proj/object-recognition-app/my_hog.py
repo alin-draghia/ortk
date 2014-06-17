@@ -61,13 +61,15 @@ class HogExtractor(objrec_tk.FeatureExtractor):
         return x
 
     def ComputeMulti(self, images, features):
-        p = Pool()
+        
 
         func = partial(_compute_multi, self)
-        features[:] = p.map(func, images)     
-        
-        p.close()
-        p.join()
+        #p = Pool()
+        #features[:] = p.map(func, images)             
+        #p.close()
+        #p.join()
+
+        features[:] = map(func, images)     
         return 
 
     def visualisation(self):

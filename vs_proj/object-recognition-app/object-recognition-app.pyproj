@@ -5,9 +5,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>train_detector.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
-    <WorkingDirectory>../bin/</WorkingDirectory>
+    <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>object-recognition-app</Name>
     <RootNamespace>object-recognition-app</RootNamespace>
@@ -41,6 +41,7 @@
     <OutputPath>bin\PythonExt_Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mp_map_async.py" />
     <Compile Include="my_hog.py" />
     <Compile Include="main.py" />
     <Compile Include="my_svm.py" />

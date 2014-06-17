@@ -26,15 +26,15 @@ def main():
 
     pyramid_builder = FloatPyramidBuilder(scale_factor=1.1, min_size=Size(64,128), max_size=Size())
     image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(4,4), padding=Size())
-    #nms = PassThroughNms()
-    nms = GroupRectanglesNms()
+    nms = PassThroughNms()
+    #nms = GroupRectanglesNms()
     feature_extractor = None
     classifier = None
     
-    with open(r'.\training_2\classifier_6.pkl', 'r') as f:
+    with open(r'.\..\bin\training_7\classifier_2.pkl', 'r') as f:
         classifier = pickle.load(f)
 
-    with open(r'.\training_2\feature_extracotr.pkl', 'r') as f:
+    with open(r'.\..\bin\training_7\feature_extracotr.pkl', 'r') as f:
         feature_extractor = pickle.load(f)
 
     w = VecF32()
