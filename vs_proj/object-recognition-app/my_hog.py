@@ -56,8 +56,9 @@ class HogExtractor(objrec_tk.FeatureExtractor):
         return self.lenght_
 
     def Compute(self, image):
-        feats, self.visualisation_  = skimage.feature.hog(image, self.num_orientations_, self.pixels_per_cell_, self.cells_per_block_, True, False)
-        return feats
+        feats = skimage.feature.hog(image, self.num_orientations_, self.pixels_per_cell_, self.cells_per_block_)
+        x = np.ascontiguousarray(feats, dtype=np.float32)
+        return x
 
     def ComputeMulti(self, images, features):
         p = Pool()

@@ -29,18 +29,27 @@ class MyTrainingCallback(BootstrappingDetectorTrainerCallback):
 
     def OnBeginIteration(self, iteration):
         self.current_iteration = iteration + 1;
+        print()
         print('Begin iteration {}/{}'.format(self.current_iteration, self.num_iterations))
+        print()
         return
 
     def OnClassifier(self, classifier):
+        print()
         cls_fn = os.path.join(self.data_dir, 'classifier_{}.pkl'.format(self.current_iteration))
         with open(cls_fn, mode='w') as f:
             pickle.dump(classifier, f)
+
+        del classifier
+
         print('Got classifier -> {}'.format(cls_fn))
+        print()
         return
 
     def OnEndIteration(self, iteration):
+        print()
         print('End iteration {}/{}'.format(self.current_iteration, self.num_iterations))
+        print()
         return 
 
     def OnPositiveSample(self, count, image, features_vector):      
@@ -49,11 +58,33 @@ class MyTrainingCallback(BootstrappingDetectorTrainerCallback):
         sys.stdout.flush()
         return
 
+    def OnDoneCollectiongPositiveSamples(self, features):
+        print()
+        msg = 'done collecting positive samples {}/{}'.format(features.shape[0], self.num_positives)
+        print(msg)
+        fn = os.path.join(self.data_dir, 'positive_samples_{}.npy'.format(self.current_iteration))
+        np.save(fn, features);
+        msg = 'positive samples saved to: '.format(fn)
+        print(msg)
+        print()
+        return
+
     def OnNegativeSample(self, count, image, features_vector, score):        
         msg = 'collecting negatve samples {}/{}'.format(count, self.num_negatives)
         sys.stdout.write('\r' + msg)
         sys.stdout.flush()
         return 
+
+    def OnDoneCollectiongNegativeSamples(self, features):
+        print()
+        msg = 'done collecting negative samples {}/{}'.format(features.shape[0], self.num_positives)
+        print(msg)
+        fn = os.path.join(self.data_dir, 'negative_samples_{}.npy'.format(self.current_iteration))
+        np.save(fn, features);
+        msg = 'negative samples saved to: '.format(fn)
+        print(msg)
+        print()
+        return
 
 def main():
 
@@ -62,17 +93,17 @@ def main():
     
     raw_input('Press any key to begin training...')
 
-    num_iterations = 5
+    num_iterations = 10
     num_positives = 2500
-    num_negatives = 2500
-    data_dir = './training_1'
+    num_negatives = 1000
+    data_dir = './training_6'
 
     if os.path.exists(data_dir) == False:
         os.makedirs(data_dir)
 
-    pyramid_builder = FloatPyramidBuilder(scale_factor=1.2, min_size=Size(), max_size=Size())
+    pyramid_builder = FloatPyramidBuilder(scale_factor=1.2, min_size=Size(64, 128), max_size=Size())
     image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(8,8), padding=Size())
-    feature_extractor = HogFeatureExtractor()
+    feature_extractor = HogExtractor()
     trainer = LinearSVM_Trainer(C=1.0)
     nms = GroupRectanglesNms()
     callback = MyTrainingCallback(num_iterations, num_positives, num_negatives, data_dir)

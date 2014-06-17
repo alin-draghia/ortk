@@ -14,13 +14,7 @@ except:
 os.environ['PATH'] += (';../3rd-party/opencv/x64/vc12/bin')
 os.environ['PATH'] += (';../packages/boost_serialization-vc120.1.55.0.16/lib/native/address-model-64/lib')
 
-debug_toolkit = True
-
-if debug_toolkit:
-    import object_recognition_toolkitd as objrec_tk
-else:
-    import object_recognition_toolkit as objrec_tk
-
+from object_recognition_toolkit import *
 from hog import HogExtractor
 
 def main():

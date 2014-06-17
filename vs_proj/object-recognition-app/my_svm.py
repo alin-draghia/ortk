@@ -40,9 +40,11 @@ class LinearSVM_Classifier(objrec_tk.Classifier):
         return np.asscalar(y)
 
     def PredictMulti(self, X, y):
-
-        aiu = self.inner_classifier_.predict(X) 
-        y[:,0] = aiu[:]
+        try:
+            aiu = self.inner_classifier_.predict(X) 
+            y[:,0] = aiu[:]
+        except ValueError as e:
+            pass
         
         return
 
@@ -71,10 +73,17 @@ class LinearSVM_Trainer(objrec_tk.Trainer):
     def Train(self, features, labels):
         X = features
         y = labels
-
-        self.cls = LinearSVC(C=self.C, verbose=1)
+        self.cls = LinearSVC(C=self.C, verbose=9)
         self.cls.fit(X,y)
-        return LinearSVM_Classifier(self.cls)
+
+        avg_accuracy = self.cls.score(X,y)
+        print('avg_accuracy=', avg_accuracy)
+
+        cls_ = LinearSVM_Classifier(self.cls)
+
+        self.cls = None
+
+        return cls_
 
     #implement pickle support
     def __reduce__(self):
