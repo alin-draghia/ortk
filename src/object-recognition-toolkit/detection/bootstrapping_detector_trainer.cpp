@@ -53,45 +53,27 @@ namespace object_recognition_toolkit
 			boost::shared_ptr<detection::Detector> detector;
 			boost::shared_ptr<classification::Classifier> classifier;
 
-
-			fs::path positive_features_filename
-				= fs::path(data_directory) / fs::path("positive_features.yaml");
-
-
-			if (fs::exists(positive_features_filename)) {
-				cv::FileStorage fileStorage;
-				fileStorage.open(positive_features_filename, cv::FileStorage::READ);
-				fileStorage["features"] >> X_pos;
+	
+			X_pos = extractPositives(positive);
+			if (callback) {
+				callback->OnDoneCollectiongPositiveSamples(X_pos);
 			}
-			else {
-				X_pos = extractPositives(positive);
-				cv::FileStorage fileStorage;
-				fileStorage.open(positive_features_filename, cv::FileStorage::WRITE);
-				fileStorage << "features" << X_pos;
-			}
-
 
 			for (size_t iteration = 0; iteration < num_iterations; iteration++)
 			{
+				core::Matrix X_neg;
 	
 				OnBeginIteration(iteration);
 
-				fs::path stage_negative_features_filename
-					= fs::path(data_directory) / fs::path("negative-features-stage-" + std::to_string(iteration) + ".yaml");
 
-				if (fs::exists(stage_negative_features_filename)) {
-					cv::FileStorage storage;
-					storage.open(stage_negative_features_filename, cv::FileStorage::READ);
-					storage["features"] >> X_neg;
-				}
-				else {
-					X_neg = extractNegatives(negative, classifier);
-					cv::FileStorage storage;
-					storage.open(stage_negative_features_filename, cv::FileStorage::WRITE);
-					storage << "features" << X_neg;
+
+				X_neg = extractNegatives(negative, classifier);
+				if (callback) {
+					callback->OnDoneCollectiongNegativeSamples(X_neg);
 				}
 
 				X_neg_total.push_back(X_neg);
+				X_neg.release();
 
 				int pos_count = X_pos.rows;
 				int neg_count = X_neg_total.rows;

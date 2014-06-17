@@ -23,7 +23,9 @@ namespace object_recognition_toolkit
 			virtual void OnClassifier(boost::shared_ptr<classification::Classifier> classifier) = 0;
 			virtual void OnEndIteration(int iteration) = 0;
 			virtual void OnPositiveSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector) = 0;
+			virtual void OnDoneCollectiongPositiveSamples(core::Matrix const& features) = 0;
 			virtual void OnNegativeSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector, double score) = 0;
+			virtual void OnDoneCollectiongNegativeSamples(core::Matrix const& features) = 0;
 		};
 
 		class PUBLIC_API BootstrappingDetectorTrainer

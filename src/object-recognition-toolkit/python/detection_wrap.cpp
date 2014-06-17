@@ -34,7 +34,9 @@ namespace object_recognition_toolkit
 			void OnClassifier(boost::shared_ptr<classification::Classifier> classifier) { this->get_override("OnClassifier")(classifier); }
 			void OnEndIteration(int iteration){ this->get_override("OnEndIteration")(iteration); }
 			void OnPositiveSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector) { this->get_override("OnPositiveSample")(count, image, features_vector); }
+			void OnDoneCollectiongPositiveSamples(core::Matrix const& features) { this->get_override("OnDoneCollectiongPositiveSamples")(features); }
 			void OnNegativeSample(int count, core::Matrix const& image, core::FeatureVector const& features_vector, double score) { this->get_override("OnNegativeSample")(count, image, features_vector, score); }
+			void OnDoneCollectiongNegativeSamples(core::Matrix const& features) { this->get_override("OnDoneCollectiongNegativeSamples")(features); }
 		};
 
 	}
@@ -92,7 +94,9 @@ void py_regiser_detection()
 			.def("OnClassifier", pure_virtual(&BootstrappingDetectorTrainerCallback::OnClassifier), args("classifier"))
 			.def("OnEndIteration", pure_virtual(&BootstrappingDetectorTrainerCallback::OnEndIteration), args("iteration"))
 			.def("OnPositiveSample", pure_virtual(&BootstrappingDetectorTrainerCallback::OnPositiveSample), (arg("count"), arg("image"), arg("feature_vector")))
+			.def("OnDoneCollectiongPositiveSamples", pure_virtual(&BootstrappingDetectorTrainerCallback::OnDoneCollectiongPositiveSamples), args("features"))
 			.def("OnNegativeSample", pure_virtual(&BootstrappingDetectorTrainerCallback::OnNegativeSample), (arg("count"), arg("image"), arg("feature_vector"), arg("score")))
+			.def("OnDoneCollectiongNegativeSamples", pure_virtual(&BootstrappingDetectorTrainerCallback::OnDoneCollectiongNegativeSamples), args("features"))
 			.enable_pickling()
 			;
 
