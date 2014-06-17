@@ -33,11 +33,6 @@ namespace object_recognition_toolkit {
 		};
 
 
-		boost::shared_ptr<FeatureExtractor> create_HogFeatureExtractor(cv::Size winSize, cv::Size blockSize, cv::Size blockStride, cv::Size cellSize, int nBins)
-		{
-			return boost::make_shared<HogFeatureExtractor>(winSize, blockSize, blockStride, cellSize, nBins);
-		}
-
 	}
 }
 
@@ -64,7 +59,7 @@ void py_regiser_feature_extraction()
 	
 	{
 		class_<HogFeatureExtractor, bases<FeatureExtractor>>("HogFeatureExtractor", init<>())
-			.def(init<Size, Size, Size, Size, int>(args("win_size", "block_size", "block_stride", "cell_sizze", "n_bins")))
+			.def(init<Size, Size, Size, Size, int>(args("win_size", "block_size", "block_stride", "cell_size", "n_bins")))
 			.def_readwrite("win_size", &HogFeatureExtractor::winSize_)
 			.def_readwrite("block_size", &HogFeatureExtractor::blockSize_)
 			.def_readwrite("block_stride", &HogFeatureExtractor::blockStride_)

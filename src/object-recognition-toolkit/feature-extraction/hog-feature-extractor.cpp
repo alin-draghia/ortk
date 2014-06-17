@@ -11,7 +11,9 @@ namespace object_recognition_toolkit {
 			: winSize_{ 64, 128 }
 			, blockSize_{ 16, 16 }
 			, blockStride_{ 8, 8 }
+			, cellSize_{ 8, 8 }
 			, nBins_{ 9 }
+			, hog_{ winSize_, blockSize_, blockStride_, cellSize_, nBins_ }
 		{
 		}
 
@@ -19,7 +21,9 @@ namespace object_recognition_toolkit {
 			: winSize_{ winSize }
 			, blockSize_{ blockSize }
 			, blockStride_{ blockStride }
+			, cellSize_{ cellSize }
 			, nBins_{ nBins }
+			, hog_{ winSize_, blockSize_, blockStride_, cellSize_, nBins_ }
 		{
 
 		}
@@ -45,7 +49,7 @@ namespace object_recognition_toolkit {
 		core::FeatureVector HogFeatureExtractor::Compute(const cv::Mat& image) const
 		{
 			std::vector<float> feats;
-			hog_.compute(image, feats);
+			hog_.compute(image, feats, winSize_);
 			return core::FeatureVector(feats, true).reshape(1, 1);
 		}
 
@@ -78,7 +82,9 @@ namespace object_recognition_toolkit {
 			ar >> winSize_;
 			ar >> blockSize_;
 			ar >> blockStride_;
+			ar >> cellSize_;
 			ar >> nBins_;
+			hog_ = cv::HOGDescriptor{ winSize_, blockSize_, blockStride_, cellSize_, nBins_ };
 		}
 
 		void HogFeatureExtractor::serialize(core::oarchive& ar, const unsigned int version)
@@ -87,6 +93,7 @@ namespace object_recognition_toolkit {
 			ar << winSize_;
 			ar << blockSize_;
 			ar << blockStride_;
+			ar << cellSize_;
 			ar << nBins_;
 		}
 
