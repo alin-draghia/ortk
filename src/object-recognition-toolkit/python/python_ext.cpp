@@ -24,9 +24,9 @@ class non_maxima_suppression_scope {};
 class pyramid_scope {};
 
 #if defined(_DEBUG)
-BOOST_PYTHON_MODULE(object_recognition_toolkitd)
+BOOST_PYTHON_MODULE(object_recognition_toolkitd_ext)
 #else
-BOOST_PYTHON_MODULE(object_recognition_toolkit)
+BOOST_PYTHON_MODULE(object_recognition_toolkit_ext)
 #endif
 {
 	namespace bp = boost::python;

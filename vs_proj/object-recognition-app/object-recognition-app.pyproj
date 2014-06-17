@@ -30,29 +30,26 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <PtvsTargetsFile>$(VSToolsPath)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'PythonExt_Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\PythonExt_Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'PythonExt_Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <OutputPath>bin\PythonExt_Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="my_hog.py" />
     <Compile Include="main.py" />
     <Compile Include="my_svm.py" />
+    <Compile Include="object_recognition_toolkit.py" />
     <Compile Include="test_detector.py" />
     <Compile Include="train_detector.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="..\bin\cv2.pyd">
-      <Name>cv2.pyd</Name>
-      <PythonExtension>..\bin\cv2.pyd</PythonExtension>
-    </Reference>
-    <Reference Include="..\bin\object_recognition_toolkit.pyd">
-      <Name>object_recognition_toolkit.pyd</Name>
-      <PythonExtension>..\bin\object_recognition_toolkit.pyd</PythonExtension>
-    </Reference>
-    <Reference Include="..\bin\object_recognition_toolkitd.pyd">
-      <Name>object_recognition_toolkitd.pyd</Name>
-      <PythonExtension>..\bin\object_recognition_toolkitd.pyd</PythonExtension>
-    </Reference>
   </ItemGroup>
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
   <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
