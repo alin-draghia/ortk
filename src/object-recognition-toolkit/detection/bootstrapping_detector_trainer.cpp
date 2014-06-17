@@ -27,7 +27,7 @@ namespace object_recognition_toolkit
 		boost::shared_ptr<Detector> BootstrappingDetectorTrainer::TrainWithDataset(const dataset::Dataset& positive, const dataset::Dataset& negative)
 		{
 			core::Matrix X_pos;
-			core::Matrix X_neg, X_neg_total;
+			core::Matrix X_neg_total;
 			auto num_iterations = this->num_iterations;
 			auto num_positives = this->num_positives;
 			auto num_negatives = this->num_negatives;
@@ -39,8 +39,7 @@ namespace object_recognition_toolkit
 			X_pos.create(0, feature_lenght, CV_32F);
 			X_pos.reserve(num_positives);
 
-			X_neg.create(0, feature_lenght, CV_32F);
-			X_neg.reserve(num_negatives);
+
 
 			X_neg_total.create(0, feature_lenght, CV_32F);
 			X_neg_total.reserve(num_negatives * num_iterations);
@@ -384,11 +383,18 @@ namespace object_recognition_toolkit
 						core::Matrix image0;
 						image(roi).copyTo(image0);
 						core::FeatureVector features = feature_extractor->Compute(image0);
-						cv::Mat_<float> fv(features);
-						cv::Mat_<float> fv0 = fv.reshape(1, 1);
 
+						if (features.type() != CV_32F) {
+							core::FeatureVector fv;
+							features.convertTo(fv, CV_32F);
+							features = fv.reshape(1, 1);
+						}
+						else {
+							features = features.reshape(1, 1);
+						}
+						
 
-						X.push_back(fv0);
+						X.push_back(features);
 
 						count += 1;
 						
@@ -445,9 +451,15 @@ namespace object_recognition_toolkit
 
 							auto window_im = window.image.clone();
 							core::FeatureVector features = feature_extractor->Compute(window_im);
-							cv::Mat_<float> fv(features);
-							cv::Mat_<float> fv0 = fv.reshape(1, 1);
-							X.push_back(fv0);
+							if (features.type() != CV_32F) {
+								core::FeatureVector fv;
+								features.convertTo(fv, CV_32F);
+								features = fv.reshape(1, 1);
+							}
+							else {
+								features = features.reshape(1, 1);
+							}
+							X.push_back(features);
 							count += 1;
 
 							if (this->callback) {
@@ -477,43 +489,49 @@ namespace object_recognition_toolkit
 
 						for (int pyramid_level_index = 0; pyramid_level_index < pyramid_num_levels; pyramid_level_index++)
 						{
-							std::vector<core::Matrix> window_images;
+
 
 							const pyramid::PyramidLevel& pyramid_level = pyramid.GetLevel(pyramid_level_index);
 
-							auto windows =
-								image_scanner->compute(pyramid_level.GetImage());
+							auto windows = image_scanner->compute(pyramid_level.GetImage());
 
 							for (auto& window : windows)
 							{
 								auto window_im = window.image.clone();
-								window_images.push_back(window_im);
+								core::FeatureVector feature = feature_extractor->Compute(window_im);
+								if((feature.rows * feature.cols) != feature_lenght){
+									throw std::runtime_error("ALIN: (feature.rows * feature.cols) != feature_lenght !!!");
+								}
 
-							}
+								core::FeatureVector fv, fv0;
+								if (feature.type() != CV_32F) {
+									feature.convertTo(fv, CV_32F);
+									feature = fv.reshape(1, 1);
+								}
+								else {
+									feature = feature.reshape(1, 1);
+								}
+								
+								double score = classifier->Predict(feature);
 
-							core::Matrix features(window_images.size(), feature_extractor->Lenght(), CV_32F);
-							feature_extractor->ComputeMulti(window_images, features);
-
-
-							core::Matrix scores(features.rows, 1, CV_64F);
-							classifier->PredictMulti(features, scores);
-
-							for ( int i = 0; i < scores.rows; i++ ) {
-								double score = scores.at<double>(i);
-								if ( score > 0.0 ) {
-
-									X.push_back(features.row(i));
+								if (score > 0.0) 
+								{
+									X.push_back(feature);
 									count += 1;
 
-									if ( this->callback ) {
-										this->callback->OnNegativeSample(count, window_images[i], features.row(i), score);
+									if (this->callback) {
+										this->callback->OnNegativeSample(count, window_im, feature, score);
 									}
 
-									if ( count == num_negatives ) {
+									if (count == num_negatives) {
 										throw done_collecting_samples();
 									}
 								}
+								
+
 							}
+
+
 
 						}
 

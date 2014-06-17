@@ -61,7 +61,7 @@ namespace object_recognition_toolkit {
 			#pragma omp parallel for
 			for( int i = 0; i < num_images; i++ ) {
 				int thread_id = omp_get_thread_num();
-				features.row(i) = extractors_pool[thread_id]->Compute(images[i]);
+				extractors_pool[thread_id]->Compute(images[i]).copyTo(features.row(i));
 			}
 		}
 
