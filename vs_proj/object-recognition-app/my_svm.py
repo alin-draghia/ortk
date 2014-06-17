@@ -35,9 +35,15 @@ class LinearSVM_Classifier(objrec_tk.Classifier):
         return pickle.loads(pickle.dumps(self))
 
     def Predict(self, feature_vector):
-        x = np.reshape(feature_vector, (1, -1,))
-        y = self.inner_classifier_.predict(x)
-        return np.asscalar(y)
+        try:
+            x = np.reshape(feature_vector, (1, -1,))
+            y = self.inner_classifier_.predict(x)
+            return np.asscalar(y)
+        except:
+            print("Predict error:", sys.exc_info()[0])
+            print("feature_vector:")
+            print(feature_vector)
+            return -1.0
 
     def PredictMulti(self, X, y):
         try:

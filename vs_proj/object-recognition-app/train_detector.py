@@ -77,7 +77,7 @@ class MyTrainingCallback(BootstrappingDetectorTrainerCallback):
 
     def OnDoneCollectiongNegativeSamples(self, features):
         print()
-        msg = 'done collecting negative samples {}/{}'.format(features.shape[0], self.num_positives)
+        msg = 'done collecting negative samples {}/{}'.format(features.shape[0], self.num_negatives)
         print(msg)
         fn = os.path.join(self.data_dir, 'negative_samples_{}.npy'.format(self.current_iteration))
         np.save(fn, features);
@@ -96,7 +96,7 @@ def main():
     num_iterations = 10
     num_positives = 2500
     num_negatives = 1000
-    data_dir = './training_6'
+    data_dir = './training_7'
 
     if os.path.exists(data_dir) == False:
         os.makedirs(data_dir)
