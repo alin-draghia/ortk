@@ -9,6 +9,8 @@ namespace object_recognition_toolkit
 	{
 
 		GroupRectanglesNms::GroupRectanglesNms()
+			: group_threshold(3)
+			, eps(0.2)
 		{
 		}
 
@@ -27,7 +29,7 @@ namespace object_recognition_toolkit
 			(void)detections;
 			(void)confidences;
 
-			cv::groupRectangles(detections, 2);
+			cv::groupRectangles(detections, group_threshold, eps);
 			confidences.clear();
 			confidences.resize(detections.size(), 0.0);
 		}
@@ -35,11 +37,15 @@ namespace object_recognition_toolkit
 		void GroupRectanglesNms::serialize(core::iarchive& ar, const unsigned int version)
 		{
 			ar >> boost::serialization::base_object<NonMaximaSuppressor>(*this);
+			ar >> group_threshold;
+			ar >> eps;
 		}
 
 		void GroupRectanglesNms::serialize(core::oarchive& ar, const unsigned int version)
 		{
 			ar << boost::serialization::base_object<NonMaximaSuppressor>(*this);
+			ar << group_threshold;
+			ar << eps;
 		}
 
 	}

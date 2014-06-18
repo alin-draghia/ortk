@@ -72,6 +72,8 @@ void py_regiser_non_maxima_suppression()
 	{
 		class_<GroupRectanglesNms, bases<NonMaximaSuppressor>>("GroupRectanglesNms", init<>())
 			.def_pickle(serialize_pickle<GroupRectanglesNms>())
+			.def_readwrite("GroupThreshold", &GroupRectanglesNms::group_threshold)
+			.def_readwrite("eps", &GroupRectanglesNms::eps)
 			;
 	}
 	

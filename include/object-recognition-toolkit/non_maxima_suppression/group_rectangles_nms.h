@@ -24,6 +24,9 @@ namespace object_recognition_toolkit
 		public:
 			virtual void suppress(std::vector<core::Box>& detections, std::vector<double>& confidences) const;
 
+			int group_threshold;
+			double eps;
+
 		private:
 			DECLARE_SERIALIZABLE();
 		};
