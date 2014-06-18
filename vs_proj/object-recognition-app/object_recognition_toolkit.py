@@ -18,6 +18,6 @@ else:
 
 from my_svm import LinearSVM_Trainer, LinearSVM_Classifier
 from my_hog import HogExtractor
-from my_detector import SlidingWindowDetector
+from my_detector import SlidingWindowDetector, SlidingWindowDetector2
 
 
