@@ -26,6 +26,11 @@ namespace object_recognition_toolkit
 			}
 		};
 
+		core::Matrix window_get_image(Window const& w) { return w.image; }
+		core::Box window_get_box(Window const& w) { return w.box; }
+		void window_set_image(Window& w, core::Matrix const& im) { w.image = im; }
+		void window_set_box(Window& w, core::Box const& b) { w.box = b; }
+
 		boost::shared_ptr<ImageScanner> create_DenseImageScanner(core::Size windowSize, core::Size windowStep, core::Size padding)
 		{
 			return boost::make_shared<DenseImageScanner>(windowSize, windowStep, padding);
@@ -42,8 +47,8 @@ void py_regiser_image_scanning()
 
 	{
 		class_<Window>("Window")
-			.def_readwrite("image", &Window::image)
-			.def_readwrite("box", &Window::box)
+			.add_property("Image", window_get_image, window_set_image)
+			.add_property("Box", window_get_box, window_set_box)
 			;
 
 		typedef std::vector<Window> WindowVector;
