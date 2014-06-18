@@ -200,3 +200,12 @@ vs_proj/train-person-detector-2/mydataset.xml
 vs_proj/python_nootbooks/.ipynb_checkpoints/
 Boost.Python.Training/packages/
 *.pyc
+after.bin
+before.bin
+scores0.bin
+src/object-recognition-toolkit/detection/train_0.txt
+src/object-recognition-toolkit/detection/train_1.txt
+trained_detectors/person_detector_01/
+vs_proj/object-recognition-app/training_10/
+vs_proj/object-recognition-app/training_8/
+vs_proj/object-recognition-app/training_9/
