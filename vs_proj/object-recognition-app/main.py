@@ -32,11 +32,11 @@ class toolkit_object(object):
         self.name = name
 
 
-def make_detector():
+def load_detector():
     pyramid_builder = objrec_tk.FloatPyramidBuilder(scale_factor=1.05, min_size=objrec_tk.Size(63,127), max_size=objrec_tk.Size())
     image_scanner = objrec_tk.DenseImageScanner(win_size=objrec_tk.Size(64,128), win_step=objrec_tk.Size(8,8), padding=objrec_tk.Size())
-    nms = objrec_tk.PassThroughNms()
-    nms0 = objrec_tk.GroupRectanglesNms()
+    #nms = objrec_tk.PassThroughNms()
+    nms = objrec_tk.GroupRectanglesNms()
     feature_extractor = None
     classifier = None
     with open(r'training_10\classifier_10.pkl', 'r') as f:
@@ -67,7 +67,7 @@ def make_detector():
 class TheApp(object):
 
     def __init__(self, main_window):
-        self.detector = make_detector()
+        self.detector = load_detector()
         self.main_window = main_window
         self.main_window.actionImage.triggered.connect(self.open_image)
         self.main_window.actionOpen_Detector.triggered.connect(self.open_detector)
@@ -76,6 +76,7 @@ class TheApp(object):
         self.main_window.actionSave_Detector.triggered.connect(self.save_detector)
         self.configure_detector_dialog = None
         self.image = None
+        self.classification_threshold = 0.0
 
         return
 
@@ -100,8 +101,8 @@ class TheApp(object):
         #self.main_window.image_label.setPixmap(QtGui.QPixmap.fromImage(self.qt_image))
 
         self.fig = Figure(figsize=(700,700), dpi=72, frameon=False)
-        ax = self.fig.add_subplot(111)
-        ax.set_navigate(True)
+        #ax = self.fig.add_subplot(111)
+        ax = self.fig.gca(label="image")
         ax.imshow(self.color_image)
  
         self.canvas = FigureCanvas(self.fig)
@@ -132,9 +133,45 @@ class TheApp(object):
     def configure_detector(self):
         print('configure detector...')
 
+        scale_factor = self.detector.pyramid_builder.scale_factor
+        self.configure_detector_dialog.scale_factor.setValue(scale_factor)
+
+        win_step_x = self.detector.image_scanner.win_step.width
+        win_step_y = self.detector.image_scanner.win_step.height
+        self.configure_detector_dialog.scanner_win_step_x.setValue(win_step_x)
+        self.configure_detector_dialog.scanner_win_step_y.setValue(win_step_y)
+
+        pad_x = self.detector.image_scanner.padding.width
+        pad_y = self.detector.image_scanner.padding.height
+
+        self.configure_detector_dialog.scanner_pad_x.setValue(pad_x)
+        self.configure_detector_dialog.scanner_pad_y.setValue(pad_y)
+
+        nms_group = self.detector.non_maxima_suppressor.GroupThreshold
+        nms_eps   = self.detector.non_maxima_suppressor.eps
+
+        self.configure_detector_dialog.nms_group_threshold.setValue(nms_group)
+        self.configure_detector_dialog.nms_eps.setValue(nms_eps)
+
+        self.configure_detector_dialog.classification_threshold.setValue(self.classification_threshold)
+        
         r = self.configure_detector_dialog.exec_()
         if r == QtGui.QDialog.DialogCode.Accepted:
             print('ok')
+
+            self.detector.pyramid_builder.scale_factor = self.configure_detector_dialog.scale_factor.value()
+            
+            self.detector.image_scanner.win_step.width  = self.configure_detector_dialog.scanner_win_step_x.value()
+            self.detector.image_scanner.win_step.height = self.configure_detector_dialog.scanner_win_step_y.value()
+
+            self.detector.image_scanner.padding.width  = self.configure_detector_dialog.scanner_pad_x.value()
+            self.detector.image_scanner.padding.height = self.configure_detector_dialog.scanner_pad_y.value()
+            
+            self.detector.non_maxima_suppressor.GroupThreshold  = self.configure_detector_dialog.nms_group_threshold.value()
+            self.detector.non_maxima_suppressor.eps             = self.configure_detector_dialog.nms_eps.value()
+
+            self.classification_threshold = self.configure_detector_dialog.classification_threshold.value()
+
         elif r == QtGui.QDialog.DialogCode.Rejected:
             print('reject')
         else:
@@ -149,7 +186,7 @@ class TheApp(object):
         self.detection_scores = objrec_tk.VecF64()
         self.detector.callback = self.on_detector_window
         self.prev_patch = None
-        self.detector.Detect(self.gray_image, self.detection_boxex, self.detection_scores, 0.0)
+        self.detector.Detect(self.gray_image, self.detection_boxex, self.detection_scores, self.classification_threshold)
 
         diplay_image = np.copy(self.color_image)
         #for det in self.detection_boxex:
@@ -161,25 +198,25 @@ class TheApp(object):
 
         
 
-        #self.fig = Figure()
+        self.fig.patches = []
         #ax = self.fig.add_subplot(111)
         #ax.imshow(diplay_image)
-        #ax = self.fig.gca()
-        #for det in self.detection_boxex:
-        #    x = det.x
-        #    y = det.y
-        #    w = det.width
-        #    h = det.height
+        ax = self.fig.gca()
+        self.fig.delaxes(ax)
+        ax = self.fig.gca()
+        ax.imshow(diplay_image)
+        for det in self.detection_boxex:
+            x = det.x
+            y = det.y
+            w = det.width
+            h = det.height
 
-        #    r = Rectangle((x,y), w, h, label='detX', fill=False)
-        #    r.set_edgecolor('red')
-        #    r.set_linestyle('dashed')
-        #    #r.set_alpha(0.6)
-        #    #r.set_linewidth(1.0)
-        #    ax.add_patch(r)
-
+            r = Rectangle((x,y), w, h, fill=False)
+            r.set_edgecolor('#1AFF00')
+            ax.add_patch(r)
 
         self.canvas.draw()
+        
         #canvas = FigureCanvas(self.fig)
         #self.main_window.setCentralWidget(canvas)
 
@@ -223,7 +260,7 @@ class TheApp(object):
         h = box.height
         r = Rectangle((x,y), w, h, label='detX', fill=False)
 
-        if score > 0.0:
+        if score > self.classification_threshold:
             r.set_edgecolor('#1AFF00')
         else:
             r.set_edgecolor('#E500FF')

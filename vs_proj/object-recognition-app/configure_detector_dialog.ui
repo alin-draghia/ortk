@@ -60,7 +60,11 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="scanner_win_step_x"/>
+       <widget class="QSpinBox" name="scanner_win_step_x">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::UpDownArrows</enum>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="scanner_win_step_y"/>
@@ -124,7 +128,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+       <widget class="QDoubleSpinBox" name="classification_threshold"/>
       </item>
      </layout>
     </widget>
