@@ -20,9 +20,7 @@ namespace object_recognition_toolkit
 
 		double LinearClassifier::Predict(const core::FeatureVector& x) const
 		{
-			try {
 				if (x.cols != w_.size()) {
-
 					throw std::runtime_error("Invalid instance vector size");
 				}
 
@@ -33,13 +31,6 @@ namespace object_recognition_toolkit
 				}
 
 				return conf;
-			}
-			catch (std::exception& e) {
-				std::cerr << e.what() << std::endl;
-			}
-			catch (...) {
-				std::cerr << "unknown exception" << std::endl;
-			}
 		}
 
 		core::Matrix LinearClassifier::PredictMulti(core::Matrix const& X) const
