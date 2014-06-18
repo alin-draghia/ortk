@@ -34,25 +34,16 @@ class LinearSVM_Classifier(objrec_tk.Classifier):
     def Clone(self):
         return pickle.loads(pickle.dumps(self))
 
-    def Predict(self, feature_vector):
-        try:
-            x = np.reshape(feature_vector, (1, -1,))
-            y = self.inner_classifier_.predict(x)
-            return np.asscalar(y)
-        except:
-            print("Predict error:", sys.exc_info()[0])
-            print("feature_vector:")
-            print(feature_vector)
-            return -1.0
+    def Predict(self, x):
+        x = x.ravel()
+        y = self.inner_classifier_.decision_function(x)
+        return np.asscalar(y)
 
-    def PredictMulti(self, X, y):
-        try:
-            aiu = self.inner_classifier_.predict(X) 
-            y[:,0] = aiu[:]
-        except ValueError as e:
-            pass
-        
-        return
+
+    def PredictMulti(self, X):
+        y = self.inner_classifier_.decision_function(X) 
+        return y
+
 
     def GetCoefs(self):
         return self.inner_classifier_.coef_

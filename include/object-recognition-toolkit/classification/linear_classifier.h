@@ -22,7 +22,7 @@ namespace object_recognition_toolkit
 			virtual ~LinearClassifier();
 
 			virtual double Predict(core::FeatureVector const& x) const;
-			virtual void PredictMulti(core::Matrix const& X, core::Matrix& y) const;
+			virtual core::Matrix PredictMulti(core::Matrix const& X) const;
 
 		public:
 			virtual boost::shared_ptr<Classifier> Clone() const;

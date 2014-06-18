@@ -23,12 +23,13 @@ namespace object_recognition_toolkit {
 				return (double)svm_.predict(x, true) * -1.0;
 			}
 
-			void PredictMulti(core::Matrix const& X, core::Matrix& y) const
+			core::Matrix PredictMulti(core::Matrix const& X) const
 			{
-				y.create(X.rows, 1, CV_64F);
+				core::Matrix y(X.rows, 1, CV_64F);
 				for (int i = 0; i < X.rows; i++) {
 					y.at<double>(i) = this->Predict(X.row(i));
 				}
+				return y;
 			}
 
 

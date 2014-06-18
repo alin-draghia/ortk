@@ -20,27 +20,39 @@ namespace object_recognition_toolkit
 
 		double LinearClassifier::Predict(const core::FeatureVector& x) const
 		{
-			if (x.cols != w_.size()) {
-				throw std::runtime_error("Invalid instance vector size");
+			try {
+				if (x.cols != w_.size()) {
+
+					throw std::runtime_error("Invalid instance vector size");
+				}
+
+				double conf = b_;
+
+				for (int i = 0; i < static_cast<int>(w_.size()); i++) {
+					conf += w_[i] * x.at<float>(i);
+				}
+
+				return conf;
 			}
-
-			double conf = b_;
-
-			for (int i = 0; i < static_cast<int>(w_.size()); i++) {
-				conf += w_[i] * x.at<float>(i);
+			catch (std::exception& e) {
+				std::cerr << e.what() << std::endl;
 			}
-
-			return conf;
+			catch (...) {
+				std::cerr << "unknown exception" << std::endl;
+			}
 		}
 
-		void LinearClassifier::PredictMulti(core::Matrix const& X, core::Matrix& y) const
+		core::Matrix LinearClassifier::PredictMulti(core::Matrix const& X) const
 		{
+			cv::Mat y;
 			y.create(X.rows, 1, CV_64F);
 
 			#pragma omp parallel for
 			for (int i = 0; i < X.rows; i++) {
 				y.at<double>(i) = this->Predict(X.row(i));
 			}
+
+			return y;
 		}
 
 		boost::shared_ptr<Classifier> LinearClassifier::Clone() const

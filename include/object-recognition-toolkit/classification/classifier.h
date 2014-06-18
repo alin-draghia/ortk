@@ -31,7 +31,7 @@ namespace object_recognition_toolkit
 
 		public:
 			virtual double Predict(core::FeatureVector const& x) const = 0;
-			virtual void PredictMulti(core::Matrix const& X, core::Matrix& y) const = 0;
+			virtual core::Matrix PredictMulti(core::Matrix const& X) const = 0;
 
 			DECLARE_SERIALIZABLE();
 		};

@@ -18,9 +18,9 @@ namespace object_recognition_toolkit
 				return this->get_override("Predict")(x);
 			}
 
-			void PredictMulti(core::Matrix const& X, core::Matrix& y) const
+			core::Matrix PredictMulti(core::Matrix const& X) const
 			{
-				this->get_override("PredictMulti")(X, y);
+				return this->get_override("PredictMulti")(X);
 			}
 
 			boost::shared_ptr<Classifier> Clone() const
@@ -59,7 +59,7 @@ void py_regiser_classification()
 		class_<Classifier_Wrapper, boost::noncopyable>("Classifier")
 			.def("Clone", pure_virtual(&Classifier::Clone))
 			.def("Predict", pure_virtual(&Classifier::Predict), args("x"))
-			.def("PredictMulti", pure_virtual(&Classifier::PredictMulti), args("X", "y"))
+			.def("PredictMulti", pure_virtual(&Classifier::PredictMulti), args("X"))
 			.enable_pickling()
 			;
 		register_ptr_to_python<boost::shared_ptr<Classifier>>();
