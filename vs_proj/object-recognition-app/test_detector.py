@@ -63,7 +63,11 @@ def main():
 
     dets = BoxVector()
     confs = VecF64()
-    detector.Detect(im, dets, confs, 0.0)
+
+    detector_dump = pickle.dumps(detector)
+    detector_ = pickle.loads(detector_dump)
+
+    detector_.Detect(im, dets, confs, 0.0)
 
 
     for det in dets:

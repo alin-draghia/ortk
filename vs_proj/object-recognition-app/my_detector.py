@@ -10,13 +10,14 @@ except:
 
 class SlidingWindowDetector(Detector):
 
-    def __init__(self):
+
+    def __init__(self, pyramid_builder=None, image_scanner=None, feature_extractor=None, classifier=None, non_maxima_suppressor=None):
         Detector.__init__(self)
-        self.pyramid_builder = None
-        self.image_scanner = None
-        self.feature_extractor = None
-        self.classifier = None
-        self.non_maxima_suppressor = None
+        self.pyramid_builder = pyramid_builder
+        self.image_scanner = image_scanner
+        self.feature_extractor = feature_extractor
+        self.classifier = classifier
+        self.non_maxima_suppressor = non_maxima_suppressor
         return
 
     def Clone(self):
@@ -62,3 +63,6 @@ class SlidingWindowDetector(Detector):
 
         return
 
+    #implement pickle support
+    def __getinitargs__(self):
+        return (self.pyramid_builder, self.image_scanner, self.feature_extractor, self.classifier, self.non_maxima_suppressor)
