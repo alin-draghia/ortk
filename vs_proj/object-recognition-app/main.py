@@ -13,7 +13,7 @@ matplotlib.use('Qt4Agg')
 import pylab
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg  as FigureCanvas
 from matplotlib.figure import Figure
-
+from matplotlib.patches import Rectangle
 
 
 from PySide import QtUiTools, QtCore, QtGui
@@ -95,12 +95,15 @@ class TheApp(object):
         #self.qt_image.load(filename);
         #self.main_window.image_label.setPixmap(QtGui.QPixmap.fromImage(self.qt_image))
 
-        self.fig = Figure()
+        self.fig = Figure(figsize=(700,700), dpi=72)
         ax = self.fig.add_subplot(111)
+        ax.set_navigate(True)
         ax.imshow(self.color_image)
-        
-        canvas = FigureCanvas(self.fig)
-        self.main_window.setCentralWidget(canvas)
+ 
+        self.canvas = FigureCanvas(self.fig)
+        self.main_window.setCentralWidget(self.canvas)
+
+
 
         return
 
@@ -147,19 +150,36 @@ class TheApp(object):
         self.detector.Detect(self.gray_image, self.detection_boxex, self.detection_scores, 0.0)
 
         diplay_image = np.copy(self.color_image)
+        #for det in self.detection_boxex:
+        #    x = det.x
+        #    y = det.y
+        #    w = det.width
+        #    h = det.height
+        #    cv2.rectangle(diplay_image, (x,y), (x+w,y+h), (255,0,0))
+
+        
+
+        #self.fig = Figure()
+        #ax = self.fig.add_subplot(111)
+        #ax.imshow(diplay_image)
+        ax = self.fig.gca()
         for det in self.detection_boxex:
             x = det.x
             y = det.y
             w = det.width
             h = det.height
-            cv2.rectangle(diplay_image, (x,y), (x+w,y+h), (255,0,0))
 
-        self.fig = Figure()
-        ax = self.fig.add_subplot(111)
-        ax.imshow(diplay_image)
-        
-        canvas = FigureCanvas(self.fig)
-        self.main_window.setCentralWidget(canvas)
+            r = Rectangle((x,y), w, h, label='detX', fill=False)
+            r.set_edgecolor('red')
+            r.set_linestyle('dashed')
+            #r.set_alpha(0.6)
+            #r.set_linewidth(1.0)
+            ax.add_patch(r)
+
+
+        self.canvas.draw()
+        #canvas = FigureCanvas(self.fig)
+        #self.main_window.setCentralWidget(canvas)
 
         return
 
