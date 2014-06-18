@@ -54,6 +54,10 @@
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="..\bin\cv2.pyd">
+      <Name>cv2.pyd</Name>
+      <PythonExtension>..\bin\cv2.pyd</PythonExtension>
+    </Reference>
     <Reference Include="..\bin\object_recognition_toolkitd_ext.pyd">
       <Name>object_recognition_toolkitd_ext.pyd</Name>
       <PythonExtension>..\bin\object_recognition_toolkitd_ext.pyd</PythonExtension>
