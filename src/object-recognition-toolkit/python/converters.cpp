@@ -199,6 +199,9 @@ namespace {
 
 			// Construct cv::Mat
 			new (storage)cv::Mat(ndim, size, cv_depth, arr_data, steps);
+			//cv::Mat tmp(ndim, size, cv_depth, arr_data, steps);
+			//new (storage)cv::Mat();
+			//tmp.copyTo(*(cv::Mat*)storage);
 
 			data->convertible = storage;
 		}
