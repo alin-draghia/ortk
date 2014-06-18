@@ -90,6 +90,9 @@ void py_regiser_pyramid()
 	{
 		class_<FloatPyramidBuilder, bases<PyramidBuilder>>("FloatPyramidBuilder", init<>())
 			.def(init<double, Size, Size>(args("scale_factor", "min_size", "max_size")))
+			.def_readwrite("scale_factor", &FloatPyramidBuilder::scaleFactor_)
+			.def_readwrite("max_size", &FloatPyramidBuilder::maxSize_)
+			.def_readwrite("min_size", &FloatPyramidBuilder::minSize_)
 			.def_pickle(serialize_pickle<FloatPyramidBuilder>())
 			;
 			

@@ -73,9 +73,9 @@ void py_regiser_classification()
 
 	{
 		class_<LinearClassifier, bases<Classifier>>("LinearClassifier", init<>())
-			.def(init<float, std::vector<float>&>(args("bias, weights")))
-			.def_readwrite("b_", &LinearClassifier::b_)
-			.def_readwrite("w_", &LinearClassifier::w_)
+			.def(init<float, std::vector<float>&>(args("bias", "weights")))
+			.def_readwrite("bias", &LinearClassifier::b_)
+			.def_readwrite("weights", &LinearClassifier::w_)
 			.def_pickle(serialize_pickle<LinearClassifier>())
 			;
 	}

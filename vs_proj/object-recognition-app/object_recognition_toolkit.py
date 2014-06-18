@@ -16,4 +16,8 @@ if __OBJECT_RECOGNITION_TOOLKIT_DEBUG__ == True:
 else:
     from object_recognition_toolkit_ext import *
 
+from my_svm import LinearSVM_Trainer, LinearSVM_Classifier
+from my_hog import HogExtractor
+from my_detector import SlidingWindowDetector
+
 

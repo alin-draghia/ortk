@@ -29,7 +29,7 @@ namespace object_recognition_toolkit
 			cv::Size GetMinSize() const;
 			cv::Size GetMaxSize() const;
 
-		private:
+		public:
 			double scaleFactor_;
 			cv::Size minSize_;
 			cv::Size maxSize_;
