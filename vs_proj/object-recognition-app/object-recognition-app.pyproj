@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test_detector.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
