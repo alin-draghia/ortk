@@ -32,7 +32,12 @@ namespace object_recognition_toolkit {
 
 		};
 
-
+		core::Matrix FeatureExtractor_ComputeMulti_v2(FeatureExtractor const& fe, std::vector<core::Matrix> const& images)
+		{
+			cv::Mat X((int)images.size(), fe.Lenght(), CV_32F);
+			fe.ComputeMulti(images, X);
+			return X;
+		}
 	}
 }
 
@@ -50,6 +55,7 @@ void py_regiser_feature_extraction()
 			.def("Clone", pure_virtual(&FeatureExtractor::Clone))
 			.def("Compute", pure_virtual(&FeatureExtractor::Compute), args("image"))
 			.def("ComputeMulti", pure_virtual(&FeatureExtractor::ComputeMulti), args("images", "features"))
+			.def("ComputeMulti", FeatureExtractor_ComputeMulti_v2, args("images"))
 			.def("Lenght", pure_virtual(&FeatureExtractor::Lenght))
 			.enable_pickling()
 			;
