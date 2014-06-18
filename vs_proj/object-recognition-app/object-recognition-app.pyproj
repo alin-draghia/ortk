@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>test_detector.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mp_map_async.py" />
+    <Compile Include="my_detector.py" />
     <Compile Include="my_hog.py" />
     <Compile Include="main.py" />
     <Compile Include="my_svm.py" />
@@ -51,6 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="..\bin\object_recognition_toolkitd_ext.pyd">
+      <Name>object_recognition_toolkitd_ext.pyd</Name>
+      <PythonExtension>..\bin\object_recognition_toolkitd_ext.pyd</PythonExtension>
+    </Reference>
+    <Reference Include="..\bin\object_recognition_toolkit_ext.pyd">
+      <Name>object_recognition_toolkit_ext.pyd</Name>
+      <PythonExtension>..\bin\object_recognition_toolkit_ext.pyd</PythonExtension>
+    </Reference>
   </ItemGroup>
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
   <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
