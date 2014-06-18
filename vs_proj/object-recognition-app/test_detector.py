@@ -24,23 +24,24 @@ def main():
     raw_input('Press any key to begin...')
 
 
-    pyramid_builder = FloatPyramidBuilder(scale_factor=1.1, min_size=Size(64,128), max_size=Size())
-    image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(4,4), padding=Size())
+    pyramid_builder = FloatPyramidBuilder(scale_factor=1.05, min_size=Size(64,128), max_size=Size())
+    image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(8,8), padding=Size())
     nms = PassThroughNms()
-    #nms = GroupRectanglesNms()
+    nms0 = GroupRectanglesNms()
     feature_extractor = None
     classifier = None
     
-    with open(r'.\..\bin\training_7\classifier_2.pkl', 'r') as f:
+    with open(r'training_10\classifier_10.pkl', 'r') as f:
         classifier = pickle.load(f)
 
-    with open(r'.\..\bin\training_7\feature_extracotr.pkl', 'r') as f:
+    with open(r'training_10\feature_extracotr_dbg.pkl', 'r') as f:
         feature_extractor = pickle.load(f)
 
     w = VecF32()
     w[:] = classifier.GetCoefs()[0, :]
     b = np.asscalar(classifier.GetIntercept())
 
+    classifier_ = classifier
     classifier = LinearClassifier(b, w)
     
 
@@ -54,12 +55,14 @@ def main():
     detector.classifier = classifier
 
     im = cv2.imread(r'..\datasets\INRIAPerson\Test\pos\crop001501.png', cv2.IMREAD_GRAYSCALE)
+    #im = cv2.imread(r'..\datasets\INRIAPerson\Train\pos\person_and_bike_129.png', cv2.IMREAD_GRAYSCALE)
+    #im = cv2.imread(r'..\datasets\INRIAPerson\train_64x128_H96\pos\crop001001a.png', cv2.IMREAD_GRAYSCALE)
     disp = cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
-
+    disp2 = np.copy(disp)
 
     dets = BoxVector()
     confs = VecF64()
-    detector.Detect(im, dets, confs, 0.9)
+    detector.Detect(im, dets, confs, -0.3)
 
 
     for det in dets:
@@ -67,9 +70,19 @@ def main():
         y = det.y
         w = det.width
         h = det.height
-        cv2.rectangle(disp, (x,y), (x+w,y+h), (255,0,0))
+        cv2.rectangle(disp, (x,y), (x+w,y+h), (0,0,255))
+
+    nms0.suppress(dets, confs)
+    for det in dets:
+        x = det.x
+        y = det.y
+        w = det.width
+        h = det.height
+        cv2.rectangle(disp2, (x,y), (x+w,y+h), (0,0,255))
 
     cv2.imshow('out', disp)
+    cv2.imshow('out2', disp2)
+
     cv2.waitKey()
     cv2.destroyAllWindows()
 

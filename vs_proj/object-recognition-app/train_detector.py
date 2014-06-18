@@ -96,16 +96,25 @@ def main():
     num_iterations = 10
     num_positives = 2500
     num_negatives = 1000
-    data_dir = './training_7'
+    data_dir = './training_10'
 
     if os.path.exists(data_dir) == False:
         os.makedirs(data_dir)
 
-    pyramid_builder = FloatPyramidBuilder(scale_factor=1.2, min_size=Size(64, 128), max_size=Size())
-    image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(8,8), padding=Size())
-    feature_extractor = HogExtractor()
-    trainer = LinearSVM_Trainer(C=1.0)
-    nms = GroupRectanglesNms()
+    scale_factor = 1.2
+    win_size = Size(64,128)
+    win_step = Size(8,8)
+    block_size = Size(16,16)
+    block_stride = win_step
+    cell_size = Size(8,8)
+    n_bins = 9
+
+    pyramid_builder = FloatPyramidBuilder(scale_factor=scale_factor, min_size=win_size, max_size=Size())
+    image_scanner = DenseImageScanner(win_size=win_size, win_step=win_step, padding=Size())
+    #feature_extractor = HogExtractor()
+    feature_extractor = HogFeatureExtractor(win_size, block_size, block_stride, cell_size, n_bins)
+    trainer = LinearSVM_Trainer(C=0.1)
+    nms = PassThroughNms()
     callback = MyTrainingCallback(num_iterations, num_positives, num_negatives, data_dir)
 
     with open(os.path.join(data_dir, 'feature_extracotr.pkl'), 'w') as f:
@@ -116,7 +125,7 @@ def main():
     detector_trainer.num_iterations=num_iterations
     detector_trainer.num_positives=num_positives
     detector_trainer.num_negatives=num_negatives
-    detector_trainer.detector_size=Size(64,128)
+    detector_trainer.detector_size=win_size
     detector_trainer.data_directory=data_dir
     detector_trainer.pyramid_builder=pyramid_builder
     detector_trainer.image_scanner=image_scanner
@@ -129,8 +138,8 @@ def main():
     positive_dataset = Dataset()
     negative_dataset = Dataset()
 
-    LoadDatasetDlib("positive_train_dataset_crop.xml", positive_dataset)
-    LoadDatasetDlib("negative_train_dataset.xml", negative_dataset)
+    LoadDatasetDlib("../bin/positive_train_dataset_crop.xml", positive_dataset)
+    LoadDatasetDlib("../bin/negative_train_dataset.xml", negative_dataset)
 
 
     detector = detector_trainer.TrainWithDataset(positive_dataset, negative_dataset)
