@@ -1,3 +1,5 @@
+\documentclass[a4paper,12pt,oneside]{book}%
+
 
 \parskip 10 pt           % sets spacing between paragraphs
 
@@ -77,3 +79,42 @@
 
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+
+
+
+\title{Tehnici de Machine Learning in procesarea si recunoasterea imaginilor}
+\author{Draghia Alin-Madalin}
+
+\begin{document}
+\fancyfoot{}
+\pagenumbering{alph}
+\setcounter{page}{1}
+\include{Titlu}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\include{Cuprins}
+\fancyfoot[C]{\thepage}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+\include{C1_Introducere}
+
+\include{C2_RecunoastereaObiectelor}
+
+%\include{ProblemaRecunoasteriiFete}
+
+%\include{ReteleNeuraleArtificiale}
+
+%\include{ReteleNeuraleConvolutie}
+
+%\include{Aplicatie}
+
+%\include{Concluzii}
+\chapter{Concluzii și posibiliatati de dezvoltare}
+
+%\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{Citations}
+\end{document}
