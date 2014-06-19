@@ -1,0 +1,79 @@
+
+\parskip 10 pt           % sets spacing between paragraphs
+
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage[romanian]{babel}
+\usepackage{longtable}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage[nottoc]{tocbibind}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{epstopdf}
+\usepackage[obeyspaces,hyphens]{url}
+\usepackage[utf8x]{inputenc}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{lmodern}
+\usepackage{dsfont}
+%\usepackage{fullpage}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithm
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage{tabularx}
+
+\widowpenalty=700
+\clubpenalty=700
+
+%\RequirePackage[l2tabu, orthodox]{nag}
+
+\setlength{\headheight}{15.35403pt}
+
+\renewcommand{\chaptermark}[1]{%
+\markboth{#1}{}}
+\fancyhead{}
+\fancyhead[L]{\rightmark}
+
+\usepackage{enumitem}
+\setlist{topsep=0pt}
+
+
+\addto\captionsromanian{%
+  \renewcommand{\tablename}%
+    {Tabelul}%
+}
+
+%\setlength{\parskip}{0pt}
+%\setlength{\parsep}{0pt}
+%\setlength{\headsep}{0pt}
+%\setlength{\topskip}{0pt}
+%\setlength{\topmargin}{0pt}
+%\setlength{\topsep}{0pt}
+%\setlength{\partopsep}{0pt}
+
+\usepackage[compact]{titlesec}
+%\titlespacing{\chapter}{0pt}{*4}{*4}
+%\titlespacing{\section}{0pt}{*2}{*2}
+%\titlespacing{\subsection}{0pt}{*1}{*1}
+%\titlespacing{\subsubsection}{0pt}{*1}{*1}
+
+%\addto\extrasromanian{%  
+%  \def\tableautorefname{Tabela}%
+%  \def\figureautorefname{Figura}%  
+%  \def\equationautorefname{Ecuația}%  
+%  \def\tableautorefname{tabela}%
+%  \def\figureautorefname{figura}%  
+%  \def\equationautorefname{ecuația}%  
+%}
+
+\usepackage[unicode,colorlinks=false,pdfauthor={Draghia Alin-Madalin},pdfsubject={Tehnici de Machine Learning in procesarea si recunoasterea imaginilor},pdfcreator=Miktex,pdfproducer=Miktex,pdfkeywords={ML, Machine Learning, Object Detection, SVM, Sliding Window, Feature Extraction, Object Recognition},pdfcenterwindow=true,pdfstartview=FitH]{hyperref}
+\usepackage[all]{hypcap}
+
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
