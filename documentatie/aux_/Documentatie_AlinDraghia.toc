@@ -1,15 +1,18 @@
 \select@language {romanian}
 \contentsline {chapter}{\numberline {1}Introducere}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motiva\IeC {{\textcommabelow t}}ie}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Enun\IeC {{\textcommabelow t}}ul problemei}{2}{section.1.2}
-\contentsline {section}{\numberline {1.3}Tehnologii folosite}{2}{section.1.3}
-\contentsline {subsubsection}{Limbajul C++}{2}{subsubsection*.2}
-\contentsline {subsubsection}{Limbajul Python}{3}{subsubsection*.3}
-\contentsline {subsubsection}{Limbajele C++ \IeC {{\textcommabelow s}}i Python}{3}{subsubsection*.4}
-\contentsline {subsubsection}{Libr\IeC {\u a}ria OpenCV}{3}{subsubsection*.5}
-\contentsline {subsubsection}{Libr\IeC {\u a}ria Boost}{3}{subsubsection*.6}
-\contentsline {subsubsection}{Libr\IeC {\u a}ria scikit-learn}{3}{subsubsection*.7}
-\contentsline {subsubsection}{Libr\IeC {\u a}ria Qt}{3}{subsubsection*.8}
-\contentsline {section}{\numberline {1.4}Structura Lucr\IeC {\u a}rii}{3}{section.1.4}
-\contentsline {chapter}{\numberline {2}Recunoasterea Obiectelor}{4}{chapter.2}
-\contentsline {chapter}{\numberline {3}Concluzii \IeC {{\textcommabelow s}}i posibiliatati de dezvoltare}{5}{chapter.3}
+\contentsline {section}{\numberline {1.2}Enun\IeC {{\textcommabelow t}}ul problemei}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Tehnologii folosite}{3}{section.1.3}
+\contentsline {subsubsection}{Limbajul C++}{3}{subsubsection*.2}
+\contentsline {subsubsection}{Limbajul Python}{4}{subsubsection*.3}
+\contentsline {subsubsection}{Limbajele C++ \IeC {{\textcommabelow s}}i Python}{4}{subsubsection*.4}
+\contentsline {subsubsection}{Libr\IeC {\u a}ria OpenCV}{4}{subsubsection*.5}
+\contentsline {subsubsection}{Libr\IeC {\u a}ria Boost}{4}{subsubsection*.6}
+\contentsline {subsubsection}{Libr\IeC {\u a}ria scikit-learn}{4}{subsubsection*.7}
+\contentsline {subsubsection}{Libr\IeC {\u a}ria Qt}{4}{subsubsection*.8}
+\contentsline {section}{\numberline {1.4}Structura Lucr\IeC {\u a}rii}{4}{section.1.4}
+\contentsline {chapter}{\numberline {2}Recunoasterea obiectelor}{5}{chapter.2}
+\contentsline {chapter}{\numberline {3}\IeC {\^I}nv\IeC {\u a}\IeC {{\textcommabelow t}}area Automata}{6}{chapter.3}
+\contentsline {subsection}{\numberline {3.0.1}\IeC {\^I}nv\IeC {\u a}\IeC {{\textcommabelow t}}area Supervizat\IeC {\u a}}{6}{subsection.3.0.1}
+\contentsline {chapter}{\numberline {4}Concluzii \IeC {{\textcommabelow s}}i posibiliatati de dezvoltare}{8}{chapter.4}
+\contentsline {chapter}{Bibliografie}{9}{chapter*.9}

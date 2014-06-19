@@ -1,0 +1,39 @@
+\chapter{Învățarea Automata}
+
+Învățarea automata, o ramura a inteligentei artificiale, este preocupata de construirea și studierea unor sisteme care pot învață din date.
+
+În 1959, Arthur Samuel a definit învățarea automata ca: "Domeniul de studiu care da calculatoarelor abilitatea de a învață fără să fie explicit programate"\cite{simon2013}.
+
+Tom M. Mitchell o oferit o definiție mai formala: "Se spune despre un program ca a învățat din experienta ${E}$ cu privire la o clasa de acțiuni ${T}$ și o măsura de performanta ${P}$, în cazul în care performantele sale la sarcina ${T}$, măsurate prin ${P}$ se îmbunătățește cu experienta ${E}$."\cite{mitchell97}
+
+Algoritmi de învățare automata se pot caracteriza în funcție de tipul de date cu care este antrenat și tipul de răspunsului dorit:
+\begin{description}
+	\item[Supervizată:]		
+	Atunci când algoritmi sunt antrenați cu un set de date cu răspuns cunoscut și se dorește răspunsul în cazul unor date noi.
+	
+	\item[Nesupervizată:] 
+	Atunci când algoritmi sunt antrenați cu un set de date cu răspuns necunoscut și se dorește găsirea unei structuri în setul de date.
+\end{description}
+
+În continuare vom discuta despre învățarea supervizată.
+
+\subsection{Învățarea Supervizată}
+
+Învățarea supervizata este sarcina învățării automate de a învață o funcție de evaluare din datele marcate de antrenament.
+Datele de antrenament sunt constituite dintr-un set de exemple de antrenament, fiecare exemplu consta într-o pereche de valori de intrare și o valoare de ieșire dorita. Un astfel de algoritm analizează datele de antrenament și produce o funcție, care poate fii folosita pentru rezolvarea problemei în cazul unor date care nu au mai fost văzute.
+
+
+
+Învățarea supervizata consta în învățarea unei funcții \( f:X \rightarrow Y \), unde \(X\) reprezinta domeniul datelor de intrare, iar \(Y\) domeniul datelor de ieșire, pentru un set de date de antrenare ${ \mathcal{D} = \{(x_i,y_i)|x_i \in X, y_i \in Y\}|_{i=1}^n }$ se doreste gasirea unei functiei ${ f(x_i) = y_i }$ și pentru \( x_i \notin \mathcal{D} \), adică date cu care nu a fost antrenat algoritmul.
+
+ 
+În funcție de tipul de lui ${y}$, algoritmi de învățare supervizata pot fii clasificați astfel:
+\begin{itemize}
+	\item Regresie: atunci când răspunsul este o valoare numerica
+	
+	Exemplu: $${y \in \mathbb{R}}$$
+	
+	\item Clasificare: atunci când răspunsul este o valoare categorica.
+	
+	Exemplu: $${y \in \{0,1\}}$$ sau  $${y \in \{alb,negru,gri\}}$$
+\end{itemize}
