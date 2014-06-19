@@ -2,7 +2,33 @@
 \include{Settings}
 
 \begin{document}
+\fancyfoot{}
+\pagenumbering{alph}
+\setcounter{page}{1}
 \include{PaginaTitlu}
 
+\pagenumbering{roman}
+\setcounter{page}{1}
+\include{PaginaCuprins}
+\fancyfoot[C]{\thepage}
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
+
+\include{Introducere}
+
+%\include{ProblemaRecunoasteriiFete}
+
+%\include{ReteleNeuraleArtificiale}
+
+%\include{ReteleNeuraleConvolutie}
+
+%\include{Aplicatie}
+
+%\include{Concluzii}
+
+
+%\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{Citations}
 \end{document}
