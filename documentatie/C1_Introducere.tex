@@ -1,6 +1,6 @@
 \chapter{Introducere}
 
-Aceasta lucrare își propune sa prezinte, din punct de vedere atat teoretic cat și practic în ce consta dezvoltarea unui algoritm de recunoaștere a obiectelor în imagini.
+Aceasta lucrare își propune sa prezinte, din punct de vedere atât teoretic cat și practic în ce consta dezvoltarea unui algoritm de recunoaștere a obiectelor în imagini, folosind tehnici de procesare a imaginilor și învățare automata.
 
 
 
@@ -24,7 +24,6 @@ Viziunea artificiala și învățarea automata sunt doua domenii aflate în plin
 
 Recunoașterea obiectelor este una dintre aplicațiile fundamentale ale viziunii artificiale. Deși de-a lungul timpului au fost dezvoltați multi algoritmi, recunoașterea obiectelor este încă departe de a putea fii considerata o problema rezolvata.
 
-\pagebreak
 
 Dezvoltarea rapida a sistemelor de calcul a permis utilizarea acestor algoritmi în tot mai multe aplicații. Câteva dintre aplicațiile recunoașterii de obiecte sunt:
 \begin{itemize}
@@ -63,9 +62,13 @@ Dezvoltarea rapida a sistemelor de calcul a permis utilizarea acestor algoritmi 
 
 
 \section{Enunțul problemei}
-Se scrie o librărie software cu ajutorul carea sa se antreneze și sa se folosească algoritmi de recunoaștere a obiectelor în imagini.
+Se scrie o biblioteca software cu ajutorul căreia sa se dezvolte algoritmi și aplicații de recunoaștere a obiectelor.
 
-Algoritmul va învață sa recunoască obiecte folosindu-se de un set de exemple pozitive cat și negative.
+Aceasta biblioteca va fii scrisa într-un mod hibrid, cu componente scose atât în C++ cat și în Python.
+
+Toate componentele bibliotecii vor suporta serializare, pentru a putea fii salvate pe disc, baze de data sau trimise prin rețea în cazul unor programe distribuite.
+
+Algoritmul va învață sa recunoască obiecte folosindu-se de un set de imagini cu exemple pozitive adnotate și exemple negative, imagini care nu conțin obiectul pe care dorim sa-l învățam.
 
 Se scrie o aplicate care antrenează un algoritm de recunoaștere și îl salvează modelul învățat pe disc și una care încarcă modelul și îl aplica pe o imagine data.
 

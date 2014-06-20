@@ -213,3 +213,8 @@ documentatie/DocumentatieObjectRecognitionToolkit/aux_/
 documentatie/DocumentatieObjectRecognitionToolkit/out/
 *.tps
 documentatie/aux_/
+*.toc
+*.bbl
+*.blg
+*.aux
+documentatie/Documentatie_AlinDraghia.pdf
