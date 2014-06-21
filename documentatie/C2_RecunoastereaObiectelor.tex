@@ -191,13 +191,53 @@ Concatenarea acestor histograme reprezentând trăsătura hog.
 	\label{fig:OE_51_1_017208_f004}
 \end{figure}
 
+Descriptorul Sift este similar cu Hog, acesta fiind în plus și invariant la rotație.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/sift.png}
+	\caption{Descriptorul Sift}
+	\label{fig:sift}
+\end{figure}
 
+Recent a apărut o noua abordare, în ceea ce privește extragerea de trăsături, aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu ar fii rețeaua neurala convolutionala.\cite{lecun-98}
 
 \pagebreak
 \section{Clasificare}
 
+Din perspectiva recunoașterii obiectelor, clasificarea se va realiza cu ajutorul unei funcții care evaluează un vector de trăsături și decide dacă este sau nu obiectul pe care încercam sa îl recunoaștem. 
+Acest tip de clasificare se numește clasificare binara, fiindcă răspunsul nu poate lua decât doua valori.
+
+Aceasta funcție de decizie poate fii, în cazurile cele mai simple, o funcție de prag peste o distanta euclidiana sau chiar o rețea neuronala cu sute de neuroni.
+
+În cazul nostru aceasta funcție este rezultatul unui algoritm de învățare automata.\footnote{Machine Learning}
+Învățarea automata, o ramura a inteligentei artificiale, este preocupata cu construcția și studiul sistemelor care pot învață din date.
+Algoritmii de învățare automata sunt împărțiți în multe categorii, însa noi ne vom axa doar pe cei de învățare supervizata.
+Se numesc algoritmi de învățare supervizata, acei algoritmi care folosesc la antrenament seturi de perechi de date ${(x,y)}$ unde ${x}$ reprezinta trăsăturile sau atributele unui exemplar, iar ${y}$ reprezinta răspunsul dorit. 
+După ce a avut loc învățarea, algoritmul va fii capabil sa producă un răspuns și în cazul unor exemplare pe care nu le-a mai întâlnit, de aceea în literatura de specialitate clasificatori se mai numesc și predictori.
+
+Scopul învățării automate, dacă privim problema din punct de vedere geometric, este acela de a găsi o un plan care sa separe cele doua clase intre ele.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/fig_clasificare.png}
+	\caption{Clasificare}
+	\label{fig:fig_clasificare}
+\end{figure}
+
+Cel mai des întâlniți algoritmi de învățare în viziunea artificiala sunt: automatul cu vectori de suport\footnote{eng. Support Vector Machines}, rețeaua neuronala.
+
+
+
+
+
+
 \pagebreak
 \section{Post-procesarea rezultatelor}
+
+O situație foarte des întâlnita în cazul algoritmilor de recunoaștere a imaginilor este ca același obiect este detectat de mai multe ori.
+Aceste detecții sunt suprapuse și se datorează faptului ca modelul învățat recunoaște și obiecte cu mici translații și scalari.
+Totuși, se dorește ca fiecare obiect prezent în imagine sa fie detectat doar o singura data.
+Acest lucru se realizează cu ajutorul unui algoritm de grupare a detecțiilor suprapuse.
 
 \pagebreak
 \section{Algoritmul de recunoaștere}
