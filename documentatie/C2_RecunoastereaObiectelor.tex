@@ -237,7 +237,80 @@ Acest lucru se realizează cu ajutorul unui algoritm de grupare a detecțiilor s
 \pagebreak
 \section{Algoritmul de recunoaștere}
 
+Folosindu-ne de componentele descrise în acest capitol putem discuta despre algoritmii de recunoaștere și antrenarea lor.
 
+Algoritmul de recunoaștere a obiectelor poate fii descris cu ajutorul pseudo-codului urmator:
+\begin{mdframed}
+\begin{verbatim}
+
+detectii = lista_goale()
+
+I = citeste_imaginea()
+P = construieste_piramida(I)
+
+pentru fiecare nivel din P
+  pentru fiecare fereastra din extrage_ferestele(P)
+    trasaturi = extrage_trasaturi(fereastra)
+    raspuns = clasificare(trasaturi)
+    daca rasuns este afirmativ atunci
+      detectii = adauga(detectii, locatie(fereastra))
+    sfarsit daca
+  sfarsit
+sfarsit
+
+detectii = grupare_suprapuse(detectii)
+
+\end{verbatim}
+\end{mdframed}
+
+Pentru antrenarea unui algoritm de recunoaștere a obiectelor avem nevoie de o baza de date cu doua seturi de imagini.
+Un set va conține imagini decupate cu obiectul pe care dorim sa îl recunoaștem, iar al doilea va fii constituit din imagini care nu conțin obiectul.
+Aceste seturi se numesc setul de exemplare pozitive, respectiv negative.
+Setul de pozitive este adus la o mărime comuna prin redimensionare.
+Din setul de imagini negative se vor extrage exemplare folosind scanarea în scara și spațiu de la algoritmul de recunoaștere.
+Pentru ca setul de negative este de obicei foarte mare, nu este practic ca la antrenare sa se folosească toate exemplarele posibile.
+Exemplarele negative se vor extrage printr-un proces iterativ.
+În prima faza se extrag un număr ales de exemple negative și se antrenează clasificatorul.
+Pe urma folosind clasificatorul antrenat la pasul anterior se scanează imaginile negative, fiecare exemplar negativ care a fost clasificat pozitiv se adaugă la lista de antrenare și se antrenează clasificatorul din nou.
+Pasul asta se repeta de un număr de ori specificat de utilizator, ori pana când nu se mai pot extrage exemplare negative din setul de date.
+Acesta se procedeu se numește bootstrapping.
+
+\begin{mdframed}
+\begin{verbatim}
+
+P = citeste_setul_de_exemplare_positive()
+N = citeste_setul_de_exemplare_negative()
+
+X = lista()
+y = lista()
+
+X = adauga(X, P)
+y = adauga(y, selecteaza_aleator(N))
+
+Cls = antreneaza_clasificator(X,y)
+
+iter = citeste_nr_iteratii()
+
+pentru i = 1 pana la iter
+  pentru I din N
+    P = construieste_piramida(I)
+    pentru fiecare nivel din P
+      pentru fiecare fereastra din extrage_ferestele(P)
+        xi = extrage_trasaturi(xi)
+        raspuns = clasificare(Cls, xi)
+        daca rasuns este 'afirmativ' atunci
+          X = adauga(X, xi)
+          y = adauga(y, 'negativ')
+        sfarsit daca
+      sfarsit
+    sfarsit
+  sfarsit
+  
+  Cls = antreneaza_clasificator(X,y)
+sfarsit
+
+\end{verbatim}
+\end{mdframed}
 
 
 
