@@ -38,6 +38,13 @@
 \usepackage{bibentry}
 
 
+\usepackage{verbatim}
+\usepackage{moreverb}
+\let\verbatiminput=\verbatimtabinput
+\def\verbatimtabsize{4\relax} 
+
+\usepackage{mdframed}
+
 \widowpenalty=700
 \clubpenalty=700
 
@@ -107,11 +114,12 @@
 \setcounter{page}{1}
 
 
+
 \include{C1_Introducere}
 
 \include{C2_RecunoastereaObiectelor}
 
-\include{InvatareaAutomata}
+%\include{InvatareaAutomata}
 
 %\include{ProblemaRecunoasteriiFete}
 
