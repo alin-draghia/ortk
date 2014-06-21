@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="object_recognition_toolkit::core::Clonable">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\clonable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Named">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\named.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Serializable">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\serialization.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="object_recognition_toolkit::core::Clonable_Wrapper" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::core::Named_Wrapper" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

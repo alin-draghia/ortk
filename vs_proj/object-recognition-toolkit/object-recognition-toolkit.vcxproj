@@ -552,6 +552,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="core_class_diagram.cd" />
+    <None Include="dataset_class_diagram.cd" />
+    <None Include="detection_class_diagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

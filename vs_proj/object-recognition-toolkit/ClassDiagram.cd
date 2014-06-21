@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="object_recognition_toolkit::classification::LinearSvcClassifier__" Collapsed="true">
+    <Position X="3" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAIAAAEAAAAAAAAAAAAAAAABk=</HashCode>
+      <FileName>src\object-recognition-toolkit\classification\linear-svc-trainer.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::classification::LinearSvcTrainer">
+    <Position X="7.75" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAgAAQAAAQAAAAAAAAAAAAAgAJA=</HashCode>
+      <FileName>include\object-recognition-toolkit\classification\linear-svc-trainer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::classification::Classifier">
+    <Position X="3.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAEAgAAAAAAAAAAAAAABg=</HashCode>
+      <FileName>include\object-recognition-toolkit\classification\classifier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::classification::LinearClassifier" Collapsed="true">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAABQkAAAAAIAAAAAAAAAABg=</HashCode>
+      <FileName>include\object-recognition-toolkit\classification\linear_classifier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::classification::MockPersonClassifier" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAIIAAQkAAAAAAAAAAAAAAAABg=</HashCode>
+      <FileName>include\object-recognition-toolkit\classification\mock-person-classifier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::classification::Trainer">
+    <Position X="6.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAhA=</HashCode>
+      <FileName>include\object-recognition-toolkit\classification\trainer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="`anonymous-namespace'::Point_to_python_ndarray&lt;PointT&gt;" Collapsed="true">
+    <Position X="23" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\converters.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="`anonymous-namespace'::Mat_T_to_python_ndarray&lt;T&gt;" Collapsed="true">
+    <Position X="24.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\converters.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="`anonymous-namespace'::Mat_T_from_python_ndarray&lt;T&gt;" Collapsed="true">
+    <Position X="23" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\converters.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Clonable">
+    <Position X="13.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\clonable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Field" Collapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAUEAAAAAAAAAEAAAAAAAAAFEABAAAAAAAQAoAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\configurable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::NotImplementedError" Collapsed="true">
+    <Position X="21.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\core.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Named">
+    <Position X="10.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\named.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::core::Serializable" Collapsed="true">
+    <Position X="21.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\core\serialization.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="no_compare_indexing_suite&lt;T&gt;" Collapsed="true">
+    <Position X="17.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="core_scope" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dataset_scope" Collapsed="true">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="classification_scope" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="detection_scope" Collapsed="true">
+    <Position X="23" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="feature_extraction_scope" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="image_scanning_scope" Collapsed="true">
+    <Position X="21.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="non_maxima_suppression_scope" Collapsed="true">
+    <Position X="19.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="pyramid_scope" Collapsed="true">
+    <Position X="17.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\python_ext.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::BootstrappingDetectorTrainer" Collapsed="true">
+    <Position X="12.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAFWACAAAAGABQQQAAgQAMFBAACAADAAAAAAAAEIABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\bootstrapping_detector_trainer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::Detector">
+    <Position X="1.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\detector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::DetectorBase">
+    <Position X="0.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAEIAAAAAAAMAAAUAEAoABAEAAAAABIAAQAAAAAEBA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\detector_base.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::DetectorBaseMt">
+    <Position X="0.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACIAAAAAAAAABIAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\detector_base_mt.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::DetectorBuilder" Collapsed="true">
+    <Position X="24.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAIAAAAgAAAgAQUAAAIAEAAAAEgAAAAABAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\detector_builder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::detection::DetectorTrainer">
+    <Position X="11.25" Y="9.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAQAAAAAAAABAAAAAAAAAAAAAAIAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\detector_trainer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::feature_extraction::FeatureExtractor">
+    <Position X="10.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AMAAAAAAACAAAAAAAAAAAABAAAAAAEAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\feature-extraction\feature-extractor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::feature_extraction::HogFeatureExtractor" Collapsed="true">
+    <Position X="11.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAABAAACQAAAAgAAAAQABAAAAAAMAAAABQABAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\feature-extraction\hog-feature-extractor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::image_scanning::DenseImageScanner" Collapsed="true">
+    <Position X="7.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIAAAAAIAAAAAAACQAABAAAAAUAAAAAgAAABAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-scanning\dense-image-scanner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::image_scanning::ImageScanner">
+    <Position X="6.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAABAAAAAAAAAAAAAAABAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-scanning\image-scanner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::non_maxima_suppression::GroupRectanglesNms" Collapsed="true">
+    <Position X="4" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AARAAAAAAACAAAAAIAAAAABAAAAAAAAAAAIAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\non_maxima_suppression\group_rectangles_nms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor">
+    <Position X="3.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\non_maxima_suppression\non_maxima_suppressor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::non_maxima_suppression::PassThroughNms" Collapsed="true">
+    <Position X="6.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAAAAAAhA=</HashCode>
+      <FileName>include\object-recognition-toolkit\non_maxima_suppression\pass_through_nms.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::pyramid::FloatPyramidBuilder" Collapsed="true">
+    <Position X="2.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAACAAAEAAAAAAJAAAABgAAACAEEAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-pyramid\float_pyramid_builder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::pyramid::PyramidLevel" Collapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAACBAAAAAQSEAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-pyramid\pyramid-level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::pyramid::Pyramid" Collapsed="true">
+    <Position X="24.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAACAAIAAAAAABAAAAAAEAAAACAABAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-pyramid\pyramid.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="object_recognition_toolkit::pyramid::PyramidBuilder">
+    <Position X="1.5" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAABAAAAAgAAAAAAAAAAAABA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-pyramid\pyramid_builder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="object_recognition_toolkit::classification::Classifier_Wrapper" Collapsed="true">
+    <Position X="0.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAABg=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\classification_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::classification::Trainer_Wrapper" Collapsed="true">
+    <Position X="5.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\classification_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::rect_to_tuple&lt;T&gt;" Collapsed="true">
+    <Position X="24.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::tuple_to_rect&lt;T&gt;" Collapsed="true">
+    <Position X="23" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAIAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::size_to_tuple&lt;T&gt;" Collapsed="true">
+    <Position X="21.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::tuple_to_size&lt;T&gt;" Collapsed="true">
+    <Position X="24.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAEAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::Mat_to_python_ndarray" Collapsed="true">
+    <Position X="21.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\converters.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::Mat_from_python_ndarray" Collapsed="true">
+    <Position X="19.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\converters.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::core::Named_Wrapper" Collapsed="true">
+    <Position X="10.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::core::Clonable_Wrapper" Collapsed="true">
+    <Position X="13.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::core::Size_pickle_suite" Collapsed="true">
+    <Position X="19.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::core::Rect_pickle_suite" Collapsed="true">
+    <Position X="23" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\core_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::detection::Detector_Wrapper" Collapsed="true">
+    <Position X="2.75" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\detection_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::detection::DetectorTrainer_Wrapper" Collapsed="true">
+    <Position X="10.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\detection_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::detection::BootstrappingDetectorTrainerCallback_Wrapper" Collapsed="true">
+    <Position X="13.5" Y="3.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAEAQAAAAAAEAAAAAIABACAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\detection_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::detection::done_collecting_samples" Collapsed="true">
+    <Position X="17.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\object-recognition-toolkit\detection\bootstrapping_detector_trainer.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::detection::BootstrappingDetectorTrainerCallback">
+    <Position X="14.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAQAAAEAQAAAAAAEAAAAAIABACAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\detection\bootstrapping_detector_trainer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::feature_extraction::FeatureExtractor_Wrapper" Collapsed="true">
+    <Position X="9.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\feature_extraction_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::image_scanning::ImageScanner_Wrapper" Collapsed="true">
+    <Position X="5.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\image_scanning_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::image_scanning::Window" Collapsed="true">
+    <Position X="17.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAwAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\image-scanning\window.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::non_maxima_suppression::NonMaximaSuppressor_Wrapper" Collapsed="true">
+    <Position X="0.75" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\non_maxima_suppression_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::pyramid::PyramidBuilder_Wrapper" Collapsed="true">
+    <Position X="0.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAABA=</HashCode>
+      <FileName>src\object-recognition-toolkit\python\pyramid_wrap.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="object_recognition_toolkit::python_ext::serialize_pickle&lt;T&gt;" Collapsed="true">
+    <Position X="17.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\object-recognition-toolkit\python\python_ext.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,12 +1,26 @@
 \chapter{Recunoașterea obiectelor}
 
 
-Recunoașterea obiectelor este o aplicate fundamentala a procesării de imagini și viziunea artificiala.
-De câteva decenii a fost, și încă este un domeniu de cercetare extensiva.
-Termenul "recunoașterea obiectelor" este folosit pentru a descrie multe aplicații și algoritmi.
-Sensul comun, de cele mai multe ori, este: date fiind cunoștințe despre înfățișarea unor obiecte, una sau mai multe imagini sunt analizate pentru a se stabili dacă exista obiectele în imagine și locația lor.
-Cu toate acestea, fiecare aplicație are cerințe și constrângeri specifice.
-Acest fapt a condus la o mare diversitate de algoritmi.
-De aceea este important ca sa avem la îndemâna biblioteci software, care sa faciliteze dezvoltarea rapida a algoritmilor de recunoaștere a obiectelor.
+%Recunoașterea obiectelor este o aplicate fundamentala a procesării de imagini și viziunea artificiala.
+%De câteva decenii a fost, și încă este un domeniu de cercetare extensiva.
+%Termenul "recunoașterea obiectelor" este folosit pentru a descrie multe aplicații și algoritmi.
+%Sensul comun, de cele mai multe ori, este: date fiind cunoștințe despre înfățișarea unor obiecte, una sau mai multe imagini sunt analizate pentru a se stabili dacă exista obiectele în imagine și locația lor.
+%Cu toate acestea, fiecare aplicație are cerințe și constrângeri specifice.
+%Acest fapt a condus la o mare diversitate de algoritmi.
+%De aceea este important ca sa avem la îndemâna biblioteci software, care sa faciliteze dezvoltarea rapida a algoritmilor de recunoaștere a obiectelor.
 
-Un caz special de recunoaștere a obiectelor apare foarte des, baza de date a modelelor ce trebuiesc recunoscute conține o singura clasa de obiecte, în acest caz sarcina de a detecta prezenta obiectului în imagine este simplificata.
+%Un caz special de recunoaștere a obiectelor apare foarte des, baza de date a modelelor ce trebuiesc recunoscute conține o singura clasa de obiecte, în acest caz sarcina de a detecta prezenta obiectului în imagine este simplificata.
+
+Problema recunoașterii de obiecte se poate exprima în felul următor: Având un o baza de date cu unul sau mai multe modele de obiecte, sa se determine dacă exista obiectul în imagine și dacă exista sa se localizeze.
+
+Unele dintre cele mai relevante lucrări din domeniu sunt: 
+\begin{itemize}
+	\item "Robust Real-time Object Detection" \cite{Viola01robustreal-time}
+	\item "Histograms of Oriented Gradients for Human Detection" \cite{Dalal05histogramsof}
+	\item "Pictorial Structures for Object Recognition" \cite{Felzenszwalb03pictorialstructures}
+\end{itemize}
+
+Dacă studiem mai atent algoritmii descriși în aceste lucrări se observa ca toate au o structura comuna și urmăresc o succesiune de operațiuni similare.
+Aceste operațiuni sunt următoarele: parcurgerea imaginii în scara și spațiu, extragerea de trăsături, clasificare și post-procesarea rezultatelor.
+
+În continuare se va discuta mai detaliat despre fiecare componenta, iar la sfârșit despre algoritmul de recunoaștere.

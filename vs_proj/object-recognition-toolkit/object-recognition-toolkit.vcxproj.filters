@@ -108,5 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="core_class_diagram.cd" />
+    <None Include="dataset_class_diagram.cd" />
+    <None Include="detection_class_diagram.cd" />
   </ItemGroup>
 </Project>
