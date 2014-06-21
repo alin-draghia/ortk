@@ -102,19 +102,96 @@ dx = 8
 dy = 8
 I = citeste_imagine()
 M = citeste_model()
-pentru x de la 0 la latime(I) - latime(I)
-  pentru y de la 0 la lungime(I) - lungime(M)
-    fereastra = sectiune(I, x, y, latime(M), lungime(M))
+pentru x de la 0 la dimx(I) - dimx(I)
+  pentru y de la 0 la dimy(I) - dimy(M)
+    fereastra = sectiune(I, x, y, dimx(M), dimy(M))
     proceseaza(fereastra)
   sfarsit pentru
 sfarsit pentru
 \end{verbatim}
 \end{mdframed}
 
+Se poate vizualiza algoritmul fereastra glisanta în figura următoare:
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.70\textwidth]{imagini/AGhannoum-SlidingWindow.png}
+	\caption{Fereastra glisanta}
+	\label{fig:AGhannoum-SlidingWindow}
+\end{figure}
+
+
 Se observa ca și aici, ca și în cazul piramidei de imagini, cu cat x și y sunt mai mici cu atât creste și numărul de ferestre evaluate, ceea ce duce la un timp de execuție mai ridicat.
+
+Complexitatea algoritmului piramida combinat cu fereastra glisanta este 
+$${O((dim_x-\Delta_x)*(dim_y-\Delta_y)*n_{piramida})}$$
 
 \pagebreak
 \section{Extragerea de trăsături}
+
+Extragerea de trăsături se ocupa cu, în cazul nostru, calcularea unei reprezentări a imaginii potrivite pentru recunoaștere.
+
+O imagine este reprezentata ca o matrice de intensități.
+Aceasta reprezentare este foarte sensibila la condițiile de iluminare, conține informații irelevante și redundante.
+Se poate observa efectul iluminării în figura \ref{fig:efectul_iluminarii}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/efectul_iluminarii.png}
+	\caption{Efectul iluminarii}
+	\label{fig:efectul_iluminarii}
+\end{figure}
+
+Exista modalități de a remedia efectul iluminării, cum ar fii egalizarea histogramei(fig. \ref{fig:egalizarea_histogrameis}).
+O alta modalitate ar fii sa se folosească o reprezentare pe baza de gradienți care sunt invarianți la iluminare.
+
+\begin{figure}[H]
+	\includegraphics[width=0.90\textwidth]{imagini/HistogramEqualization-1.png}
+	\caption{Egalizarea Histogramei}
+	\label{fig:egalizarea_histogrameis}
+\end{figure}
+
+
+Efectul informațiilor irelevante și redundante poate fii ameliorat folosind tehnici de reducerea de dimensionalitate, cum ar fii analiza componentelor principale\footnote{eng. PCA, principal component analisys}(fig. \ref{fig:fig_pca_principal_component_analysis} sau transformata cosinus discreta(fig. \ref{fig:take_DCT}).
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/fig_pca_principal_component_analysis.png}
+	\caption{Analiza componentelor principale}
+	\label{fig:fig_pca_principal_component_analysis}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/take_DCT.png}
+	\caption{Transformata cosinus}
+	\label{fig:take_DCT}
+\end{figure}
+
+
+
+Totuși nici una dintre reprezentările menționate mai sus nu tratează problema discriminării, adică dacă doua imagini conțin același obiect atunci și reprezentările lor trebuie sa fie apropiate, iar dacă sunt imagini ale unor obiecte diferite atunci reprezentările lor sa fie distanțate.
+
+Aici intervine ceea ce se numește ingineria trăsăturilor\footnote{eng. Feature Engineering} care, folosind cunoștințe din fizica, biologie sau chiar neurologie construiește reprezentări mult mai favorabile recunoașterii.
+Câteva dinte cele mai cunoscute trăsături sunt Haar\cite{Viola01robustreal-time}, Sift\cite{Lowe99objectrecognition} și Hog\cite{Dalal05histogramsof}.
+
+Valoare unei trăsături Haar este diferența dintre suma pixelilor din dreptunghiul negru și suma pixelilor din dreptunghiul alb, normalizata la aria celor doua.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/haarfeatures.png}
+	\caption{Trasaturi Haar}
+	\label{fig:haarfeatures}
+\end{figure}
+
+Hog, sau histograma orientărilor de gradienți, se calculează divizând imaginea in zone mai mici, numite celule, apoi se calculează histograma de orientări a gradienților din aceste zone. 
+Concatenarea acestor histograme reprezentând trăsătura hog.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{imagini/OE_51_1_017208_f004.png}
+	\caption{Trasaturi hog}
+	\label{fig:OE_51_1_017208_f004}
+\end{figure}
+
+
 
 \pagebreak
 \section{Clasificare}
@@ -124,3 +201,24 @@ Se observa ca și aici, ca și în cazul piramidei de imagini, cu cat x și y su
 
 \pagebreak
 \section{Algoritmul de recunoaștere}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
