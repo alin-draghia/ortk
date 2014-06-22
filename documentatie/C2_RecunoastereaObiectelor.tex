@@ -11,7 +11,8 @@
 
 %Un caz special de recunoaștere a obiectelor apare foarte des, baza de date a modelelor ce trebuiesc recunoscute conține o singura clasa de obiecte, în acest caz sarcina de a detecta prezenta obiectului în imagine este simplificata.
 
-Problema recunoașterii de obiecte se poate exprima în felul următor: Având un o baza de date cu unul sau mai multe modele de obiecte, sa se determine dacă exista obiectul în imagine și dacă exista sa se localizeze.
+Problema recunoașterii de obiecte se poate exprima în felul următor:
+Având o baza de date cu unul sau mai multe modele de obiecte, sa se determine dacă exista obiectul în imagine și dacă exista, sa se localizeze.
 
 Unele dintre cele mai relevante lucrări din domeniu sunt: 
 \begin{itemize}
@@ -21,7 +22,7 @@ Unele dintre cele mai relevante lucrări din domeniu sunt:
 \end{itemize}
 
 Dacă studiem mai atent algoritmii descriși în aceste lucrări se observa ca toate au o structura comuna și urmăresc o succesiune de operațiuni similare.
-Aceste operațiuni sunt următoarele: parcurgerea imaginii în scara și spațiu, extragerea de trăsături, clasificare și post-procesarea rezultatelor.
+Aceste operațiuni sunt următoarele: parcurgerea imaginii spațial la diferite scalari, extragerea de trăsături, clasificare și post-procesarea rezultatelor.
 
 În continuare se va discuta mai detaliat despre fiecare componenta, iar la sfârșit despre algoritmul de recunoaștere.
 
@@ -29,41 +30,43 @@ Aceste operațiuni sunt următoarele: parcurgerea imaginii în scara și spațiu
 \section{Parcurgerea imaginii în scara și spațiu}
 
 %Obiectele trebuie recunoscute la orice poziție și scara într-o imagine.
-Obiectele care trebuiesc recunoscute pot prezenta deviații de la modelul din baza de date, aceste deviații pot fi de natura geometrica: translație, rotație, scalare și perspectiva.
+Obiectele care trebuiesc recunoscute pot prezenta deviații de la modelul din baza de date.
+Aceste deviații pot fi de natura geometrica: translație, rotație, scalare și perspectiva.
 
 O soluție pentru aceasta problema ar fi sa se construiască un model care sa prezinte toate instanțierile obiectului.
-O dificultate cu aceasta abordare ar fi ca nu se pot știi dinainte toate transformările obiectului, chiar dacă s-ar știi, se poate deduce ca un astfel de model ar putea fi mult prea mare ca sa poată fi aplicat practic.
+O dificultate a acestei abordari ar fi ca nu se pot ști dinainte toate transformările obiectului.
+Chiar dacă s-ar ști, se poate deduce ca un astfel de model ar putea fi mult prea mare ca sa poată fi aplicat practic.
 
-O alta abordare a fi sa se folosească o reprezentare a imaginii invarianta la aceste transformări.
-Din literatura se știe ca o imagine reprezentata în spațiul Fourier este invarianta la translație și o imagine reprezentata în spațiul Log-Polar este invarianta la scalare și rotație.
+O alta abordare ar fi sa se folosească o reprezentare a imaginii, invarianta la aceste transformări.
+Din literatura se știe ca o imagine reprezentata în spațiul Fourier este invarianta la translație și o imagine reprezentata în spațiul Log-Polar este invarianta la scalare și rotație.\cite{treiber2010introduction}
 Exista chiar și o combinație intre aceste doua reprezentări numita Fourier-Mellin care este invarianta la toate cele trei transformări.
-Totuși s-a observat ca utilizarea acestei reprezentări are aplicații limitate, ea find folosita mai mult la alinierea imaginilor.
+Totuși s-a observat ca utilizarea acestei reprezentări are aplicații limitate, ea find folosita mai mult la alinierea imaginilor.\cite{treiber2010introduction}
 
-O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica este folosirea unei combinații de piramida de imagini și un algoritm de tip fereastră glisantă\footnote{eng. sliding window}, acestea find aplicate pe imagine, nu pe modelul din baza de date.
+O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica, este folosirea unei combinații intre o piramida de imagini și un algoritm de tip fereastră glisantă\footnote{Eng. sliding window}, acestea find aplicate pe imagine, nu pe modelul din baza de date.
 
-Folosirea piramidei de imagini și fereastra glisanta ne permite ca in restul algoritmului de recunoaștere sa tratam problema ca și cum nu ar exista translații sau scalari, astfel simplificând mult algoritmii aplicați.
+Folosirea piramidei de imagini și fereastra glisanta ne permit ca în restul algoritmului de recunoaștere sa tratam problema ca și cum nu ar exista translații sau scalari, astfel simplificând mult algoritmii aplicați.
 
 O piramida de imagini este o reprezentare multi-scara.
 Piramida de imagini se formează, pornind de la o imagine sursa, prin scalari succesive.
-Aceste scalari se fac cu un factor și se opresc atunci când se ajunge la o dimensiune minima.
-Dacă factorul de scalare este ${\alpha > 1}$ atunci avem funcția care calculează dimensiunea unui nivel este  
-$${ f(D,L) = D * \frac{1}{\alpha^L} }$$, unde ${D}$ este dimensiune imaginii sursa și ${L}$ este nivelul piramidei pentru care dorim sa aflam dimensiune.
+Aceste scalari se fac cu un factor ${\alpha > 1, \alpha \in \mathbb{R}}$ și se opresc atunci când se ajunge la o dimensiune minima.
+Dimensiunea imaginii la un anumit nivel din piramida se calculează astfel:
+$${
+f(D,L) = D \cdot \frac{1}{\alpha^L}
+}$$
+
+Unde ${D \in \mathbb{N}^2}$ este dimensiune imaginii sursa și ${L \in \mathbb{N}^+}$ este nivelul piramidei pentru care dorim sa aflam dimensiune.
 
 Se poate vizualiza piramida de imagini în figurile următoare:
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/Pyramids_Tutorial_Pyramid_Theory.png}
-	\caption{Piramida de imagini}
+		\includegraphics[width=1.0\textwidth]{imagini/pyramid0.png}
+		\includegraphics[width=1.0\textwidth]{imagini/pyramid1.png}
+	\caption{Piramida de imagini\footnotemark}
 	\label{fig:Pyramids_Tutorial_Pyramid_Theory}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/300px-Example_pyramid.jpg}
-	\caption{Exemplu piramida de imagini}
-	\label{fig:300px-Example_pyramid}
-\end{figure}
+\footnotetext{Pyramid methods in image processing.\cite{adelson1984pyramid}}
 
 
 Prezentarea formarii piramidei de imagini în pseudo-cod:
@@ -86,13 +89,15 @@ sfarsit cicleaza
 \end{verbatim}
 \end{mdframed}
 
-Se poate observa ca totuși acest model nu poate reprezenta toate scările posibile, find un model discret, aceasta problema poate fi ameliorata prin alegerea unui ${\alpha}$ potrivi și permițând modelului din baza de date sa reprezinte și el mici variații de scara.
+Se poate observa ca, totuși, acest model nu poate reprezenta toate scările posibile, find un model discret.
+Aceasta problema poate fi ameliorata prin alegerea unui ${\alpha}$ potrivi și permițând modelului din baza de date sa reprezinte și el mici variații de scara.
 
-O alta observație ar fi, cu cat ${\alpha}$ este mai mic, cu atât șansele sa nimerim scara corecta cresc, dar în același timp creste și consumul de memorie și durata de execuție a algoritmului. Consumul de memorie poate fi evitat dacă algoritmul se executa într-un mod recursiv, astfel eliminând menținerea explicita a unei liste de imagini în memorie.
+O alta observație ar fi: cu cat ${\alpha}$ este mai mic, cu atât șansele sa nimerim scara corecta cresc, dar în același timp creste și consumul de memorie și durata de execuție a algoritmului.
+Consumul de memorie poate fi evitat dacă algoritmul se executa într-un mod recursiv, eliminând astfel menținerea explicita a unei liste de imagini în memorie.
 
 Algoritmul fereastra glisanta se folosește pentru a obține invarianta la translație a modelului.
 Aici fereastra se refera la o secțiune rectangulara a imaginii.
-Fereastra va avea aceiași dimensiune ca și modelul din baza de date.
+Fereastra va avea aceeași dimensiune ca și modelul din baza de date.
 Fereastra glisanta are ca parametri ${\Delta_x, \Delta_y \geq 1}$, însemnând pasul pe axa x, respectiv pasul pe axa y.
 
 Pseudo-cod fereastra glisanta:
@@ -114,21 +119,22 @@ sfarsit pentru
 Se poate vizualiza algoritmul fereastra glisanta în figura următoare:
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.70\textwidth]{imagini/AGhannoum-SlidingWindow.png}
-	\caption{Fereastra glisanta}
-	\label{fig:AGhannoum-SlidingWindow}
+		\includegraphics[width=1.00\textwidth]{imagini/sliding_window.png}
+	\caption{Fereastre Glisanta \footnotemark}
+	\label{fig:sliding_window}
 \end{figure}
+\footnotetext{Imagine din: Segmented Gray-Code Kernels for Fast Pattern Matching\cite{Ouyang2013SegGCK}}
 
 
-Se observa ca și aici, ca și în cazul piramidei de imagini, cu cat x și y sunt mai mici cu atât creste și numărul de ferestre evaluate, ceea ce duce la un timp de execuție mai ridicat.
+Se observa ca aici, ca și în cazul piramidei de imagini, cu cat x și y sunt mai mici cu atât creste și numărul de ferestre evaluate, ceea ce duce la un timp de execuție mai ridicat.
 
 Complexitatea algoritmului piramida combinat cu fereastra glisanta este 
-$${O((dim_x-\Delta_x)*(dim_y-\Delta_y)*n_{piramida})}$$
+$${O((dim_x-\Delta_x) \cdot (dim_y-\Delta_y) \cdot n_{piramida})}$$
 
 \pagebreak
 \section{Extragerea de trăsături}
 
-Extragerea de trăsături se ocupa cu, în cazul nostru, calcularea unei reprezentări a imaginii potrivite pentru recunoaștere.
+Extragerea de trăsături, în cazul nostru, reprezinta operațiunea de calculare a unei reprezentări a imaginii potrivita pentru recunoaștere.
 
 O imagine este reprezentata ca o matrice de intensități.
 Aceasta reprezentare este foarte sensibila la condițiile de iluminare, conține informații irelevante și redundante.
@@ -137,69 +143,78 @@ Se poate observa efectul iluminării în figura \ref{fig:efectul_iluminarii}.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.90\textwidth]{imagini/efectul_iluminarii.png}
-	\caption{Efectul iluminarii}
+	\caption{Efectul iluminarii\footnotemark}
 	\label{fig:efectul_iluminarii}
 \end{figure}
+\footnotetext{Sursa imagine: Computer vision: algorithms and applications\cite{szeliski2010computer}}
+
 
 Exista modalități de a remedia efectul iluminării, cum ar fi egalizarea histogramei(fig. \ref{fig:egalizarea_histogrameis}).
 O alta modalitate ar fi sa se folosească o reprezentare pe baza de gradienți care sunt invarianți la iluminare.
 
 \begin{figure}[H]
-	\includegraphics[width=0.90\textwidth]{imagini/HistogramEqualization-1.png}
-	\caption{Egalizarea Histogramei}
+	\includegraphics[width=1.0\textwidth]{imagini/histogram_equalization.png}
+	\caption{Egalizarea Histogramei\footnotemark}
 	\label{fig:egalizarea_histogrameis}
 \end{figure}
+\footnotetext{Sursa imagine: Histogram remapping as a preprocessing step for robust face recognition\cite{vstruc2009histogram}}
 
 
-Efectul informațiilor irelevante și redundante poate fi ameliorat folosind tehnici de reducerea de dimensionalitate, cum ar fi analiza componentelor principale\footnote{eng. PCA, principal component analisys}(fig. \ref{fig:fig_pca_principal_component_analysis} sau transformata cosinus discreta(fig. \ref{fig:take_DCT}).
+Efectul informațiilor irelevante și redundante poate fi ameliorat folosind tehnici de reducere a dimensionalitatii, cum ar fi analiza componentelor principale\footnote{Eng. PCA, principal component analisys}(fig. \ref{fig:fig_pca_principal_component_analysis} sau transformata cosinus discreta(fig. \ref{fig:take_DCT}).
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.90\textwidth]{imagini/fig_pca_principal_component_analysis.png}
-	\caption{Analiza componentelor principale}
+	\caption{Analiza componentelor principale\footnotemark}
 	\label{fig:fig_pca_principal_component_analysis}
 \end{figure}
+\footnotetext{Sursa imagine: \url{http://phdthesis-bioinformatics-maxplanckinstitute-molecularplantphys.matthias-scholz.de}}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.90\textwidth]{imagini/take_DCT.png}
-	\caption{Transformata cosinus}
+	\caption{Transformata cosinus\footnotemark}
 	\label{fig:take_DCT}
 \end{figure}
+\footnotetext{Sursa imagine: \url{http://cnx.org/content/m13173/1.6/}}
 
 
+Totuși, nici una dintre reprezentările menționate mai sus nu tratează problema discriminării, adică dacă doua imagini conțin același obiect atunci și reprezentările lor trebuie sa fie apropiate, iar dacă sunt imagini ale unor obiecte diferite atunci reprezentările lor sa fie distanțate.
 
-Totuși nici una dintre reprezentările menționate mai sus nu tratează problema discriminării, adică dacă doua imagini conțin același obiect atunci și reprezentările lor trebuie sa fie apropiate, iar dacă sunt imagini ale unor obiecte diferite atunci reprezentările lor sa fie distanțate.
+Aici intervine ceea ce se numește ingineria trăsăturilor\footnote{Eng. Feature Engineering} care, folosind cunoștințe din fizica, biologie sau chiar neurologie , construiește reprezentări mult mai favorabile recunoașterii.
+Câteva dinte cele mai cunoscute trăsături sunt HAAR\cite{Viola01robustreal-time}, SIFT\cite{Lowe99objectrecognition} și HOG\cite{Dalal05histogramsof}.
 
-Aici intervine ceea ce se numește ingineria trăsăturilor\footnote{eng. Feature Engineering} care, folosind cunoștințe din fizica, biologie sau chiar neurologie construiește reprezentări mult mai favorabile recunoașterii.
-Câteva dinte cele mai cunoscute trăsături sunt Haar\cite{Viola01robustreal-time}, Sift\cite{Lowe99objectrecognition} și Hog\cite{Dalal05histogramsof}.
-
-Valoare unei trăsături Haar este diferența dintre suma pixelilor din dreptunghiul negru și suma pixelilor din dreptunghiul alb, normalizata la aria celor doua.
+Valoare unei trăsături HAAR este diferența dintre suma pixelilor din dreptunghiul negru și suma pixelilor din dreptunghiul alb, normalizata la aria celor doua.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/haarfeatures.png}
-	\caption{Trasaturi Haar}
+		\includegraphics[width=0.50\textwidth]{imagini/haar0.png}
+		\includegraphics[width=0.48\textwidth]{imagini/haar1.png}
+	\caption{Trasaturi HAAR\footnotemark}
 	\label{fig:haarfeatures}
 \end{figure}
+\footnotetext{Sursa imagine: Robust Real-time Object Detection\cite{Viola01robustreal-time}}
 
-Hog, sau histograma orientărilor de gradienți, se calculează divizând imaginea in zone mai mici, numite celule, apoi se calculează histograma de orientări a gradienților din aceste zone. 
-Concatenarea acestor histograme reprezentând trăsătura hog.
+HOG, sau histograma orientărilor de gradienți, se calculează divizând imaginea în zone mai mici, numite celule, apoi se calculează histograma de orientări a gradienților din aceste zone. 
+Concatenarea acestor histograme reprezinta trăsătura HOG.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/OE_51_1_017208_f004.png}
-	\caption{Trasaturi hog}
-	\label{fig:OE_51_1_017208_f004}
+		\includegraphics[width=0.80\textwidth]{imagini/hog0.png}
+	\caption{Trasaturi HOG\footnotemark}
+	\label{fig:hog0}
 \end{figure}
+\footnotetext{Sursa imagine: HOGgles: Visualizing Object Detection Features\cite{vondrick2013hoggles}}
 
-Descriptorul Sift este similar cu Hog, acesta find în plus și invariant la rotație.
+Descriptorul SIFT este similar cu HAAR, acesta find în plus și invariant la rotație.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/sift.png}
-	\caption{Descriptorul Sift}
+		\includegraphics[width=0.80\textwidth]{imagini/sift0.jpg}
+	\caption{Descriptorul SIFT\footnotemark}
 	\label{fig:sift}
 \end{figure}
+\footnotetext{Sursa imagine: \url{http://www.vlfeat.org/overview/sift.html}}
 
-Recent a apărut o noua abordare, în ceea ce privește extragerea de trăsături, aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu ar fi rețeaua neurala convolutionala.\cite{lecun-98}
+Recent a apărut o noua abordare în ceea ce privește extragerea de trăsături.
+Aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu fiind rețeaua neuronala convolutionala.\cite{lecun-98}
 
 \pagebreak
 \section{Clasificare}
@@ -210,21 +225,21 @@ Acest tip de clasificare se numește clasificare binara, findcă răspunsul nu p
 Aceasta funcție de decizie poate fi, în cazurile cele mai simple, o funcție de prag peste o distanta euclidiana sau chiar o rețea neuronala cu sute de neuroni.
 
 În cazul nostru aceasta funcție este rezultatul unui algoritm de învățare automata.\footnote{Machine Learning}
-Învățarea automata, o ramura a inteligentei artificiale, este preocupata cu construcția și studiul sistemelor care pot învață din date.
+Învățarea automata, o ramura a inteligentei artificiale, este preocupata cu studiul și construcția sistemelor care pot învață din date.
 Algoritmii de învățare automata sunt împărțiți în multe categorii, însa noi ne vom axa doar pe cei de învățare supervizata.
-Se numesc algoritmi de învățare supervizata, acei algoritmi care folosesc la antrenament seturi de perechi de date ${(x,y)}$ unde ${x}$ reprezinta trăsăturile sau atributele unui exemplar, iar ${y}$ reprezinta răspunsul dorit. 
-După ce a avut loc învățarea, algoritmul va fi capabil sa producă un răspuns și în cazul unor exemplare pe care nu le-a mai întâlnit, de aceea în literatura de specialitate clasificatori se mai numesc și predictori.
+Se numesc algoritmi de învățare supervizata acei algoritmi care folosesc la antrenament seturi de perechi de date ${(x,y)}$ unde ${x}$ reprezinta trăsăturile sau atributele unui exemplar, iar ${y}$ reprezinta răspunsul dorit. 
+După ce a avut loc învățarea, algoritmul va fi capabil sa producă un răspuns și în cazul unor exemplare pe care nu le-a mai întâlnit, de aceea în literatura de specialitate clasificatorii se mai numesc și predictori.
 
-Scopul învățării automate, dacă privim problema din punct de vedere geometric, este acela de a găsi o un plan care sa separe cele doua clase intre ele.
+Scopul învățării automate, dacă privim problema din punct de vedere geometric, este acela de a găsi o un plan care sa separe cele doua clase intre ele. (fig: \ref{fig:fig_clasificare})
 
 \begin{figure}[h]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/fig_clasificare.png}
+		\includegraphics[width=0.90\textwidth]{imagini/fig_clasificare2.png}
 	\caption{Clasificare}
 	\label{fig:fig_clasificare}
 \end{figure}
 
-Cel mai des întâlniți algoritmi de învățare în viziunea artificiala sunt: automatul cu vectori de suport\footnote{eng. Support Vector Machines}, rețeaua neuronala.
+Cel mai des întâlniți algoritmi de învățare în viziunea artificiala sunt: automatul cu vectori de suport\cite{suykens1999least}\footnote{Eng. Support Vector Machines} si rețeaua neuronala.
 
 \pagebreak
 \section{Post-procesarea rezultatelor}
@@ -270,10 +285,11 @@ Setul de pozitive este adus la o mărime comuna prin redimensionare.
 Din setul de imagini negative se vor extrage exemplare folosind scanarea în scara și spațiu de la algoritmul de recunoaștere.
 Pentru ca setul de negative este de obicei foarte mare, nu este practic ca la antrenare sa se folosească toate exemplarele posibile.
 Exemplarele negative se vor extrage printr-un proces iterativ.
-În prima faza se extrag un număr ales de exemple negative și se antrenează clasificatorul.
-Pe urma folosind clasificatorul antrenat la pasul anterior se scanează imaginile negative, fiecare exemplar negativ care a fost clasificat pozitiv se adaugă la lista de antrenare și se antrenează clasificatorul din nou.
-Pasul asta se repeta de un număr de ori specificat de utilizator, ori pana când nu se mai pot extrage exemplare negative din setul de date.
-Acesta se procedeu se numește bootstrapping.
+În prima faza se extrage un număr ales de exemple negative și se antrenează clasificatorul.
+Apoi, folosind clasificatorul antrenat la pasul anterior, se scanează imaginile negative.
+Fiecare exemplar negativ care a fost clasificat pozitiv se adaugă la lista de antrenare și se antrenează clasificatorul din nou.
+Pasul acesta se repeta de un număr de ori specificat de utilizator, sau pana când nu se mai pot extrage exemplare negative din setul de date.
+Acest procedeu se numește bootstrapping.
 
 \begin{mdframed}
 \begin{verbatim}

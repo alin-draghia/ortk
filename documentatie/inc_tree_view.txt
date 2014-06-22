@@ -1,0 +1,10 @@
+\---object-recognition-toolkit
+    +---classification
+    +---core
+    +---dataset
+    +---detection
+    +---feature-extraction
+    +---image-pyramid
+    +---image-scanning
+    +---non_maxima_suppression
+    \---python

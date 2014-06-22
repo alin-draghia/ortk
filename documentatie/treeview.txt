@@ -1,0 +1,23 @@
++---include
+|   \---object-recognition-toolkit
+|       +---classification
+|       +---core
+|       +---dataset
+|       +---detection
+|       +---feature-extraction
+|       +---image-pyramid
+|       +---image-scanning
+|       +---non_maxima_suppression
+|       \---python
+\---src
+    \---object-recognition-toolkit
+        +---classification
+        +---core
+        +---dataset
+        |   \---imglab
+        +---detection
+        +---feature-extraction
+        +---image-pyramid
+        +---image-scanning
+        +---non_maxima_suppression
+        \---python
