@@ -1,10 +1,14 @@
-\chapter{Implementare Librăriei}
+\chapter{Implementarea Bibliotecii}
 
-În acest capitol va fii prezentata implementarea librăriei software pentru dezvoltarea de algoritmi și aplicații de recunoaștere a obiectelor.
+În acest capitol va fi prezentata implementarea librăriei software pentru dezvoltarea de algoritmi și aplicații de recunoaștere a obiectelor.
+
+Biblioteca a fost implementata într-un mod hibrid.
+Interfețele au fost definite în limbajul C++, iar implementările au fost făcute atât în C++ cat și în Python.
+
 
 \section{Diagrama de clase}
 
-Librăria este împărțita în următoarele pachete:
+Biblioteca este împărțita în următoarele pachete:
 \begin{itemize}
 	\item core
 	\item dataset
@@ -17,48 +21,91 @@ Librăria este împărțita în următoarele pachete:
 	\item python
 \end{itemize}
 
+\subsection{Core}
+Pachetul "core" conține interfețe de baza ale librăriei.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/coreClassDiagram.png}
+	\caption{core Class Diagram}
+	\label{fig:coreClassDiagram}
+\end{figure}
 
-Pachetul "core" contine interfețe de baza ale librăriei.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/core_diagram.png}
-\end{center}
+\subsection{Dataset}
+Pachetul "dataset" conține clase care modelează baza de date pentru antrenament, și implementează funcționalități de importare unor formate uzuale.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{uml/datasetClassDiagram.png}
+	\caption{Diagrama de clase: dataset}
+	\label{fig:datasetClassDiagram}
+\end{figure}
 
-Pachetul "dataset" contine clase care modelează baza de date pentru antrenament, și implementează funcționalități de importare unor formate uzuale.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/dataset_diagram.png}
-\end{center}
+\subsection{Image Pyramid}
+Pachetul "image-pyramid" conține interfețe și implementări care servesc la construcția piramidei de imagini.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{uml/imagepyramidClassDiagram.png}
+	\caption{Diagrama de clase: image-pyramid}
+	\label{fig:imagepyramidClassDiagram}
+\end{figure}
 
-Pachetul "image-pyramid" contine interfețe și implementeri care servesc la construcția piramidei de imagini.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/pyramid_diagram.png}
-\end{center}
 
-Pachetul "image-scanning" contine interfete si implementari care servesc la scanarea imaginilor
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/image_scanning_diagram.png}
-\end{center}
+Clasa FloatPyramidBuilder construiește o piramida de imagini folosind ScaleFactor ca factor de scalare și MinSize, MaxSize ca criterii de terminare.
 
-Pachetul "feature-extraction" contine interfete si implementari care servesc la extragerea de trasaturi din imagini.
-\begin{center}
-	\includegraphics[width=0.8\textwidth]{uml/feature_extraction_diagram.png}
-\end{center}
+Metodele Transform si Invert din clasa PyramidLevel transforma coordonate din spațiul imaginii sursa în cel al nivelului, respectiv invers.
 
-Pachetul "classification" contine interfete si implementari care servesc la clasificare si antrenarea clasificatorilor.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/classification_diagram.png}
-\end{center}
+\subsection{Image Scanning}
+Pachetul "image-scanning" conține interfețe și implementări care servesc la scanarea imaginilor
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/imagescanningClassDiagram.png}
+	\caption{Diagrama de clase: image-scanning}
+	\label{fig:imagescanningClassDiagram}
+\end{figure}
 
-Pachetul "non-maxima-suppression" contine interfete si implementari care servesc la post-procesarea rezultatelor.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/nms_diagram.png}
-\end{center}
+\subsection{Feature Extraction}
+Pachetul "feature-extraction" conține interfețe și implementări care servesc la extragerea de trăsături din imagini.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/featureextractionClassDiagram.png}
+	\caption{Diagrama de clase: feature-extraction}
+	\label{fig:featureextractionClassDiagram}
+\end{figure}
 
-Pachetul "detection" contine interfete si implementari care servesc la recunoasterea obiectelor in imagini si la antrenarea algoritmilor.
-\begin{center}
-	\includegraphics[width=1.00\textwidth]{uml/detection_diagram.png}
-\end{center}
+\subsection{Classification}
+Pachetul "classification" conține interfețe și implementări care servesc la clasificare și antrenarea clasificatorilor.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.00\textwidth]{uml/classificationClassDiagram.png}
+	\caption{Diagrama de clase: classification}
+	\label{fig:classificationClassDiagram}
+\end{figure}
 
-Pachetul "python" contine supportul necesar pentru interoperabilitatea cu limbajul Python.
+\subsection{Non Maxima Suppression}
+Pachetul "non-maxima-suppression" conține interfețe și implementări care servesc la post-procesarea rezultatelor.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/nonmaximasuppressionClassDiagram.png}
+	\caption{Diagrama de clase: non-maxima-suppression}
+	\label{fig:nonmaximasuppressionClassDiagram}
+\end{figure}
+
+\subsection{Detection}
+Pachetul "detection" conține interfețe și implementări care servesc la recunoasterea obiectelor in imagini si la antrenarea algoritmilor.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/detectionClassDiagram.png}
+	\caption{Diagrame de clase: detection}
+	\label{fig:detectionClassDiagram}
+\end{figure}
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/detection2ClassDiagram.png}
+	\caption{Diagrama de clase: detection}
+	\label{fig:detection2ClassDiagram}
+\end{figure}
+
+\subsection{Python}
+Pachetul "python" conține suportul necesar pentru interoperabilitatea cu limbajul Python.
 
 
 

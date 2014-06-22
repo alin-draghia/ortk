@@ -11,8 +11,8 @@ Prin intermediul acestei lucrări doresc sa prezint, atât din punct de vedere t
 Recunoașterea obiectelor este una dintre principalele aplicații ale viziunii artificiale și procesarea de imagini. 
 
 Oamenii pot recunoaște o mulțime de obiecte într-o imagine fără sa depună prea mult efort, chiar dacă în aceste imagini obiectele prezintă variații de perspectiva, de dimensiune, sunt translatate, rotite sau chiar obstrucționate. 
-Cu toate ca, de-a lungul timpului au fost studiați și dezvoltați multi algoritmi, sistemele de recunoaștere automata a obiectelor sunt încă departe de performanta unei ființe umane, chiar de cea a unui copil de numai doi ani, deci inca exista loc pentru cercetarea și dezvoltarea algoritmilor în acest domeniu.
-În ciuda performantei relativ scăzute a acestor algoritmi, odată cu dezvoltarea sistemelor hardware, fapt ce a permis aplicarea unor algoritmi mult mai complicați sau au putut fii aplicați pe niște probleme de dimensiune mai mare, cererea de aplicații a crescut. 
+Cu toate ca, de-a lungul timpului au fost studiați și dezvoltați multi algoritmi, sistemele de recunoaștere automata a obiectelor sunt încă departe de performanta unei fințe umane, chiar de cea a unui copil de numai doi ani, deci inca exista loc pentru cercetarea și dezvoltarea algoritmilor în acest domeniu.
+În ciuda performantei relativ scăzute a acestor algoritmi, odată cu dezvoltarea sistemelor hardware, fapt ce a permis aplicarea unor algoritmi mult mai complicați sau au putut fi aplicați pe niște probleme de dimensiune mai mare, cererea de aplicații a crescut. 
 
 Cateva dintre cele mai de succes aplicatii sunt: 
 \begin{itemize}
@@ -45,13 +45,13 @@ Cateva dintre cele mai de succes aplicatii sunt:
 
 Înțelegerea și dezvoltarea unui sistem de recunoaștere automata a obiectelor poate fi foarte dificila, mai ales pentru cei care sunt la început de drum în studierea acestui domeniu. 
 Documentația de specialitate, de cele mai multe ori, este scrisa privind problema de la un nivel foarte înalt și nu sunt tratate detaliile algoritmilor. 
-În același timp, în foarte multe lucrări se fac referiri la lucrări anterioare, unele chiar cu zeci de ani distanta intre ele, acestea fiind uneori foarte greu de găsit.
+În același timp, în foarte multe lucrări se fac referiri la lucrări anterioare, unele chiar cu zeci de ani distanta intre ele, acestea find uneori foarte greu de găsit.
 Parcurgerea unui astfel de document, presupune cunoștințe extensive de matematica, statistica, învățare automata, procesarea imaginilor și chiar cunoștințe din domeniul biologic sau medical. 
-Toate acestea fac ca nivelul de la care se intra acest domeniu sa fie unul foarte înalt, ceea ce poate fii descurajant pentru un începător.
+Toate acestea fac ca nivelul de la care se intra acest domeniu sa fie unul foarte înalt, ceea ce poate fi descurajant pentru un începător.
 
 Exista câteva librarii software bune, open-source, cu care se pot dezvolta aplicații. 
 Acestea conțin algoritmi de recunoaștere a obiectelor gata implementați. 
-Totuși componentele care stau la baza acestor implementări nu sunt expuse, reutilizarea lor fiind imposibila.
+Totuși componentele care stau la baza acestor implementări nu sunt expuse, reutilizarea lor find imposibila.
 Nici codul sursa nu este ușor de urmări, acești algoritm sunt optimizați cu instrucțiuni de asamblare, cod pe mai multe fire de execuție și chiar cod care se executa pe procesorul grafic.
 Din aceasta cauza, consider ca nu sunt foarte utile celor care doresc sa dezvolte sau sa implementeze algoritmi.
 
@@ -85,7 +85,7 @@ Totodată aceasta sa servească ca un punct de plecare pentru cei care doresc sa
 
 %Cei mai multi algoritmi de recunoaștere a obiectelor au o structura comuna formata din următoarele componente: scanarea imaginii, extragerea de trasaturi, classificare si procesarea rezultatelor.
 
-%Multi algoritmi sunt scrisi intr-un mod foarte rigid si componentele lor nu pot fii refolosite. Sunt optimizati pana la punctul in care codul sursa nu mai poate fii inteles cu usurinta.
+%Multi algoritmi sunt scrisi intr-un mod foarte rigid si componentele lor nu pot fi refolosite. Sunt optimizati pana la punctul in care codul sursa nu mai poate fi inteles cu usurinta.
 
 %In cadrul companiei la care lucrez, Dynamic Ventures, am folosi
 
@@ -97,7 +97,7 @@ Totodată aceasta sa servească ca un punct de plecare pentru cei care doresc sa
 
 
 
-%Aceasta problema nu poate fii nici pe departe considerata rezolvata, de-a lungul timpului un număr mare de algoritmi au fost propuși.
+%Aceasta problema nu poate fi nici pe departe considerata rezolvata, de-a lungul timpului un număr mare de algoritmi au fost propuși.
 
 %Mult timp recunoașterea automata a obiectelor în imagini a fost considera impracticabila datorita complexității de timp și spațiu a acestor algoritmi.
 
@@ -109,9 +109,9 @@ Totodată aceasta sa servească ca un punct de plecare pentru cei care doresc sa
 \section{Enunțul problemei}
 Se scrie o librărie software cu ajutorul căreia sa se dezvolte algoritmi și aplicații de recunoaștere a obiectelor.
 
-Aceasta biblioteca va fii scrisa într-un mod hibrid, cu componente implementate atât în C++ cat și în Python.
+Aceasta biblioteca va fi scrisa într-un mod hibrid, cu componente implementate atât în C++ cat și în Python.
 
-Toate componentele bibliotecii vor suporta serializare, pentru a putea fii salvate pe disc, baze de data sau trimise prin rețea în cazul unor programe distribuite.
+Toate componentele bibliotecii vor suporta serializare, pentru a putea fi salvate pe disc, baze de data sau trimise prin rețea în cazul unor programe distribuite.
 
 Algoritmul va învață sa recunoască obiecte folosindu-se de un set de imagini cu exemple pozitive adnotate și exemple negative, imagini care nu conțin obiectul pe care dorim sa-l învățam.
 
@@ -129,9 +129,9 @@ Se scrie o aplicate care antrenează un algoritm de recunoaștere și salvează 
 %Este un limbaj multi-paradigma, cu verificare statica a tipurilor. 
 %Suporta programarea procedurala, orientata pe obiecte și generica.
 %Limbajul oferă facilitați de manipulare a memoriei la nivel scăzut.
-%Fiind proiectat inițial ca un limbaj pentru programarea de sisteme(sisteme integrate, kernel sisteme de operare), performața și eficienta sunt trăsături principale.
+%find proiectat inițial ca un limbaj pentru programarea de sisteme(sisteme integrate, kernel sisteme de operare), performața și eficienta sunt trăsături principale.
 
-%Dat fiind faptul ca este și compatibil cu limbajul C, utilizatorii C++ au la dispoziție o gama larga de librarii software din cele mai diverse ramuri de aplicații de care se pot folosii.
+%Dat find faptul ca este și compatibil cu limbajul C, utilizatorii C++ au la dispoziție o gama larga de librarii software din cele mai diverse ramuri de aplicații de care se pot folosii.
 
 \subsubsection{Limbajul Python}
 [Am rezervat o pagina]
@@ -185,7 +185,7 @@ Capitolele care urmează vor trata algoritmul de recunoaștere a obiectelor din 
 Capitolul 1 prezintă enunțul problemei și motivația acesteia
 
 Capitolul 2 se prezintă problema generala a unui algoritm de recunoaștere.
-Vor fii prezentate în detaliu componentele din structura algoritmului.
+Vor fi prezentate în detaliu componentele din structura algoritmului.
 Se va prezenta o tehnica eficienta de antrenare a acestor algoritmi.
 
 Capitolul 3 se prezintă în detaliu implementarea unei librarii de dezvoltare a algoritmilor de recunoaștere a obiectelor.

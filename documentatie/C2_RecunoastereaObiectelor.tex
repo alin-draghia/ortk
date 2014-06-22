@@ -4,7 +4,7 @@
 %Recunoașterea obiectelor este o aplicate fundamentala a procesării de imagini și viziunea artificiala.
 %De câteva decenii a fost, și încă este un domeniu de cercetare extensiva.
 %Termenul "recunoașterea obiectelor" este folosit pentru a descrie multe aplicații și algoritmi.
-%Sensul comun, de cele mai multe ori, este: date fiind cunoștințe despre înfățișarea unor obiecte, una sau mai multe imagini sunt analizate pentru a se stabili dacă exista obiectele în imagine și locația lor.
+%Sensul comun, de cele mai multe ori, este: date find cunoștințe despre înfățișarea unor obiecte, una sau mai multe imagini sunt analizate pentru a se stabili dacă exista obiectele în imagine și locația lor.
 %Cu toate acestea, fiecare aplicație are cerințe și constrângeri specifice.
 %Acest fapt a condus la o mare diversitate de algoritmi.
 %De aceea este important ca sa avem la îndemâna biblioteci software, care sa faciliteze dezvoltarea rapida a algoritmilor de recunoaștere a obiectelor.
@@ -29,17 +29,17 @@ Aceste operațiuni sunt următoarele: parcurgerea imaginii în scara și spațiu
 \section{Parcurgerea imaginii în scara și spațiu}
 
 %Obiectele trebuie recunoscute la orice poziție și scara într-o imagine.
-Obiectele care trebuiesc recunoscute pot prezenta deviații de la modelul din baza de date, aceste deviații pot fii de natura geometrica: translație, rotație, scalare și perspectiva.
+Obiectele care trebuiesc recunoscute pot prezenta deviații de la modelul din baza de date, aceste deviații pot fi de natura geometrica: translație, rotație, scalare și perspectiva.
 
-O soluție pentru aceasta problema ar fii sa se construiască un model care sa prezinte toate instanțierile obiectului.
-O dificultate cu aceasta abordare ar fii ca nu se pot știi dinainte toate transformările obiectului, chiar dacă s-ar știi, se poate deduce ca un astfel de model ar putea fii mult prea mare ca sa poată fii aplicat practic.
+O soluție pentru aceasta problema ar fi sa se construiască un model care sa prezinte toate instanțierile obiectului.
+O dificultate cu aceasta abordare ar fi ca nu se pot știi dinainte toate transformările obiectului, chiar dacă s-ar știi, se poate deduce ca un astfel de model ar putea fi mult prea mare ca sa poată fi aplicat practic.
 
-O alta abordare a fii sa se folosească o reprezentare a imaginii invarianta la aceste transformări.
+O alta abordare a fi sa se folosească o reprezentare a imaginii invarianta la aceste transformări.
 Din literatura se știe ca o imagine reprezentata în spațiul Fourier este invarianta la translație și o imagine reprezentata în spațiul Log-Polar este invarianta la scalare și rotație.
 Exista chiar și o combinație intre aceste doua reprezentări numita Fourier-Mellin care este invarianta la toate cele trei transformări.
-Totuși s-a observat ca utilizarea acestei reprezentări are aplicații limitate, ea fiind folosita mai mult la alinierea imaginilor.
+Totuși s-a observat ca utilizarea acestei reprezentări are aplicații limitate, ea find folosita mai mult la alinierea imaginilor.
 
-O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica este folosirea unei combinații de piramida de imagini și un algoritm de tip fereastră glisantă\footnote{eng. sliding window}, acestea fiind aplicate pe imagine, nu pe modelul din baza de date.
+O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica este folosirea unei combinații de piramida de imagini și un algoritm de tip fereastră glisantă\footnote{eng. sliding window}, acestea find aplicate pe imagine, nu pe modelul din baza de date.
 
 Folosirea piramidei de imagini și fereastra glisanta ne permite ca in restul algoritmului de recunoaștere sa tratam problema ca și cum nu ar exista translații sau scalari, astfel simplificând mult algoritmii aplicați.
 
@@ -86,9 +86,9 @@ sfarsit cicleaza
 \end{verbatim}
 \end{mdframed}
 
-Se poate observa ca totuși acest model nu poate reprezenta toate scările posibile, fiind un model discret, aceasta problema poate fii ameliorata prin alegerea unui ${\alpha}$ potrivi și permițând modelului din baza de date sa reprezinte și el mici variații de scara.
+Se poate observa ca totuși acest model nu poate reprezenta toate scările posibile, find un model discret, aceasta problema poate fi ameliorata prin alegerea unui ${\alpha}$ potrivi și permițând modelului din baza de date sa reprezinte și el mici variații de scara.
 
-O alta observație ar fii, cu cat ${\alpha}$ este mai mic, cu atât șansele sa nimerim scara corecta cresc, dar în același timp creste și consumul de memorie și durata de execuție a algoritmului. Consumul de memorie poate fii evitat dacă algoritmul se executa într-un mod recursiv, astfel eliminând menținerea explicita a unei liste de imagini în memorie.
+O alta observație ar fi, cu cat ${\alpha}$ este mai mic, cu atât șansele sa nimerim scara corecta cresc, dar în același timp creste și consumul de memorie și durata de execuție a algoritmului. Consumul de memorie poate fi evitat dacă algoritmul se executa într-un mod recursiv, astfel eliminând menținerea explicita a unei liste de imagini în memorie.
 
 Algoritmul fereastra glisanta se folosește pentru a obține invarianta la translație a modelului.
 Aici fereastra se refera la o secțiune rectangulara a imaginii.
@@ -141,8 +141,8 @@ Se poate observa efectul iluminării în figura \ref{fig:efectul_iluminarii}.
 	\label{fig:efectul_iluminarii}
 \end{figure}
 
-Exista modalități de a remedia efectul iluminării, cum ar fii egalizarea histogramei(fig. \ref{fig:egalizarea_histogrameis}).
-O alta modalitate ar fii sa se folosească o reprezentare pe baza de gradienți care sunt invarianți la iluminare.
+Exista modalități de a remedia efectul iluminării, cum ar fi egalizarea histogramei(fig. \ref{fig:egalizarea_histogrameis}).
+O alta modalitate ar fi sa se folosească o reprezentare pe baza de gradienți care sunt invarianți la iluminare.
 
 \begin{figure}[H]
 	\includegraphics[width=0.90\textwidth]{imagini/HistogramEqualization-1.png}
@@ -151,7 +151,7 @@ O alta modalitate ar fii sa se folosească o reprezentare pe baza de gradienți 
 \end{figure}
 
 
-Efectul informațiilor irelevante și redundante poate fii ameliorat folosind tehnici de reducerea de dimensionalitate, cum ar fii analiza componentelor principale\footnote{eng. PCA, principal component analisys}(fig. \ref{fig:fig_pca_principal_component_analysis} sau transformata cosinus discreta(fig. \ref{fig:take_DCT}).
+Efectul informațiilor irelevante și redundante poate fi ameliorat folosind tehnici de reducerea de dimensionalitate, cum ar fi analiza componentelor principale\footnote{eng. PCA, principal component analisys}(fig. \ref{fig:fig_pca_principal_component_analysis} sau transformata cosinus discreta(fig. \ref{fig:take_DCT}).
 
 \begin{figure}[H]
 	\centering
@@ -191,7 +191,7 @@ Concatenarea acestor histograme reprezentând trăsătura hog.
 	\label{fig:OE_51_1_017208_f004}
 \end{figure}
 
-Descriptorul Sift este similar cu Hog, acesta fiind în plus și invariant la rotație.
+Descriptorul Sift este similar cu Hog, acesta find în plus și invariant la rotație.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.90\textwidth]{imagini/sift.png}
@@ -199,21 +199,21 @@ Descriptorul Sift este similar cu Hog, acesta fiind în plus și invariant la ro
 	\label{fig:sift}
 \end{figure}
 
-Recent a apărut o noua abordare, în ceea ce privește extragerea de trăsături, aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu ar fii rețeaua neurala convolutionala.\cite{lecun-98}
+Recent a apărut o noua abordare, în ceea ce privește extragerea de trăsături, aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu ar fi rețeaua neurala convolutionala.\cite{lecun-98}
 
 \pagebreak
 \section{Clasificare}
 
 Din perspectiva recunoașterii obiectelor, clasificarea se va realiza cu ajutorul unei funcții care evaluează un vector de trăsături și decide dacă este sau nu obiectul pe care încercam sa îl recunoaștem. 
-Acest tip de clasificare se numește clasificare binara, fiindcă răspunsul nu poate lua decât doua valori.
+Acest tip de clasificare se numește clasificare binara, findcă răspunsul nu poate lua decât doua valori.
 
-Aceasta funcție de decizie poate fii, în cazurile cele mai simple, o funcție de prag peste o distanta euclidiana sau chiar o rețea neuronala cu sute de neuroni.
+Aceasta funcție de decizie poate fi, în cazurile cele mai simple, o funcție de prag peste o distanta euclidiana sau chiar o rețea neuronala cu sute de neuroni.
 
 În cazul nostru aceasta funcție este rezultatul unui algoritm de învățare automata.\footnote{Machine Learning}
 Învățarea automata, o ramura a inteligentei artificiale, este preocupata cu construcția și studiul sistemelor care pot învață din date.
 Algoritmii de învățare automata sunt împărțiți în multe categorii, însa noi ne vom axa doar pe cei de învățare supervizata.
 Se numesc algoritmi de învățare supervizata, acei algoritmi care folosesc la antrenament seturi de perechi de date ${(x,y)}$ unde ${x}$ reprezinta trăsăturile sau atributele unui exemplar, iar ${y}$ reprezinta răspunsul dorit. 
-După ce a avut loc învățarea, algoritmul va fii capabil sa producă un răspuns și în cazul unor exemplare pe care nu le-a mai întâlnit, de aceea în literatura de specialitate clasificatori se mai numesc și predictori.
+După ce a avut loc învățarea, algoritmul va fi capabil sa producă un răspuns și în cazul unor exemplare pe care nu le-a mai întâlnit, de aceea în literatura de specialitate clasificatori se mai numesc și predictori.
 
 Scopul învățării automate, dacă privim problema din punct de vedere geometric, este acela de a găsi o un plan care sa separe cele doua clase intre ele.
 
@@ -239,7 +239,7 @@ Acest lucru se realizează cu ajutorul unui algoritm de grupare a detecțiilor s
 
 Folosindu-ne de componentele descrise în acest capitol putem discuta despre algoritmii de recunoaștere și antrenarea lor.
 
-Algoritmul de recunoaștere a obiectelor poate fii descris cu ajutorul pseudo-codului urmator:
+Algoritmul de recunoaștere a obiectelor poate fi descris cu ajutorul pseudo-codului urmator:
 \begin{mdframed}
 \begin{verbatim}
 
@@ -264,7 +264,7 @@ detectii = grupare_suprapuse(detectii)
 \end{mdframed}
 
 Pentru antrenarea unui algoritm de recunoaștere a obiectelor avem nevoie de o baza de date cu doua seturi de imagini.
-Un set va conține imagini decupate cu obiectul pe care dorim sa îl recunoaștem, iar al doilea va fii constituit din imagini care nu conțin obiectul.
+Un set va conține imagini decupate cu obiectul pe care dorim sa îl recunoaștem, iar al doilea va fi constituit din imagini care nu conțin obiectul.
 Aceste seturi se numesc setul de exemplare pozitive, respectiv negative.
 Setul de pozitive este adus la o mărime comuna prin redimensionare.
 Din setul de imagini negative se vor extrage exemplare folosind scanarea în scara și spațiu de la algoritmul de recunoaștere.
