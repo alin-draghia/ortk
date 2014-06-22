@@ -4,8 +4,8 @@
 
 Prin intermediul acestei lucrări doresc sa prezint, din punct de vedere teoretic, pașii necesari în dezvoltarea unui sistem de recunoaștere a obiectelor în imagini, folosind tehnici de procesare a imaginilor și învățare automata.
 
-Totodată aceasta lucrare vine însoțita de implementarea unei biblioteci software pentru dezvoltarea de algoritmi și aplicații de recunoaștere a obiectelor.
-În plus, pe baza acestei biblioteci, am implementat unul dintre algoritmi de recunoaștere consacrați.
+Totodată, aceasta lucrare vine însoțita de implementarea unei biblioteci software pentru dezvoltarea de algoritmi și aplicații de recunoaștere a obiectelor.
+În plus, pe baza acestei biblioteci, am implementat unul dintre algoritmii de recunoaștere consacrați.
 
 
 
@@ -14,7 +14,8 @@ Totodată aceasta lucrare vine însoțita de implementarea unei biblioteci softw
 Recunoașterea obiectelor este una dintre principalele aplicații ale viziunii artificiale și procesarea de imagini. 
 
 Oamenii pot recunoaște o mulțime de obiecte într-o imagine fără sa depună prea mult efort, chiar dacă în aceste imagini obiectele prezintă variații de perspectiva, de dimensiune, sunt translatate, rotite sau chiar obstrucționate. 
-Cu toate ca, de-a lungul timpului au fost studiați și dezvoltați multi algoritmi, sistemele de recunoaștere automata a obiectelor sunt încă departe de performanta unei ființe umane, chiar de cea a unui copil de numai doi ani, deci încă exista loc pentru cercetarea și dezvoltarea algoritmilor în acest domeniu.
+Cu toate ca de-a lungul timpului au fost studiați și dezvoltați multi algoritmi, sistemele de recunoaștere automata a obiectelor sunt încă departe de performanta unei ființe umane, chiar de cea a unui copil de numai doi ani.
+Așadar, încă exista loc pentru cercetarea și dezvoltarea algoritmilor în acest domeniu.
 În ciuda performantei relativ scăzute a acestor algoritmi, odată cu dezvoltarea sistemelor hardware, fapt ce a permis aplicarea unor algoritmi mult mai complicați sau au putut fi aplicați pe niște probleme de dimensiune mai mare, cererea de aplicații a crescut. 
 
 Câteva dintre cele mai de succes aplicații sunt: 
@@ -50,8 +51,8 @@ Câteva dintre cele mai de succes aplicații sunt:
 
 Înțelegerea și dezvoltarea unui sistem de recunoaștere automata a obiectelor poate fi foarte dificila, mai ales pentru cei care sunt la început de drum în studierea acestui domeniu. 
 Documentația de specialitate, de cele mai multe ori, este scrisa privind problema de la un nivel foarte înalt și nu sunt tratate detaliile algoritmilor. 
-În același timp, în foarte multe lucrări se fac referiri la lucrări anterioare, unele chiar cu zeci de ani distanta intre ele, acestea find uneori foarte greu de găsit.
-Parcurgerea unui astfel de document, presupune cunoștințe extensive de matematica, statistica, învățare automata, procesarea imaginilor și chiar cunoștințe din domeniul biologic sau medical. 
+În același timp, în foarte multe lucrări se fac referiri la lucrări anterioare, unele chiar cu zeci de ani distanta intre ele, acestea fiind uneori foarte greu de găsit.
+Parcurgerea unui astfel de document presupune cunoștințe extensive de matematica, statistica, învățare automata, procesarea imaginilor și chiar cunoștințe din domeniul biologic sau medical. 
 Toate acestea fac ca nivelul de la care se intra acest domeniu sa fie unul foarte înalt, ceea ce poate fi descurajant pentru un începător.
 
 Exista câteva biblioteci software bune, open-source, cu care se pot dezvolta aplicații: 
@@ -64,19 +65,18 @@ Avantajele acestor biblioteci sunt:
 	\item Se poate trece direct la dezvoltarea de aplicatii
 \end{itemize}
 Totuși sunt și dezavantaje:
-/\begin{itemize}
+\begin{itemize}
 	\item Componentele care stau la baza acestor implementări nu sunt expuse, reutilizarea lor find imposibila.
-	\item Codul sursa este optimizat cu instituțiuni de asamblare sau cod pentru procesorul grafic, fiind dificil de înțeles.
+	\item Codul sursa este optimizat cu instrucțiuni în cod asamblare sau pentru procesorul grafic, fiind dificil de înțeles.
 \end{itemize}
-Aceste dezavantaje, fac ca aceste biblioteci sa nu fie foarte utile celor care doresc sa dezvolte sau sa implementeze algoritmi.
+Aceste dezavantaje fac ca aceste biblioteci sa nu fie foarte utile celor care doresc sa dezvolte sau sa implementeze algoritmi.
 
-Doresc, ca la finalul acestei lucrări, sa obțin o platforma de dezvoltare a algoritmilor pentru recunoașterea obiectelor, pe care sa o pot folosi în activitatea mea din domeniu.
-Totodată aceasta sa servească ca un punct de plecare pentru cei care doresc sa se inițieze în domeniu.
+Doresc ca, la finalul acestei lucrări, sa obțin o platforma de dezvoltare a algoritmilor pentru recunoașterea obiectelor, pe care sa o pot folosi în activitatea mea din domeniu și care sa servească ca un punct de plecare pentru cei care doresc sa se inițieze în domeniu.
 
 Avantajele acestei platforme ar fi:
 \begin{itemize}
 	\item Fiecare componenta a unui algoritm de recunoaștere este implementat într-o clasa separata
-	\item Algoritmi pot fi implementați atât în C++ cat și în Python
+	\item Algoritmii pot fi implementați atât în C++ cat și în Python
 	\item Reutilizare sporita
 	\item Pot fi ușor adaptați algoritmi din alte biblioteci pentru utilizare în cadrul platformei
 \end{itemize}
@@ -137,7 +137,7 @@ Aceasta biblioteca va fi scrisa într-un mod hibrid, cu componente implementate 
 Toate componentele bibliotecii vor suporta serializare, pentru a putea fi salvate pe disc, baze de data sau trimise prin rețea în cazul unor programe distribuite.
 
 Algoritmul va învăța sa recunoască obiecte folosindu-se de un set de imagini cu exemple pozitive adnotate și exemple negative, imagini care nu conțin obiectul pe care dorim sa-l învățam.
-Algoritmul poate fii personalizat prin alegerea de implementări diferite ale componentelor de către utilizator.
+Algoritmul poate fi personalizat prin alegerea de implementări diferite ale componentelor de către utilizator.
 
 Ca exemplificare, se scrie o aplicație care antrenează un algoritm de recunoaștere și salvează modelul învățat pe disc și o alta aplicație care încarcă modelul și îl aplica pe o imagine data.
 
@@ -146,12 +146,12 @@ Ca exemplificare, se scrie o aplicație care antrenează un algoritm de recunoa�
 \section{Structura Lucrării}
 Capitolele care urmează vor trata algoritmul de recunoaștere a obiectelor din punct de vedere teoretic și se va prezenta implementarea unei platforme de dezvoltare a acestora.
 
-În capitolul 2 se prezintă în detaliu structura unui algoritm de recunoaștere și o tehnica eficienta de antrenare a unui astfel de algoritm.
+În capitolul 2 sunt prezentate în detaliu structura unui algoritm de recunoaștere și o tehnica eficienta de antrenare a unui astfel de algoritm.
 
-În capitolul 3 se prezintă în detaliu implementarea bibliotecii de dezvoltare a algoritmilor de recunoaștere a obiectelor.
+În capitolul 3 este prezentata în detaliu implementarea bibliotecii de dezvoltare a algoritmilor de recunoaștere a obiectelor.
 
-În capitolul 4 se vor discuta tehnologiile folosite.
+În capitolul 4 sunt prezentate tehnologiile folosite.
 
-În capitolul 5 se prezintă concluzii despre lucrare, precum și posibilități de dezvoltare.
+În capitolul 5 sunt prezentate concluzii despre lucrare, precum și posibilități de dezvoltare.
 
 \pagebreak

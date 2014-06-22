@@ -30,11 +30,11 @@ Aceste operațiuni sunt următoarele: parcurgerea imaginii spațial la diferite 
 \section{Parcurgerea imaginii în scara și spațiu}
 
 %Obiectele trebuie recunoscute la orice poziție și scara într-o imagine.
-Obiectele care trebuiesc recunoscute pot prezenta deviații de la modelul din baza de date.
+Obiectele care trebuie recunoscute pot prezenta deviații de la modelul din baza de date.
 Aceste deviații pot fi de natura geometrica: translație, rotație, scalare și perspectiva.
 
 O soluție pentru aceasta problema ar fi sa se construiască un model care sa prezinte toate instanțierile obiectului.
-O dificultate a acestei abordari ar fi ca nu se pot ști dinainte toate transformările obiectului.
+O dificultate a acestei abordări ar fi ca nu se pot ști dinainte toate transformările obiectului.
 Chiar dacă s-ar ști, se poate deduce ca un astfel de model ar putea fi mult prea mare ca sa poată fi aplicat practic.
 
 O alta abordare ar fi sa se folosească o reprezentare a imaginii, invarianta la aceste transformări.
@@ -42,19 +42,19 @@ Din literatura se știe ca o imagine reprezentata în spațiul Fourier este inva
 Exista chiar și o combinație intre aceste doua reprezentări numita Fourier-Mellin care este invarianta la toate cele trei transformări.
 Totuși s-a observat ca utilizarea acestei reprezentări are aplicații limitate, ea find folosita mai mult la alinierea imaginilor.\cite{treiber2010introduction}
 
-O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica, este folosirea unei combinații intre o piramida de imagini și un algoritm de tip fereastră glisantă\footnote{Eng. sliding window}, acestea find aplicate pe imagine, nu pe modelul din baza de date.
+O alta soluție, poate un pic mai naiva, dar în același timp foarte puternica, este folosirea unei combinații intre o piramida de imagini și un algoritm de tip fereastră glisantă\footnote{Eng. sliding window}, acestea fiind aplicate pe imagine, nu pe modelul din baza de date.
 
 Folosirea piramidei de imagini și fereastra glisanta ne permit ca în restul algoritmului de recunoaștere sa tratam problema ca și cum nu ar exista translații sau scalari, astfel simplificând mult algoritmii aplicați.
 
 O piramida de imagini este o reprezentare multi-scara.
-Piramida de imagini se formează, pornind de la o imagine sursa, prin scalari succesive.
+Piramida de imagini se formează pornind de la o imagine sursa, prin scalari succesive.
 Aceste scalari se fac cu un factor ${\alpha > 1, \alpha \in \mathbb{R}}$ și se opresc atunci când se ajunge la o dimensiune minima.
 Dimensiunea imaginii la un anumit nivel din piramida se calculează astfel:
 $${
 f(D,L) = D \cdot \frac{1}{\alpha^L}
 }$$
 
-Unde ${D \in \mathbb{N}^2}$ este dimensiune imaginii sursa și ${L \in \mathbb{N}^+}$ este nivelul piramidei pentru care dorim sa aflam dimensiune.
+Unde ${D \in \mathbb{N}^2}$ este dimensiunea imaginii sursa și ${L \in \mathbb{N}^+}$ este nivelul piramidei pentru care dorim sa aflam dimensiunea.
 
 Se poate vizualiza piramida de imagini în figurile următoare:
 
@@ -90,7 +90,7 @@ sfarsit cicleaza
 \end{mdframed}
 
 Se poate observa ca, totuși, acest model nu poate reprezenta toate scările posibile, find un model discret.
-Aceasta problema poate fi ameliorata prin alegerea unui ${\alpha}$ potrivi și permițând modelului din baza de date sa reprezinte și el mici variații de scara.
+Aceasta problema poate fi ameliorata prin alegerea unui ${\alpha}$ potrivit și permițând modelului din baza de date sa prezinte și el mici variații de scara.
 
 O alta observație ar fi: cu cat ${\alpha}$ este mai mic, cu atât șansele sa nimerim scara corecta cresc, dar în același timp creste și consumul de memorie și durata de execuție a algoritmului.
 Consumul de memorie poate fi evitat dacă algoritmul se executa într-un mod recursiv, eliminând astfel menținerea explicita a unei liste de imagini în memorie.
@@ -126,7 +126,7 @@ Se poate vizualiza algoritmul fereastra glisanta în figura următoare:
 \footnotetext{Imagine din: Segmented Gray-Code Kernels for Fast Pattern Matching\cite{Ouyang2013SegGCK}}
 
 
-Se observa ca aici, ca și în cazul piramidei de imagini, cu cat x și y sunt mai mici cu atât creste și numărul de ferestre evaluate, ceea ce duce la un timp de execuție mai ridicat.
+Se observa ca aici, ca și în cazul piramidei de imagini, cu cat x și y sunt mai mici, cu atât creste și numărul de ferestre evaluate, ceea ce duce la un timp de execuție mai ridicat.
 
 Complexitatea algoritmului piramida combinat cu fereastra glisanta este 
 $${O((dim_x-\Delta_x) \cdot (dim_y-\Delta_y) \cdot n_{piramida})}$$
@@ -179,7 +179,7 @@ Efectul informațiilor irelevante și redundante poate fi ameliorat folosind teh
 \footnotetext{Sursa imagine: \url{http://cnx.org/content/m13173/1.6/}}
 
 
-Totuși, nici una dintre reprezentările menționate mai sus nu tratează problema discriminării, adică dacă doua imagini conțin același obiect atunci și reprezentările lor trebuie sa fie apropiate, iar dacă sunt imagini ale unor obiecte diferite atunci reprezentările lor sa fie distanțate.
+Totuși, nici una dintre reprezentările menționate mai sus nu tratează problema discriminării, adică: dacă doua imagini conțin același obiect atunci și reprezentările lor trebuie sa fie apropiate, iar dacă sunt imagini ale unor obiecte diferite atunci reprezentările lor sa fie distanțate.
 
 Aici intervine ceea ce se numește ingineria trăsăturilor\footnote{Eng. Feature Engineering} care, folosind cunoștințe din fizica, biologie sau chiar neurologie , construiește reprezentări mult mai favorabile recunoașterii.
 Câteva dinte cele mai cunoscute trăsături sunt HAAR\cite{Viola01robustreal-time}, SIFT\cite{Lowe99objectrecognition} și HOG\cite{Dalal05histogramsof}.
@@ -204,7 +204,7 @@ Concatenarea acestor histograme reprezinta trăsătura HOG.
 \end{figure}
 \footnotetext{Sursa imagine: HOGgles: Visualizing Object Detection Features\cite{vondrick2013hoggles}}
 
-Descriptorul SIFT este similar cu HAAR, acesta find în plus și invariant la rotație.
+Descriptorul SIFT este similar cu HOG, acesta fiind în plus și invariant la rotație.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.80\textwidth]{imagini/sift0.jpg}
@@ -220,11 +220,11 @@ Aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensită
 \section{Clasificare}
 
 Din perspectiva recunoașterii obiectelor, clasificarea se va realiza cu ajutorul unei funcții care evaluează un vector de trăsături și decide dacă este sau nu obiectul pe care încercam sa îl recunoaștem. 
-Acest tip de clasificare se numește clasificare binara, findcă răspunsul nu poate lua decât doua valori.
+Acest tip de clasificare se numește clasificare binara, fiindcă răspunsul nu poate lua decât doua valori.
 
 Aceasta funcție de decizie poate fi, în cazurile cele mai simple, o funcție de prag peste o distanta euclidiana sau chiar o rețea neuronala cu sute de neuroni.
 
-În cazul nostru aceasta funcție este rezultatul unui algoritm de învățare automata.\footnote{Machine Learning}
+În cazul nostru aceasta funcție este rezultatul unui algoritm de învățare automata.\footnote{Eng. Machine Learning}
 Învățarea automata, o ramura a inteligentei artificiale, este preocupata cu studiul și construcția sistemelor care pot învață din date.
 Algoritmii de învățare automata sunt împărțiți în multe categorii, însa noi ne vom axa doar pe cei de învățare supervizata.
 Se numesc algoritmi de învățare supervizata acei algoritmi care folosesc la antrenament seturi de perechi de date ${(x,y)}$ unde ${x}$ reprezinta trăsăturile sau atributele unui exemplar, iar ${y}$ reprezinta răspunsul dorit. 
@@ -234,7 +234,7 @@ Scopul învățării automate, dacă privim problema din punct de vedere geometr
 
 \begin{figure}[h]
 	\centering
-		\includegraphics[width=0.90\textwidth]{imagini/fig_clasificare2.png}
+		\includegraphics[width=0.8\textwidth]{imagini/fig_clasificare2.png}
 	\caption{Clasificare}
 	\label{fig:fig_clasificare}
 \end{figure}
@@ -248,6 +248,13 @@ O situație foarte des întâlnita în cazul algoritmilor de recunoaștere a ima
 Aceste detecții sunt suprapuse și se datorează faptului ca modelul învățat recunoaște și obiecte cu mici translații și scalari.
 Totuși, se dorește ca fiecare obiect prezent în imagine sa fie detectat doar o singura data.
 Acest lucru se realizează cu ajutorul unui algoritm de grupare a detecțiilor suprapuse.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.8\textwidth]{imagini/nms.png}
+	\caption{Efectul post-procesarii}
+	\label{fig:nms}
+\end{figure}
+
 
 \pagebreak
 \section{Algoritmul de recunoaștere}
