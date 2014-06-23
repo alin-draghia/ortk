@@ -1,22 +1,32 @@
 \chapter{Tehnologii folosite}
 
-TODO: fix me!
+În acest capitol voi enumera tehnologiile folosite și voi oferi cate o scurta descriere pentru fiecare.
+
 \section{Limbajul C++}
-[Am rezervat o pagina]
-\pagebreak
 
+C++ este un limbaj de programare general, multi-paradigma, compilat cu verificare statica a tipurilor.
+Suporta programarea: procedurala, orientata pe obiecte și generica.
+Limbajul oferă acces la facilitați de manipulare a memoriei pana la cel mai scăzut nivel.
 
-%Limbajul C++ este un limbaj de programare general care și este compilat în cod-mașina.
-%Este un limbaj multi-paradigma, cu verificare statica a tipurilor. 
-%Suporta programarea procedurala, orientata pe obiecte și generica.
-%Limbajul oferă facilitați de manipulare a memoriei la nivel scăzut.
-%find proiectat inițial ca un limbaj pentru programarea de sisteme(sisteme integrate, kernel sisteme de operare), performața și eficienta sunt trăsături principale.
+Câteva dintre trăsăturile limbajului care îl fac potrivit pentru aceasta lucrare sunt:
+\begin{itemize}
+	\item Performanta. Multi dintre algoritmii ce vor fi descris au de procesat un volum foarte mare de date. este important ca execuția sa fie cat mai rapida.
+	\item Portabilitatea. Ne oferă posibilitatea de a porta codul către alte platforme.
+	\item Biblioteci. Sunt scrise multe biblioteci pentru acest limbaj. În plus faptul ca este compatibil cu C ne pune practic la dispoziție un întreg arsenal de biblioteci.
+	\item Modern. În ultimi ani limbajul a trecut printr-o întreaga serie de schimbări care l-au transformat într-un limbaj mult mai ușor de folosit.
+\end{itemize}
 
-%Dat find faptul ca este și compatibil cu limbajul C, utilizatorii C++ au la dispoziție o gama larga de librarii software din cele mai diverse ramuri de aplicații de care se pot folosii.
 
 \section{Limbajul Python}
-[Am rezervat o pagina]
-\pagebreak
+
+Limbajul Python este un limbaj interpretat, dinamic, foarte ușor de folosit.
+Ca și în cazul C++, Python este un limbaj multi-paradigma și suporta programarea orientata pe obiecte, procedurala și generica.
+Este portabil, și vine însoți de o librărie standard vasta, cu facilitați de lucru cu fișiere xml pana la programare distribuita.
+Vine integrat cu un manager de pachete: bibliotecile pot fi instalate mult mai ușor.
+Are toate beneficiile unui limbaj modern: management automat de memorie, serializare automata a obiectelor si reflexia tipurilor.
+
+Python este un limbaj foarte popular în domeniul învățării automate, de aceea sunt disponibile foarte multe biblioteci care susțin acest domeniu.
+Este și un limbaj care se scalează de la mici aplicații demonstrative pana la aplicații distribuite cu sute de noduri.
 
 
 %\subsubsection{Limbajele C++ și Python}
@@ -44,22 +54,25 @@ TODO: fix me!
 
 
 \section{Biblioteca Boost}
-[Am rezervat o pagina]
-\pagebreak
 
+Este una dintre cele mai mari și de calitate biblioteci C++.
+Din biblioteca Boost am folosit Boost.Serialization si Boost.Python, cu ajutorul cărora am implementat serializarea obiectelor și interoperabilitate intre C++ și Python pentru sistemul dezvoltat în aceasta lucrare.
 
 \section{Biblioteca scikit-learn}
-[Am rezervat o pagina]
-\pagebreak
+
+Este cea mai cunoscuta biblioteca Python de învățare automata. Sunt implementați zeci de algoritmi de învățare, selecție de trăsături, validare și reducere a dimensionalitatii.
+
 
 \section{Biblioteca numpy}
-[Am rezervat o pagina]
-\pagebreak
+
+Biblioteca numpy a transformat Python-ul într-un adevărat rival al MATLAB.
+Aceasta biblioteca face lucru cu vectori și matrici in Python foarte simplu și eficient.
+
 
 \section{Biblioteca matplotlib}
-[Am rezervat o pagina]
-\pagebreak
+
+Matplotlib este o biblioteca Python de vizualizare a datelor. Se pot afișa imagini, trasa grafice sau vizualiza grafuri.
 
 \section{Biblioteca PySide}
-[Am rezervat o pagina]
-\pagebreak
+
+Biblioteca PySide este interfața de programare în Python a bibliotecii Qt, una dintre cele mai populare biblioteci de dezvoltare a interfețelor de utilizator portabile. Deși este cunoscuta pentru dezvoltarea de interfețe grafice, Qt este defapt un cadru de lucru complete de dezvoltare de aplicații cu facilitați de lucru cu baze de date, fire de execuție, comunicare în rețea sau grafica 3d.
