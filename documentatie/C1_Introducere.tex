@@ -59,7 +59,7 @@ Exista câteva biblioteci software bune, open-source, cu care se pot dezvolta ap
 opencv\footnote{\url{http://opencv.org/}}, 
 dlib\footnote{\url{http://dlib.net/}}, 
 libccv\footnote{\url{http://libccv.org/}}.
-Avantajele acestor biblioteci sunt:
+Avantajele lor sunt:
 \begin{itemize}
 	\item Exista algoritmi de recunoaștere a obiectelor gata implementați.
 	\item Se poate trece direct la dezvoltarea de aplicatii
@@ -69,9 +69,9 @@ Totuși sunt și dezavantaje:
 	\item Componentele care stau la baza acestor implementări nu sunt expuse, reutilizarea lor find imposibila.
 	\item Codul sursa este optimizat cu instrucțiuni în cod asamblare sau pentru procesorul grafic, fiind dificil de înțeles.
 \end{itemize}
-Aceste dezavantaje fac ca aceste biblioteci sa nu fie foarte utile celor care doresc sa dezvolte sau sa implementeze algoritmi.
+Aceste dezavantaje fac ca aceste biblioteci sa nu fie utile celor care doresc sa dezvolte sau sa studieze astfel de algoritmi.
 
-Doresc ca, la finalul acestei lucrări, sa obțin o platforma de dezvoltare a algoritmilor pentru recunoașterea obiectelor, pe care sa o pot folosi în activitatea mea din domeniu și care sa servească ca un punct de plecare pentru cei care doresc sa se inițieze în domeniu.
+La finalul lucrării s-a obținut o platforma de dezvoltare a algoritmilor pentru recunoașterea obiectelor, pe care sa o pot folosi în activitatea mea din domeniu și care sa servească ca un punct de plecare pentru cei care doresc sa se inițieze în domeniu.
 
 Avantajele acestei platforme ar fi:
 \begin{itemize}
@@ -80,6 +80,8 @@ Avantajele acestei platforme ar fi:
 	\item Reutilizare sporita
 	\item Pot fi ușor adaptați algoritmi din alte biblioteci pentru utilizare în cadrul platformei
 \end{itemize}
+
+C++ și Python sunt doua limbaje de programare foarte diferite, dar tocmai aceste diferențe fac ca cele doua sa se complementeze aproape perfect, formând un mediu de lucrul prielnic studierii și dezvoltării de algoritmi.
 
 %Viziunea artificiala reprezinta procesul invers al celui de formare a imagini și se ocupa cu recuperarea de informații din imagini cu ajutorul metodelor matematice, geometrice, statistice și a teoriei învățării automate\footnote{Machine learning}.
 
@@ -133,8 +135,10 @@ Avantajele acestei platforme ar fi:
 Se scrie o biblioteca software cu ajutorul căreia sa se dezvolte algoritmi și aplicații de recunoaștere a obiectelor.
 
 Aceasta biblioteca va fi scrisa într-un mod hibrid, cu componente implementate atât în C++ cat și în Python.
+Aceasta combinație de limbaje va permite implementarea rapida a algoritmilor în Python, iar la nevoie aceștia pot fi implementați parțial în C++.
 
 Toate componentele bibliotecii vor suporta serializare, pentru a putea fi salvate pe disc, baze de data sau trimise prin rețea în cazul unor programe distribuite.
+De asemenea se serializează rezultatul unor sesiuni lungi de antrenare.
 
 Algoritmul va învăța sa recunoască obiecte folosindu-se de un set de imagini cu exemple pozitive adnotate și exemple negative, imagini care nu conțin obiectul pe care dorim sa-l învățam.
 Algoritmul poate fi personalizat prin alegerea de implementări diferite ale componentelor de către utilizator.
@@ -145,13 +149,12 @@ Ca exemplificare, se scrie o aplicație care antrenează un algoritm de recunoa�
 
 \section{Structura Lucrării}
 
-TODO: fix me!
 
-Capitolele care urmează vor trata algoritmul de recunoaștere a obiectelor din punct de vedere teoretic și se va prezenta implementarea unei platforme de dezvoltare a acestora.
+Capitolele care urmează vor trata algoritmii de recunoaștere a obiectelor din punct de vedere teoretic și se va prezenta implementarea unei platforme de dezvoltare a acestora.
 
-În capitolul 2 sunt prezentate în detaliu structura unui algoritm de recunoaștere și o tehnica eficienta de antrenare a unui astfel de algoritm.
+În capitolul 2 sunt prezentate în detaliu structura algoritmilor de recunoaștere și o tehnica eficienta de antrenare.
 
-În capitolul 3 este prezentata în detaliu implementarea bibliotecii de dezvoltare a algoritmilor de recunoaștere a obiectelor.
+În capitolul 3 este prezentata în detaliu structura bibliotecii de dezvoltare a algoritmilor de recunoaștere a obiectelor și implementarea unui astfel de algoritm.
 
 În capitolul 4 sunt prezentate tehnologiile folosite.
 

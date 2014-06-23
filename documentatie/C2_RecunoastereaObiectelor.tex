@@ -22,7 +22,7 @@ Unele dintre cele mai relevante lucrări din domeniu sunt:
 \end{itemize}
 
 Dacă studiem mai atent algoritmii descriși în aceste lucrări se observa ca toate au o structura comuna și urmăresc o succesiune de operațiuni similare.
-Aceste operațiuni sunt următoarele: parcurgerea imaginii spațial la diferite scalari, extragerea de trăsături, clasificare și post-procesarea rezultatelor.
+Aceste operațiuni sunt următoarele: parcurgerea imaginii în mod spațial la diferite scalari, extragerea de trăsături, clasificare și post-procesarea rezultatelor.
 
 În continuare se va discuta mai detaliat despre fiecare componenta, iar la sfârșit despre algoritmul de recunoaștere.
 
@@ -98,9 +98,9 @@ Consumul de memorie poate fi evitat dacă algoritmul se executa într-un mod rec
 Algoritmul fereastra glisanta se folosește pentru a obține invarianta la translație a modelului.
 Aici fereastra se refera la o secțiune rectangulara a imaginii.
 Fereastra va avea aceeași dimensiune ca și modelul din baza de date.
-Fereastra glisanta are ca parametri ${\Delta_x, \Delta_y \geq 1}$, însemnând pasul pe axa x, respectiv pasul pe axa y.
+Fereastra glisanta are ca parametri ${\Delta_x, \Delta_y \geq 1}$, însemnând pasul pe axa ${x}$, respectiv pasul pe axa ${y}$.
 
-Pseudo-cod fereastra glisanta:
+Pseudo-cod fereastra glisanta este:
 \begin{mdframed}
 \begin{verbatim}
 dx = 8
@@ -120,7 +120,7 @@ Se poate vizualiza algoritmul fereastra glisanta în figura următoare:
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=1.00\textwidth]{imagini/sliding_window.png}
-	\caption{Fereastre Glisanta\protect\footnotemark}
+	\caption{Parcurgerea fereastră glisanta\protect\footnotemark}
 	\label{fig:sliding_window}
 \end{figure}
 \footnotetext{Imagine din: Segmented Gray-Code Kernels for Fast Pattern Matching\cite{Ouyang2013SegGCK}}
@@ -216,7 +216,6 @@ Descriptorul SIFT este similar cu HOG, acesta fiind în plus și invariant la ro
 Recent a apărut o noua abordare în ceea ce privește extragerea de trăsături.
 Aceasta folosește reprezentarea cruda a imaginii, adică matricea de intensități a pixelilor și se bazează pe algoritmul de clasificare sa extragă trăsături mai puternice, un exemplu fiind rețeaua neuronala convolutionala.\cite{lecun-98}
 
-\pagebreak
 \section{Clasificare}
 
 Din perspectiva recunoașterii obiectelor, clasificarea se va realiza cu ajutorul unei funcții care evaluează un vector de trăsături și decide dacă este sau nu obiectul pe care încercam sa îl recunoaștem. 
@@ -259,13 +258,11 @@ Acest lucru se realizează cu ajutorul unui algoritm de grupare a detecțiilor s
 \pagebreak
 \section{Algoritmul de recunoaștere}
 
-Folosindu-ne de componentele descrise în acest capitol putem discuta despre algoritmii de recunoaștere și antrenarea lor.
-
-Algoritmul de recunoaștere a obiectelor poate fi descris cu ajutorul pseudo-codului urmator:
+Algoritmul de recunoaștere a obiectelor poate fi implementat folosind componentele descrise pe parcursul acestui capitol, urmărind pseudo-codul:
 \begin{mdframed}
 \begin{verbatim}
 
-detectii = lista_goale()
+detectii = lista()
 
 I = citeste_imaginea()
 P = construieste_piramida(I)
@@ -285,18 +282,21 @@ detectii = grupare_suprapuse(detectii)
 \end{verbatim}
 \end{mdframed}
 
+\section{Antrenarea algoritmului de recunoaștere}
+
 Pentru antrenarea unui algoritm de recunoaștere a obiectelor avem nevoie de o baza de date cu doua seturi de imagini.
 Un set va conține imagini decupate cu obiectul pe care dorim sa îl recunoaștem, iar al doilea va fi constituit din imagini care nu conțin obiectul.
 Aceste seturi se numesc setul de exemplare pozitive, respectiv negative.
-Setul de pozitive este adus la o mărime comuna prin redimensionare.
-Din setul de imagini negative se vor extrage exemplare folosind scanarea în scara și spațiu de la algoritmul de recunoaștere.
-Pentru ca setul de negative este de obicei foarte mare, nu este practic ca la antrenare sa se folosească toate exemplarele posibile.
-Exemplarele negative se vor extrage printr-un proces iterativ.
-În prima faza se extrage un număr ales de exemple negative și se antrenează clasificatorul.
+Setul de pozitive este adus la o mărime comuna prin redimensionare, iar setul de negative este folosit în întregime.
+
+Pentru ca setul de negative poate conține chiar și milioane de exemplare, nu este practic ca la antrenare sa se folosească toate exemplarele posibile.
+Se va încerca extragerea doar a acelor exemplare care contribuie la îmbunătățirea antrenamentului.
+Printr-un proces iterativ de antrenări succesive, numit "bootstrapping", din setul de imagini negative se vor extrage exemplare folosind scanarea în scara și spațiu de la algoritmul de recunoaștere.
+În prima iterație se extrag un număr, specificat de către utilizator, de exemple negative și se antrenează clasificatorul.
 Apoi, folosind clasificatorul antrenat la pasul anterior, se scanează imaginile negative.
-Fiecare exemplar negativ care a fost clasificat pozitiv se adaugă la lista de antrenare și se antrenează clasificatorul din nou.
+Fiecare exemplar negativ care a fost clasificat ca fiind pozitiv este adăugat în lista de antrenare și se antrenează clasificatorul din nou.
 Pasul acesta se repeta de un număr de ori specificat de utilizator, sau pana când nu se mai pot extrage exemplare negative din setul de date.
-Acest procedeu se numește bootstrapping.
+Acest algoritm va atinge performantele unui algoritm naiv, antrenat cu toate exemplarele, folosind un număr mult mai mic de exemplare și într-un timp mult mai scurt.
 
 \begin{mdframed}
 \begin{verbatim}
@@ -331,7 +331,6 @@ pentru i = 1 pana la iter
   
   Cls = antreneaza_clasificator(X,y)
 sfarsit
-
 \end{verbatim}
 \end{mdframed}
 
