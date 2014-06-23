@@ -25,7 +25,7 @@ def main():
 
 
     pyramid_builder = FloatPyramidBuilder(scale_factor=1.05, min_size=Size(63,127), max_size=Size())
-    image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(8,8), padding=Size())
+    image_scanner = DenseImageScanner(win_size=Size(64,128), win_step=Size(4,4), padding=Size())
     nms = PassThroughNms()
     nms0 = GroupRectanglesNms()
     feature_extractor = None
@@ -56,7 +56,7 @@ def main():
     detector.classifier = classifier
 
     #im = cv2.imread(r'..\datasets\INRIAPerson\Test\pos\crop001501.png', cv2.IMREAD_GRAYSCALE)
-    im = cv2.imread(r'..\datasets\INRIAPerson\Train\pos\person_and_bike_129.png', cv2.IMREAD_GRAYSCALE)
+    im = cv2.imread(r'd:\dev\object-recognition-toolkit\datasets\testing_images\crop001670.png', cv2.IMREAD_GRAYSCALE)
     #im = cv2.imread(r'..\datasets\INRIAPerson\train_64x128_H96\pos\crop001001a.png', cv2.IMREAD_GRAYSCALE)
     disp = cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
     disp2 = np.copy(disp)

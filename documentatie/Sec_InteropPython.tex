@@ -1,0 +1,113 @@
+\section{Interoperabilitatea cu Python}
+Interoperabilitatea cu limbajul Python se poate realiza folosind una dinte aceste tehnologii:
+\begin{itemize}
+	\item Python C Api\cite{pythonCAPI}
+	\item SWIG\cite{swig}
+	\item pyrex\cite{pyrex}
+	\item ctypes\cite{ctypes}
+	\item SIP\cite{sip}
+	\item Boost.Python\cite{boostpython}
+\end{itemize}
+
+Am ales sa rezolv problema de interoperabilitate cu limbajul Python prin intermediul bibliotecii Boost.Python.
+Particularitățile acestei biblioteci vor fi discutate în capitolul "Tehnologii folosite".
+
+Pentru ca o clasa abstracta declarata în C++ sa poate fi implementata in Python, iar aceasta implementare sa fie disponibila atât în Python cat și în C++ este nevoie de o clasa ajutătoare care sa acționeze ca o legătura intre cele doua limbaje. 
+Aceasta clase se implementează prin moștenire din clasa pe care dorim sa o expunem și clasa "wrapper" din Boost.Python.
+O astfel de implementare poate fi observata in codul urmator:
+\begin{lstlisting}[language=C++]
+namespace object_recognition_toolkit
+{
+	namespace pyramid
+	{
+		namespace bp = boost::python;
+
+		struct PyramidBuilder_Wrapper : public PyramidBuilder
+			, public bp::wrapper < PyramidBuilder > {
+			
+			virtual ~PyramidBuilder_Wrapper() {}
+
+			Pyramid Build(core::Matrix const& image) const
+			{ return this->get_override("Build")(image); }
+
+			boost::shared_ptr<PyramidBuilder> Clone() const
+			{ return this->get_override("Clone")(); }
+		};
+	}
+}
+\end{lstlisting}
+
+Pe urma, acesta clasa trebuie înregistrată pentru a fi vizibila în Python.
+Înregistrarea se face cu Boost.Python prin intermediul clasei \verb!class_! după cum se observa mai jos:
+
+\begin{lstlisting}[language=C++]
+void py_regiser_pyramid()
+{
+using namespace boost::python;
+using namespace object_recognition_toolkit::core;
+using namespace object_recognition_toolkit::pyramid;
+using object_recognition_toolkit::python_ext::serialize_pickle;
+
+class_<PyramidLevel>("PyramidLevel", 
+		init<const Matrix&, double>((arg("image"),arg("scale"))))
+	.def("GetScale", &PyramidLevel::GetScale)
+	.def("GetImage", &PyramidLevel::GetImage, 
+		return_value_policy<copy_const_reference>())
+	.def("Transform", &PyramidLevel::Transform<int>, arg("box"))
+	.def("Invert", &PyramidLevel::Invert<int>, arg("box"))
+	;
+
+class_<Pyramid>("Pyramid", init<>())
+	.def("AddLevel", &Pyramid::AddLevel, arg("level"))
+	.def("Clear", &Pyramid::Clear)
+	.def("GetNumLevels", &Pyramid::GetNumLevels)
+	.def("GetLevel", &Pyramid::GetLevel, arg("index"), 
+		return_value_policy<copy_const_reference>())
+	;
+
+class_<PyramidBuilder_Wrapper, boost::noncopyable>("PyramidBuilder")
+	.def("Clone", pure_virtual(&PyramidBuilder::Clone))
+	.def("Build", pure_virtual(&PyramidBuilder::Build), arg("image"))
+	.enable_pickling()
+	;
+register_ptr_to_python<boost::shared_ptr<PyramidBuilder>>();
+
+class_<FloatPyramidBuilder, bases<PyramidBuilder>>("FloatPyramidBuilder", init<>())
+	.def(init<double, Size, Size>(args("scale_factor", "min_size", "max_size")))
+	.def_readwrite("scale_factor", &FloatPyramidBuilder::scaleFactor_)
+	.def_readwrite("max_size", &FloatPyramidBuilder::maxSize_)
+	.def_readwrite("min_size", &FloatPyramidBuilder::minSize_)
+	.def_pickle(serialize_pickle<FloatPyramidBuilder>())
+	;
+}
+\end{lstlisting}
+
+După care, implementarea aceste clase poate fi observata in codul urmator:
+\begin{lstlisting}[language=Python,frame=single]
+import object_recognition_toolkit as ort
+
+class MyPyramidBuilder(ort.PyramidBuilder):
+
+    def __init__(self, num):
+        ort.PyramidBuilder.__init__(self)
+        self.num = num
+        
+    def Build(self, image):
+        pyr = ort.Pyramid()
+        for si in range(self.num):
+        	scale = 1.0//(2.0**float(si))
+        	level = ort.PyramidLevel(image, scale)
+            pyr.AddLevel(levele)
+        return pyr
+    
+    #implement pickle support
+    def __reduce__(self):
+        initargs = (self.num, )
+        # this is not necesary, becouse num is an init arg, 
+        # but for the sake of example :)
+        state = {'num': self.num} 
+        return (MyPyramidBuilder, initargs, state, )
+    
+    def __setstate__(self, state):
+        self.num = state['num']
+\end{lstlisting}

@@ -4,12 +4,16 @@
 
 Biblioteca a fost implementata într-un mod hibrid.
 Interfețele au fost definite în limbajul C++, iar implementările au fost făcute atât în C++ cat și în Python.
+Biblioteca a fost scrisa și testata cu Visual Studio 2013.
+
 
 Structura de directoare a bibliotecii este:
 \verbatiminput{treeview.txt}
 Fiecare pachet este situat in propriul director.
 Declaratiile se gasesc in directorul "\verb!include!"
 ,iar implementarile in "\verb!src!".
+
+
 
 \pagebreak
 \section{Diagrama de clase}
@@ -24,6 +28,9 @@ Pachetul "core" conține interfețe de baza ale bibliotecii.
 \end{figure}
 
 \subsection{Dataset}
+%[TODO:] Discutie depre PASCAL VOC, ImageNet etc.
+
+
 Pachetul "dataset" conține clase care modelează baza de date pentru antrenament și implementează funcționalități de importare unor formate uzuale.
 \begin{figure}[H]
 	\centering
@@ -115,9 +122,114 @@ Pachetul "python" conține suportul necesar pentru interoperabilitatea cu limbaj
 
 
 \pagebreak
+\section{Algoritm de recunoaștere a persoanelor}
 
-\section{Interoperabilitatea cu Python}
-\pagebreak
+Cu ajutorul bibliotecii descrise în lucrare am implementat algoritmul de recunoaștere a personalelor în imagini descris în lucrarea "Histograms of Oriented Gradients for Human Detection", scrisa de Navneet Dalal și Bill Triggs.\cite{Dalal05histogramsof}
+Acesta lucrare a introdus și descris extragerea trăsăturilor de imagine: histograma de gradienți orientați.
 
-\section{Serializarea}
-\pagebreak
+Pentru implementarea algoritmului s-au folosit următoarele componente:
+\begin{itemize}
+	\item Parcurgerea imaginii: FloatPyramidBuilder și SlidingWindow
+	\item Extragerea de trăsături: HogFeature
+	\item Clasificare: LinearSVM\_Classifier și LinearSVM\_Trainer
+	\item Post-procesare: GroupRectanglesNms
+	\item Baza de date: Dataset
+	\item Antrenament: BootstrappingDetectorTrainer
+\end{itemize}
+
+Setul de imagini folosit pentru antrenarea algoritmul este cel oferit de institutul Inria(todo: cite) și poate fi descarcat gratuit de pe pagina web: \url{http://pascal.inrialpes.fr/data/human/}. 
+Sunt oferite imagini și adnotări în formatul PASCAL VOC(todo: cite).
+Datele conțin exemplare pozitive și negative.
+%\input{Sec_InteropPython}
+
+Înainte de antrenare imaginile exemplarelor pozitive au fost decupate și redimensionate la o mărime de 64 pixeli lățime și 128 pixeli înălțime.
+Exemplarele negative au fost folosite în întregime. (fig. \ref{fig:exemplare_pozitive_inria_person})
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.93\textwidth]{imagini/exemplare_pozitive_inria_person.png}
+	\caption{Exemplare pozitive din setul de date}
+	\label{fig:exemplare_pozitive_inria_person}
+\end{figure}
+
+
+Antrenarea cu "bootstraping" a fost efectuata folosind 2500 de exemplare pozitive într-un număr de 10 iterații fiecare adăugând 1.000 de exemplare negative la modelul învățat. În total s-au folosit 10.000 de exemplare negative.
+
+Lungimea vectorului de trăsături pentru o fereastra de dimensiune 64x128, folosindu-se celule de 8x8, blocuri de 16x16 și histograma cu 9 valori, este de 3870 de componente.
+
+Factorul de scalare a piramidei de imagini este setat la 6/5 = 1.2, iar pasul ferestrei glisante este de 8 pixeli în ambele direcții.
+
+În timpul antrenării modelul rezultat după fiecare iterație intermediara a fost salvat.
+
+\subsection{Cod antrenament}
+Codul programului de antrenare în Python este:
+\lstinputlisting[language=Python]{cod_antrenament.py}
+
+\subsection{Rezultate}
+În continuare voi prezenta câteva rezultate ale algoritmului implementat.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=1.00\textwidth]{imagini/rezultate_cu_nms.png}
+\end{center}
+	\caption{Rezultate recunoastere persoane}
+	\label{fig:rezultate_recunoaster_pers1}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=1.00\textwidth]{imagini/rezultate2.png}
+\end{center}
+\begin{center}
+	\includegraphics[width=1.00\textwidth]{imagini/rezultate3.png}
+\end{center}
+	\caption{Rezultate recunoastere persoane}
+	\label{fig:rezultate_recunoaster_pers2}
+\end{figure}
+
+\subsection{Aplicație de recunoaștere a obiectelor}
+
+În continuare voi prezenta aplicația de recunoaștere a obiectelor.
+
+%Aplicația este una cu interfața grafica. Aceasta interfața a fost dezvoltata folosind biblioteca PySide.
+
+Aceasta aplicație are rolul de a demonstra algoritmi de recunoaștere dezvoltați cu cadrul de lucru descris în aceasta lucrare.
+
+Aplicația suporta următoarele operațiuni:
+\begin{itemize}
+	\item Încărcare și salvare algoritm
+	\item Încărcare imagine
+	\item Configurare parametrii algoritm
+	\item Executarea algoritmului
+\end{itemize}
+
+Interfața cu utilizatorul a fost dezvoltata folosind biblioteca PySide și poate fi observata în figura \ref{fig:aplicatia}.
+
+Un algoritm poate fi configurat cu ajutorul dialogului de configurare din figura \ref{fig:dialog_configurare}.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{uml/aplicatie_use_case.png}
+	\caption{Diagrama Use Case a aplicatiei}
+	\label{fig:aplicatie_use_case}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{imagini/aplicatia.png}
+	\caption{Aplicatia de recunoastere}
+	\label{fig:aplicatia}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.5\textwidth]{imagini/dialog_configurare.png}
+	\caption{Dialog de configurare}
+	\label{fig:dialog_configurare}
+\end{figure}
+
+
+
+
+
+%\input{Sec_Serializarea}

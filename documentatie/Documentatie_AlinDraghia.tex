@@ -47,6 +47,28 @@
 
 \usepackage{natbib}
 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{
+	backgroundcolor=\color{white},
+	basicstyle=\footnotesize,
+	commentstyle=\color{mygreen},
+	frame=single,
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\tiny\color{mygray},
+	rulecolor=\color{black},
+	tabsize=2,
+	stringstyle=\color{mymauve},
+	breaklines=true
+}
+
 \widowpenalty=700
 \clubpenalty=700
 
@@ -102,7 +124,12 @@
 \title{Tehnici de Machine Learning in procesarea si recunoasterea imaginilor}
 \author{Draghia Alin-Madalin}
 
+\usepackage{pdfpages}
+
 \begin{document}
+
+\includepdf[pages={1}]{coperta.pdf}
+
 \fancyfoot{}
 \pagenumbering{alph}
 \setcounter{page}{1}
@@ -119,6 +146,9 @@
 
 \include{C1_Introducere}
 \include{C2_RecunoastereaObiectelor}
+
+\include{CapTehnologiiFolosite}
+
 \include{C3_Implementare}
 %\chapter{}
 
@@ -134,7 +164,7 @@
 
 %\include{Aplicatie}
 
-\include{CapTehnologiiFolosite}
+
 
 %\include{Concluzii}
 \include{C5_Concluzii}
