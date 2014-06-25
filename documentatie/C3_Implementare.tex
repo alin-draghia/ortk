@@ -11,7 +11,7 @@ Structura de directoare a bibliotecii este:
 \verbatiminput{treeview.txt}
 Fiecare pachet este situat in propriul director.
 Declaratiile se gasesc in directorul "\verb!include!"
-,iar implementarile in "\verb!src!".
+, iar implementarile in "\verb!src!".
 
 \pagebreak
 \section{Diagrama de clase}
@@ -47,9 +47,9 @@ Pachetul "image-pyramid" conține interfețe și implementări care servesc la c
 \end{figure}
 
 
-Clasa FloatPyramidBuilder construiește o piramida de imagini folosind ScaleFactor ca factor de scalare și MinSize, MaxSize ca criterii de terminare.
+Clasa FloatPyramidBuilder construiește o piramida de imagini folosind ScaleFactor ca factor de scalare și MinSize, MaxSize drept criterii de terminare.
 
-Metodele Transform si Invert din clasa PyramidLevel transforma coordonate din spațiul imaginii sursa în cel al nivelului, respectiv invers.
+Metodele Transform și Invert din clasa PyramidLevel transforma coordonate din spațiul imaginii sursa în cel al nivelului, respectiv invers.
 
 \subsection{Image Scanning}
 Pachetul "image-scanning" conține interfețe și implementări care servesc la scanarea imaginilor
@@ -122,7 +122,7 @@ Pachetul "python" conține suportul necesar pentru interoperabilitatea cu limbaj
 \pagebreak
 \section{Algoritm de recunoaștere a persoanelor}
 
-Cu ajutorul bibliotecii descrise în lucrare am implementat algoritmul de recunoaștere a personalelor în imagini descris în lucrarea "Histograms of Oriented Gradients for Human Detection", scrisa de Navneet Dalal și Bill Triggs.\cite{Dalal05histogramsof}
+Cu ajutorul bibliotecii descrise în lucrare am implementat algoritmul de recunoaștere a personalelor în imagini descris în lucrarea "Histograms of Oriented Gradients for Human Detection", scrisa de Navneet Dalal și Bill Triggs\cite{Dalal05histogramsof}.
 Acesta lucrare a introdus și descris extragerea trăsăturilor de imagine: histograma de gradienți orientați.
 
 Pentru implementarea algoritmului s-au folosit următoarele componente:
@@ -135,13 +135,13 @@ Pentru implementarea algoritmului s-au folosit următoarele componente:
 	\item Antrenament: BootstrappingDetectorTrainer
 \end{itemize}
 
-Setul de imagini folosit pentru antrenarea algoritmul este cel oferit de institutul Inria(todo: cite) și poate fi descarcat gratuit de pe pagina web: \url{http://pascal.inrialpes.fr/data/human/}. 
-Sunt oferite imagini și adnotări în formatul PASCAL VOC(todo: cite).
+Setul de imagini folosit pentru antrenarea algoritmului este cel oferit de institutul Inria\footnote{\url{http://www.inria.fr/centre/grenoble}} și poate fi descarcat gratuit de pe pagina web: \url{http://pascal.inrialpes.fr/data/human/}. 
+Sunt oferite imagini și adnotări în formatul PASCAL VOC\footnote{\url{http://pascallin.ecs.soton.ac.uk/challenges/VOC/}}.
 Datele conțin exemplare pozitive și negative.
 %\input{Sec_InteropPython}
 
 Înainte de antrenare imaginile exemplarelor pozitive au fost decupate și redimensionate la o mărime de 64 pixeli lățime și 128 pixeli înălțime.
-Exemplarele negative au fost folosite în întregime. (fig. \ref{fig:exemplare_pozitive_inria_person})
+Exemplarele negative au fost folosite în întregime(fig. \ref{fig:exemplare_pozitive_inria_person}).
 
 \begin{figure}[H]
 	\centering
@@ -205,29 +205,51 @@ Interfața cu utilizatorul a fost dezvoltata folosind biblioteca PySide și poat
 
 Un algoritm poate fi configurat cu ajutorul dialogului de configurare din figura \ref{fig:dialog_configurare}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=1.00\textwidth]{uml/aplicatie_use_case.png}
 	\caption{Diagrama Use Case a aplicatiei}
 	\label{fig:aplicatie_use_case}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 		\includegraphics[width=1.00\textwidth]{imagini/aplicatia.png}
 	\caption{Aplicatia de recunoastere}
 	\label{fig:aplicatia}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-		\includegraphics[width=0.5\textwidth]{imagini/dialog_configurare.png}
+		\includegraphics[width=0.45\textwidth]{imagini/dialog_configurare.png}
 	\caption{Dialog de configurare}
 	\label{fig:dialog_configurare}
 \end{figure}
 
 
+\section{Modalități de extindere a bibliotecii}
 
+Scopul acestei lucrări este de a scurta timpul necesar dezvoltării algoritmilor de recunoaștere a obiectelor în imagini.
+Acesta a fost realizat folosindu-se tehnici din programarea orientata pe obiecte.
+Sunt proiectate interfețe și sunt oferite implementări pentru fiecare componenta a unui algoritm de recunoaștere.
+Astfel, utilizatorul bibliotecii nu trebuie decât sa implementeze una sau doua componente pentru a obține un algoritm nou de recunoaștere.
 
+Majoritatea algoritmilor de recunoaștere a obiectelor în imagini pot fi implementați folosind cadrul de lucru dezvoltat în aceasta lucrare. Diferențele apar doar la algoritmul de învățare automata sau de extragere a trăsăturilor.
 
+\subsection{Exemplu}
+O modalitate de extindere a unui algoritm este folosirea tehnicii de agregare.
+Exemplu: adăugarea algoritmului PCA de reducere a dimensionalității la cel de învățare automata SVM.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{uml/pca_classifier_diagram.png}
+	\caption{Extindere algoritm de învățare automata}
+	\label{fig:pca_classifier_diagram}
+\end{figure}
+
+Codul sursa pentru acest exemplu este:
+\lstinputlisting[language=Python]{PCA_SVM_Trainer.py}
+
+Urmărind acest exemplu se poate observa cat de ușor este de extins un algoritm folosind cadrul de lucru dezvoltat în aceasta lucrare.
+Astfel de extinderi pot fi aplicate oricărei componente din algoritmul de recunoaștere.
 %\input{Sec_Serializarea}
