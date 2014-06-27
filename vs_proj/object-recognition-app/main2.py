@@ -37,7 +37,7 @@ class TheApp(object):
 
     def open_image(self):
         print('open image...')
-        filename, selected_filter = QtGui.QFileDialog.getOpenFileName(self.main_window, "Open Image...")
+        filename, selected_filter = QtGui.QFileDialog.getOpenFileName(self.main_window, "Open Image...", dir="./testing_images")
         if not filename:
             return
 
@@ -69,7 +69,7 @@ class TheApp(object):
 
     def open_detector(self):
         print('open detector...')
-        filename, selected_filter = QtGui.QFileDialog.getOpenFileName(self.main_window, "Open Detector...")
+        filename, selected_filter = QtGui.QFileDialog.getOpenFileName(self.main_window, "Open Detector...", dir="./detectors")
         if not filename:
             return
 
@@ -79,7 +79,7 @@ class TheApp(object):
 
     def save_detector(self):
         print('save detector...')
-        filename, selected_filter = QtGui.QFileDialog.getSaveFileName(self.main_window, "Save Detector...")
+        filename, selected_filter = QtGui.QFileDialog.getSaveFileName(self.main_window, "Save Detector...", dir="./detectors")
         if not filename:
             return
 
@@ -137,21 +137,20 @@ class TheApp(object):
                 self.sliding_window_anim_._stop()                
                 self.sliding_window.set_visible(False)
                 self.detected_windows_collection.set_visible(False)
-
+              
                 self._detector.post_processor.suppress(self.boxes, self.scores)
                 for b in self.boxes:
                     R = Rectangle((b.x,b.y), b.width, b.height)
                     self.boxes_patches.append(R)
-
+                    
                 self.boxes_collection.set_paths(self.boxes_patches)
+                self.sliding_window_anim_ = None
                 return self.sliding_window, self.detected_windows_collection, self.boxes_collection
 
             self.sliding_window.set_x(box.x)
             self.sliding_window.set_y(box.y)
             self.sliding_window.set_width(box.width)
             self.sliding_window.set_height(box.height)
-            self.sliding_window.set_visible(True)
-            self.sliding_window.set_edgecolor('#E500FF')
 
             if(score>self._detector.classification_treshold):
                 self.boxes.append(box)
@@ -177,8 +176,8 @@ class TheApp(object):
 
         self.sliding_window = Rectangle((5,5), 5, 5)        
         self.sliding_window.set_fill(False)
+        self.sliding_window.set_linewidth(2.0)
         self.sliding_window.set_edgecolor('#E500FF')
-        self.sliding_window.set_visible(False)
 
         self.detected_windows = []
         self.detected_windows_collection = PatchCollection(patches=self.detected_windows)

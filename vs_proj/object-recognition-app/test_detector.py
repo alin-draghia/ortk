@@ -61,12 +61,12 @@ def main():
     detector.classifier = classifier
 
 
-    with open(r'people_detector.dat', 'w') as f:
+    with open(r'people_detector_4.dat', 'w') as f:
         d = dict()
         d['pyramid_builder'] = pyramid_builder
         d['image_scanner'] = image_scanner
         d['feature_extractor'] = feature_extractor
-        d['classifier'] = classifier
+        d['classifier'] = MockPersonClassifier()
         d['post_proc'] = GroupRectanglesNms()
         d['classification_treshold'] = 0.0
         d['author'] = r"alin.draghia@gmail.com"

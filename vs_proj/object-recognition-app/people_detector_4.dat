@@ -1,0 +1,58 @@
+(dp0
+S'comment'
+p1
+S'people_detector'
+p2
+sS'author'
+p3
+S'alin.draghia@gmail.com'
+p4
+sS'post_proc'
+p5
+cobject_recognition_toolkitd_ext
+GroupRectanglesNms
+p6
+(tRp7
+(S'22 serialization::archive 10 1 0\n0 1 0\n1 3 0.20000000000000001'
+p8
+tp9
+bsS'classification_treshold'
+p10
+F0.0
+sS'image_scanner'
+p11
+cobject_recognition_toolkitd_ext
+DenseImageScanner
+p12
+(tRp13
+(S'22 serialization::archive 10 1 0\n0 1 0\n1 0 0 64 128 4 4 0 0'
+p14
+tp15
+bsS'pyramid_builder'
+p16
+cobject_recognition_toolkitd_ext
+FloatPyramidBuilder
+p17
+(tRp18
+(S'22 serialization::archive 10 1 0\n0 1 0\n1 1.05 0 0 63 127 0 0'
+p19
+tp20
+bsS'classifier'
+p21
+cobject_recognition_toolkitd_ext
+MockPersonClassifier
+p22
+(tRp23
+(S'22 serialization::archive 10 1 0\n0 0 0'
+p24
+tp25
+bsS'feature_extractor'
+p26
+cobject_recognition_toolkitd_ext
+HogFeatureExtractor
+p27
+(tRp28
+(S'22 serialization::archive 10 1 0\n0 0 0 0 0 64 128 16 16 8 8 8 8 9'
+p29
+tp30
+bs.
