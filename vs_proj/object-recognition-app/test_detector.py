@@ -2,6 +2,7 @@ from __future__ import division, print_function
 
 import sys
 import os
+import time
 import numpy as np
 from math import floor
 import pickle
@@ -30,6 +31,10 @@ def main():
     nms0 = GroupRectanglesNms()
     feature_extractor = None
     classifier = None
+
+
+    
+
     
     with open(r'training_10\classifier_10.pkl', 'r') as f:
         classifier = pickle.load(f)
@@ -55,8 +60,26 @@ def main():
     detector.non_maxima_suppressor = nms
     detector.classifier = classifier
 
+
+    with open(r'people_detector.dat', 'w') as f:
+        d = dict()
+        d['pyramid_builder'] = pyramid_builder
+        d['image_scanner'] = image_scanner
+        d['feature_extractor'] = feature_extractor
+        d['classifier'] = classifier
+        d['post_proc'] = GroupRectanglesNms()
+        d['classification_treshold'] = 0.0
+        d['author'] = r"alin.draghia@gmail.com"
+        d['comment'] = r"people_detector"
+        pickle.dump(d, f)
+
+    with open(r'people_detector.dat', 'r') as f:
+        d = pickle.load(f)
+        print(d)
+
+
     #im = cv2.imread(r'..\datasets\INRIAPerson\Test\pos\crop001501.png', cv2.IMREAD_GRAYSCALE)
-    im = cv2.imread(r'd:\dev\object-recognition-toolkit\datasets\testing_images\crop001670.png', cv2.IMREAD_GRAYSCALE)
+    im = cv2.imread(r'..\\datasets\testing_images\crop001670.png', cv2.IMREAD_GRAYSCALE)
     #im = cv2.imread(r'..\datasets\INRIAPerson\train_64x128_H96\pos\crop001001a.png', cv2.IMREAD_GRAYSCALE)
     disp = cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
     disp2 = np.copy(disp)
@@ -67,8 +90,10 @@ def main():
     detector_dump = pickle.dumps(detector)
     detector_ = pickle.loads(detector_dump)
 
+    t0 = time.time()
     detector_.Detect(im, dets, confs, 0.0)
-
+    t = time.time() - t0
+    print('total time=', t)
 
     for det in dets:
         x = det.x

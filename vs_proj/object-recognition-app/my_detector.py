@@ -2,6 +2,9 @@ from __future__ import division, print_function
 
 from object_recognition_toolkit import *
 import numpy as np
+import time
+
+from skimage.feature import hog
 
 try:
     import cPickle as pickle
@@ -30,6 +33,9 @@ class SlidingWindowDetector(Detector):
         num_pyramid_leveles = pyramid.GetNumLevels();
 
         for pyramid_level_index in range(num_pyramid_leveles):
+
+            t0 = time.time()
+
             pyramid_level = pyramid.GetLevel(pyramid_level_index)
             pyramid_level_image = pyramid_level.GetImage()
             
@@ -41,6 +47,7 @@ class SlidingWindowDetector(Detector):
             windows_images = VecMat()
             windows_boxes = BoxVector()
 
+            k = 0;
             for window in windows:
                 window_image = window.Image
                 window_box = window.Box
@@ -59,7 +66,10 @@ class SlidingWindowDetector(Detector):
                 confidence = np.asscalar(y[i])
                 if confidence > treshold:
                     detections.append(windows_boxes[i])
-                    confidences.append(confidence)                        
+                    confidences.append(confidence)   
+                    
+            t = time.time() - t0                     
+            print('time=', t)
 
         return
 
@@ -111,7 +121,9 @@ class SlidingWindowDetector2(Detector):
                 if y > treshold:
                     detections.append(pyramid_level.Invert(window_box))
                     confidences.append(y)      
-                            
+                 
+        
+        self.non_maxima_suppressor.suppress(detections, confidences);           
         return
 
     #implement pickle support

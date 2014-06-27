@@ -64,10 +64,17 @@
         <property name="buttonSymbols">
          <enum>QAbstractSpinBox::UpDownArrows</enum>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="scanner_win_step_y"/>
+       <widget class="QSpinBox" name="scanner_win_step_y">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
@@ -128,7 +135,17 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="classification_threshold"/>
+       <widget class="QDoubleSpinBox" name="classification_threshold">
+        <property name="minimum">
+         <double>-9999.989999999999782</double>
+        </property>
+        <property name="maximum">
+         <double>9999.989999999999782</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

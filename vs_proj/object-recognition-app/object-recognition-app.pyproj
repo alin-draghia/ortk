@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>44e91f5d-8865-4fbc-a84e-095f278a2b06</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>main2.py</StartupFile>
     <SearchPath>..\..\bin\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -41,6 +41,7 @@
     <OutputPath>bin\PythonExt_Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="main2.py" />
     <Compile Include="mp_map_async.py" />
     <Compile Include="my_detector.py" />
     <Compile Include="my_hog.py" />
@@ -49,6 +50,7 @@
     <Compile Include="object_recognition_toolkit.py" />
     <Compile Include="test_detector.py" />
     <Compile Include="train_detector.py" />
+    <Compile Include="visual_detector.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
